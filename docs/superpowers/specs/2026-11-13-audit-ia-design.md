@@ -139,9 +139,9 @@ Définition retenue de « souverain » *(à confirmer)* : opérateur soumis au s
 | Couche | Choix | Candidats à évaluer |
 |---|---|---|
 | Orchestration vocale | Orchestrateur ouvert, auto-hébergé | LiveKit Agents, Pipecat |
-| Transcription | Modèle européen ou à poids ouverts, exécuté sur notre infrastructure | Voxtral (Mistral), Whisper auto-hébergé, modèles Kyutai |
+| Transcription | **Voxtral (Mistral)** *(décision du porteur)*, exécuté sur notre infrastructure si les conditions d'hébergement de Mistral ne répondent pas à la définition de « souverain » | Repli : Whisper auto-hébergé, modèles Kyutai |
 | Modèle de langage | Fournisseur européen ou modèle à poids ouverts auto-hébergé, derrière une interface commune | Mistral en premier |
-| Synthèse vocale | Idem | Modèles Kyutai, autres modèles ouverts en français |
+| Synthèse vocale | Famille Voxtral si elle couvre la synthèse en français avec une qualité suffisante *(à vérifier)* ; sinon modèle ouvert auto-hébergé | Modèles Kyutai, autres modèles ouverts en français |
 | Service d'entretien et de diagnostic | Python | — |
 | Interface | Next.js (TypeScript), comme le site tckc.ai | — |
 | Base de connaissances et règles | Fichiers structurés versionnés dans le dépôt, validés par schéma ; règles en code typé | — |
@@ -215,7 +215,7 @@ Prises le 13 novembre 2026.
 |---|---|---|
 | Cible du démonstrateur | Bpifrance, les builders, quelques décideurs | Trois publics et leurs critères de réussite (section 6). |
 | Hébergement | Souverain | Pile technique (section 5). |
-| Fournisseurs de modèles et de voix | Qualité et souveraineté | Souveraineté éliminatoire, qualité pour départager (section 5). |
+| Fournisseurs de modèles et de voix | Qualité et souveraineté ; Voxtral pour la voix | Souveraineté éliminatoire, qualité pour départager ; Voxtral retenu d'emblée (section 5). |
 | Conservation de l'audio | Aucune | Traitement en flux, seule la transcription est gardée (section 5). |
 | Gouvernance de la neutralité | Totale | Aucune position privilégiée, base et règles publiées (section 3). |
 | Financeur et calendrier | À déterminer | La date du démonstrateur reste ouverte. |
@@ -228,7 +228,7 @@ Ce sont des lectures de ces décisions, pas des décisions :
 2. **« Builders ».** Lus comme les indépendants et entreprises qui mettent l'IA en œuvre chez les clients. Si le terme désigne plutôt des co-développeurs de l'outil, la question d'une licence ouverte se pose.
 3. **Ouverture du code.** Publier la base de connaissances et les règles est proposé ; publier tout le code sous licence libre ne l'est pas encore.
 4. **Définition de « souverain »** donnée en section 5, et niveau SecNumCloud dès le démonstrateur ou seulement à l'ouverture au public.
-5. **Qualité contre souveraineté** : si aucune brique vocale souveraine n'atteint une qualité acceptable aux tests, faut-il retarder ou déroger ?
+5. **Périmètre de Voxtral** : la décision « Voxtral » tranche la question de la brique vocale. Restent à vérifier, avant de s'engager, que Voxtral couvre la transcription en flux et la synthèse en français, et où Mistral l'exécute ; à défaut, auto-hébergement des poids ouverts pour la transcription et modèle ouvert pour la synthèse.
 
 ## 10. Laissé à la réalisation
 
