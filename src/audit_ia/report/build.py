@@ -61,6 +61,7 @@ class Report(BaseModel):
     profile: CompanyProfile
     summary: list[ReportItem]
     by_dimension: dict[Dimension, list[ReportItem]]
+    benchmarks: list[ReportItem]
     use_cases: list[ReportItem]
     obligations: list[ReportItem]
     upcoming: list[ReportItem]
@@ -108,16 +109,18 @@ def build_report(
         refs += [Ref(kind="fact", id=f) for f in finding.fact_ids]
         sources: list[SourceLine] = []
         stale = False
+        text = problem.symptom
         for bid in problem.evidence_benchmark_ids:
             hit = benchmark_hits.get(bid)
             if hit is None:
                 continue
             refs.append(Ref(kind="benchmark", id=bid))
+            text += f" Repère : {kb.benchmarks[bid].indicator} : {kb.benchmarks[bid].value}."
             sources.append(_source_line(kb, kb.benchmarks[bid].provenance, hit.stale))
             stale = stale or hit.stale
         by_dimension[problem.dimension].append(
             ReportItem(
-                text=problem.symptom,
+                text=text,
                 refs=refs,
                 sources=sources,
                 note=_notes(
@@ -150,13 +153,35 @@ def build_report(
             )
         )
 
+    # --- repères du segment
+    benchmarks = []
+    for hit in diagnosis.benchmarks:
+        b = kb.benchmarks[hit.benchmark_id]
+        benchmarks.append(
+            ReportItem(
+                text=f"{b.indicator} : {b.value} — {b.population}, {b.fieldwork}",
+                refs=[Ref(kind="benchmark", id=b.id)],
+                sources=[_source_line(kb, b.provenance, hit.stale)],
+                note=STALE_NOTE if hit.stale else None,
+            )
+        )
+
     # --- cas d'usage
     use_cases = []
     for uc_id in diagnosis.use_case_ids:
         uc = kb.use_cases[uc_id]
+        parts = [f"{uc.title}."]
+        for label, values in (
+            ("Prérequis", uc.prerequisites),
+            ("Obstacles fréquents", uc.obstacles),
+            ("Risques", uc.risks),
+        ):
+            if values:
+                parts.append(f"{label} : {' ; '.join(values)}.")
+        parts.append(f"Première étape : {uc.first_step}")
         use_cases.append(
             ReportItem(
-                text=f"{uc.title}. Premier pas : {uc.first_step}",
+                text=" ".join(parts),
                 refs=[Ref(kind="use_case", id=uc.id)],
             )
         )
@@ -250,7 +275,7 @@ def build_report(
     all_items = (
         [i for items in by_dimension.values() for i in items]
         + sections["applicable"] + sections["a_venir"]
-        + sections["en_projet"] + sections["reference"] + aids
+        + sections["en_projet"] + sections["reference"] + aids + benchmarks
     )  # fmt: skip
     for item in all_items:
         for line in item.sources:
@@ -266,6 +291,7 @@ def build_report(
         profile=state.profile,
         summary=summary,
         by_dimension=by_dimension,
+        benchmarks=benchmarks,
         use_cases=use_cases,
         obligations=sections["applicable"],
         upcoming=sections["a_venir"],

@@ -36,3 +36,9 @@ def test_check_catches_missing_keys():
     del r.by_dimension[Dimension.SI]
     r.plan.pop(next(iter(r.plan)))
     assert len(check_report(r, state(), KB)) == 2
+
+
+def test_check_catches_benchmark_item_without_source():
+    r = report_for(S_FULL)
+    r.benchmarks[0].sources = []
+    assert any("benchmarks" in v and "sans ligne de source" in v for v in check_report(r, S_FULL, KB))

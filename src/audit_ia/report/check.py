@@ -29,6 +29,7 @@ def _ref_exists(ref: Ref, state: AuditState, kb: KnowledgeBase) -> bool:
 def _sections(report: Report) -> list[tuple[str, ReportItem]]:
     named: list[tuple[str, list[ReportItem]]] = [
         ("summary", report.summary),
+        ("benchmarks", report.benchmarks),
         ("use_cases", report.use_cases),
         ("obligations", report.obligations),
         ("upcoming", report.upcoming),

@@ -59,3 +59,42 @@ def test_summary_and_plan_and_annex():
     assert ids == sorted(ids) and len(set(map(tuple, (s.model_dump().values() for s in r.sources)))) == len(ids)
     finding = r.by_dimension[Dimension.SECURITE][0]
     assert [s.source_id for s in finding.sources] == ["src-a"]
+
+
+def test_use_case_shows_prerequisites_obstacles_risks_and_first_step():
+    text = report_for(state()).use_cases[0].text
+    assert text == (
+        "Rédaction assistée de courriers. Prérequis : Un outil validé. "
+        "Obstacles fréquents : Peur de l'erreur. Risques : Fuite de données. "
+        "Première étape : Tester sur trois courriers types."
+    )
+
+
+def test_use_case_omits_empty_labels():
+    uc = KB.use_cases["cas-a"].model_copy(
+        update={"prerequisites": [], "obstacles": [], "risks": []}
+    )
+    kb = KB.model_copy(update={"use_cases": {"cas-a": uc}})
+    text = report_for(state(), kb=kb).use_cases[0].text
+    assert "Première étape" in text
+    assert not any(l in text for l in ("Prérequis", "Obstacles", "Risques"))
+
+
+def test_segment_benchmark_is_shown_with_value_and_source():
+    r = report_for(state(sector="construction"), kb=KB_SECTOR_ONLY)
+    assert [i.refs[0].id for i in r.benchmarks] == ["repere-construction"]
+    item = r.benchmarks[0]
+    assert "25 %" in item.text and item.sources and item.sources[0].url
+    assert item.sources[0].source_id in [s.source_id for s in r.sources]
+    assert report_for(state()).benchmarks[0].refs[0].id == "repere-a"
+
+
+def test_stale_benchmark_is_flagged():
+    r = report_for(state(), today=date(2027, 12, 3))
+    assert r.benchmarks and all(i.note == STALE_NOTE for i in r.benchmarks)
+    assert all(s.stale for i in r.benchmarks for s in i.sources)
+
+
+def test_finding_shows_evidence_benchmark_value():
+    text = report_for(S_FULL).by_dimension[Dimension.SECURITE][0].text
+    assert "Repère : adoption : 40 %." in text
