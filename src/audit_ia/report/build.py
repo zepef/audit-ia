@@ -16,7 +16,11 @@ from audit_ia.kb.models import Benchmark, Confidence, Horizon, KnowledgeBase, Pr
 
 STALE_NOTE = "À revérifier : cette information n'a pas été recontrôlée récemment."
 ESTIMATED_NOTE = "Fondé sur une estimation du décideur, à confirmer."
-NO_FINDING_TEXT = "Aucun constat établi sur cette dimension."
+NON_COVERED_TEXT = (
+    "Cette dimension n'est pas encore couverte par la base de connaissances : "
+    "aucun constat ne peut être établi."
+)
+NO_FINDING_TEXT = "Aucun constat sur cette dimension d'après vos réponses."
 UNPUBLISHED_SCOPE = "Taille des entreprises interrogées non publiée."
 
 _MONTHS = [
@@ -41,6 +45,13 @@ STAGE_LABELS = {
     Stage.USAGE_OUTILLE: "usage outillé",
     Stage.PROCESSUS_TRANSFORME: "processus transformé",
 }
+
+
+DimensionStatus = Literal["constats", "aucun_constat", "a_verifier", "non_couverte"]
+
+
+def _plural(n: int, singular: str, plural: str | None = None) -> str:
+    return singular if n == 1 else (plural or singular + "s")
 
 
 class Ref(BaseModel):
@@ -73,6 +84,7 @@ class Report(BaseModel):
     sector_label: str
     summary: list[ReportItem]
     by_dimension: dict[Dimension, list[ReportItem]]
+    dimension_status: dict[Dimension, DimensionStatus]
     benchmarks: list[ReportItem]
     use_cases: list[ReportItem]
     obligations: list[ReportItem]
@@ -151,8 +163,34 @@ def build_report(
                 ),
             )
         )
+    dimension_status: dict[Dimension, DimensionStatus] = {}
+    undecided = set(diagnosis.undecided_problem_ids)
     for dimension, items in by_dimension.items():
-        if not items:
+        problems = {p.id for p in kb.problems.values() if p.dimension is dimension}
+        pending = [
+            v.fact_id
+            for v in diagnosis.verifications
+            if any(b in problems for b in v.blocks)
+        ]
+        if items:
+            dimension_status[dimension] = "constats"
+        elif not problems:
+            dimension_status[dimension] = "non_couverte"
+            items.append(ReportItem(text=NON_COVERED_TEXT, refs=[]))
+        elif problems & undecided and pending:
+            dimension_status[dimension] = "a_verifier"
+            n = len(pending)
+            items.append(
+                ReportItem(
+                    text=(
+                        "Rien n'a pu être établi sur cette dimension : "
+                        f"{n} {_plural(n, 'point')} {_plural(n, 'reste', 'restent')} à vérifier."
+                    ),
+                    refs=[Ref(kind="fact", id=f) for f in pending],
+                )
+            )
+        else:
+            dimension_status[dimension] = "aucun_constat"
             items.append(ReportItem(text=NO_FINDING_TEXT, refs=[]))
 
     # --- règles
@@ -273,28 +311,81 @@ def build_report(
     ]
 
     # --- synthèse
-    per_dim = ", ".join(
-        f"{DIMENSION_LABELS[d]} {sum(1 for f in diagnosis.findings if kb.problems[f.problem_id].dimension is d)}"
-        for d in Dimension
+    n_findings = len(diagnosis.findings)
+    if n_findings:
+        per_dim = ", ".join(
+            f"{DIMENSION_LABELS[d]} {k}"
+            for d in Dimension
+            if (k := sum(1 for f in diagnosis.findings if kb.problems[f.problem_id].dimension is d))
+        )
+        findings_text = (
+            f"{n_findings} {_plural(n_findings, 'constat')} "
+            f"{_plural(n_findings, 'établi')} : {per_dim}."
+        )
+    else:
+        findings_text = "Aucun constat établi à ce stade."
+    to_verify = sum(1 for st in dimension_status.values() if st == "a_verifier")
+    if to_verify:
+        findings_text += (
+            f" {to_verify} {_plural(to_verify, 'dimension')} "
+            f"{_plural(to_verify, 'reste', 'restent')} à vérifier."
+        )
+    uncovered = sum(1 for st in dimension_status.values() if st == "non_couverte")
+    if uncovered:
+        findings_text += (
+            f" {uncovered} {_plural(uncovered, 'dimension')} "
+            f"{_plural(uncovered, 'non couverte', 'non couvertes')} par la base de connaissances."
+        )
+
+    n_app, n_up = len(sections["applicable"]), len(sections["a_venir"])
+    applicable_text = f"{n_app} {_plural(n_app, 'obligation applicable', 'obligations applicables')}"
+    upcoming_text = f"{n_up} {_plural(n_up, 'échéance')} à venir"
+    if n_app and n_up:
+        rules_text = f"{applicable_text} et {upcoming_text}."
+    elif n_app:
+        rules_text = f"{applicable_text} ; aucune échéance à venir identifiée."
+    elif n_up:
+        rules_text = f"Aucune obligation applicable identifiée ; {upcoming_text}."
+    else:
+        rules_text = "Aucune obligation applicable ni échéance à venir identifiée."
+
+    n_verif = len(verifications)
+    verif_text = (
+        f"{n_verif} {_plural(n_verif, 'vérification')} à mener."
+        if n_verif
+        else "Aucune vérification à mener."
     )
+    n_est = sum(1 for f in diagnosis.findings if f.certainty is Certainty.ESTIME)
+    if n_est:
+        verif_text += (
+            f" {n_est} {_plural(n_est, 'constat')} "
+            f"{_plural(n_est, 'repose', 'reposent')} sur une estimation."
+        )
+    shown = (
+        [i for items in by_dimension.values() for i in items]
+        + sections["applicable"] + sections["a_venir"]
+        + sections["en_projet"] + sections["reference"] + aids + benchmarks
+    )  # fmt: skip
+    n_stale = sum(1 for i in shown if i.note and STALE_NOTE in i.note)
+    if n_stale:
+        verif_text += f" {n_stale} {_plural(n_stale, 'information')} à revérifier."
+
+    first_case = kb.use_cases[diagnosis.use_case_ids[0]] if diagnosis.use_case_ids else None
     summary = [
         ReportItem(
-            text=f"Constats par dimension : {per_dim}.",
+            text=findings_text,
             refs=[Ref(kind="problem", id=f.problem_id) for f in diagnosis.findings],
         ),
         ReportItem(
             text=(
-                f"Premier cas d'usage à étudier : {use_cases[0].text}"
-                if use_cases
-                else "Aucun cas d'usage n'a pu être retenu sur la base des informations recueillies."
+                f"Premier cas d'usage à étudier : {first_case.title}."
+                if first_case
+                else "Aucun cas d'usage prioritaire ne ressort de vos réponses."
             ),
-            refs=list(use_cases[0].refs) if use_cases else [],
+            refs=[Ref(kind="use_case", id=first_case.id)] if first_case else [],
         ),
         ReportItem(
-            text=(
-                f"{len(sections['applicable'])} obligation(s) applicable(s) et "
-                f"{len(sections['a_venir'])} échéance(s) à venir."
-            ),
+            text=rules_text,
             refs=[
                 Ref(kind="rule", id=h.rule_id)
                 for h in diagnosis.rules
@@ -302,19 +393,14 @@ def build_report(
             ],
         ),
         ReportItem(
-            text=f"{len(verifications)} vérification(s) à mener.",
+            text=verif_text,
             refs=[Ref(kind="fact", id=v.fact_id) for v in diagnosis.verifications],
         ),
     ]
 
     # --- annexe des sources
     seen: dict[tuple, SourceLine] = {}
-    all_items = (
-        [i for items in by_dimension.values() for i in items]
-        + sections["applicable"] + sections["a_venir"]
-        + sections["en_projet"] + sections["reference"] + aids + benchmarks
-    )  # fmt: skip
-    for item in all_items:
+    for item in shown:
         for line in item.sources:
             seen.setdefault(tuple(line.model_dump().values()), line)
     annex = sorted(
@@ -334,6 +420,7 @@ def build_report(
         ),
         summary=summary,
         by_dimension=by_dimension,
+        dimension_status=dimension_status,
         benchmarks=benchmarks,
         use_cases=use_cases,
         obligations=sections["applicable"],

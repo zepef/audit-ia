@@ -16,7 +16,7 @@ def test_sections_always_present():
 
 def test_empty_audit_report():
     r = report_for(state())
-    assert all(len(v) == 1 and v[0].refs == [] for v in r.by_dimension.values())
+    assert all(len(v) == 1 for v in r.by_dimension.values())
     assert r.verifications and check_report(r, state(), KB) == []
 
 
@@ -150,3 +150,73 @@ def test_verification_blocking_only_problems_names_nothing():
     item = next(i for i in report_for(state()).verifications if i.refs[0].id == "comptes_perso")
     assert item.text == "Des comptes personnels sont-ils utilisés pour les outils d'IA ?"
     assert ("problem", "HUM-S1") in {(x.kind, x.id) for x in item.refs}
+
+
+# --- F3 : une dimension vide dit pourquoi
+
+NON_COVERED = (
+    "Cette dimension n'est pas encore couverte par la base de connaissances : "
+    "aucun constat ne peut être établi."
+)
+
+
+def test_dimension_status_and_placeholders():
+    r = report_for(state(comptes_perso=False))
+    assert r.dimension_status[Dimension.SECURITE] == "aucun_constat"
+    assert r.by_dimension[Dimension.SECURITE][0].text == "Aucun constat sur cette dimension d'après vos réponses."
+    assert r.dimension_status[Dimension.GOUVERNANCE] == "a_verifier"
+    assert r.by_dimension[Dimension.GOUVERNANCE][0].text == (
+        "Rien n'a pu être établi sur cette dimension : 1 point reste à vérifier."
+    )
+    assert r.dimension_status[Dimension.STRATEGIE] == "non_couverte"
+    assert r.by_dimension[Dimension.STRATEGIE][0].text == NON_COVERED
+    assert report_for(S_FULL).dimension_status[Dimension.SECURITE] == "constats"
+
+
+def test_points_to_verify_plural():
+    from audit_ia.kb.models import All, Test
+
+    problem = KB.problems["HUM-G1"].model_copy(
+        update={"triggers": All(all=[Test(fact="charte_ia", op="eq", value=False),
+                                     Test(fact="f1", op="eq", value=False)])}  # fmt: skip
+    )
+    kb = KB.model_copy(update={"problems": {**KB.problems, "HUM-G1": problem}})
+    text = report_for(state(), kb=kb).by_dimension[Dimension.GOUVERNANCE][0].text
+    assert text == "Rien n'a pu être établi sur cette dimension : 2 points restent à vérifier."
+
+
+# --- F7 : synthèse lisible
+
+def test_summary_texts():
+    texts = [i.text for i in report_for(S_FULL).summary]
+    assert texts == [
+        "1 constat établi : sécurité 1. 1 dimension reste à vérifier. "
+        "5 dimensions non couvertes par la base de connaissances.",
+        "Premier cas d'usage à étudier : Rédaction assistée de courriers.",
+        "1 obligation applicable et 1 échéance à venir.",
+        "1 vérification à mener.",
+    ]
+
+
+def test_summary_without_finding_and_with_estimate_and_stale():
+    texts = [i.text for i in report_for(state()).summary]
+    assert texts[0] == (
+        "Aucun constat établi à ce stade. 2 dimensions restent à vérifier. "
+        "5 dimensions non couvertes par la base de connaissances."
+    )
+    assert texts[3] == "2 vérifications à mener."
+    s = state(comptes_perso=("estime", True), charte_ia=False)
+    texts = [i.text for i in report_for(s, today=date(2027, 12, 3)).summary]
+    assert texts[0].startswith("2 constats établis : gouvernance 1, sécurité 1.")
+    assert texts[3] == (
+        "Aucune vérification à mener. 1 constat repose sur une estimation. "
+        "4 informations à revérifier."
+    )
+
+
+def test_summary_without_use_case_or_rules():
+    kb = KB.model_copy(update={"use_cases": {}, "rules": {}})
+    texts = [i.text for i in report_for(state(), kb=kb).summary]
+    assert texts[1] == "Aucun cas d'usage prioritaire ne ressort de vos réponses."
+    assert texts[2] == "Aucune obligation applicable ni échéance à venir identifiée."
+    assert not any("(s)" in t or " 0 " in f" {t}" for t in texts)
