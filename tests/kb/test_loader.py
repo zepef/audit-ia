@@ -69,3 +69,17 @@ def test_unknown_key_fails_with_file_and_entry(tmp_path, file, entry_id, edit):
     with pytest.raises(KBError) as e:
         load_kb(root)
     assert (e.value.file, e.value.entry_id) == (file, entry_id)
+
+
+def test_sectors_are_loaded():
+    kb = load_kb(KB_MIN)
+    assert {"commerce", "construction", "peche", "autre"} <= set(kb.sectors)
+    assert kb.sectors["construction"].label
+
+
+def test_benchmark_with_unknown_sector_is_rejected(tmp_path):
+    root = mutated_copy(KB_MIN, tmp_path, "benchmark_unknown_sector")
+    with pytest.raises(KBError) as e:
+        load_kb(root)
+    assert (e.value.file, e.value.entry_id) == ("benchmarks.yaml", "repere-construction")
+    assert "secteur inconnu" in e.value.message

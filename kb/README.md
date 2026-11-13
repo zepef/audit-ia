@@ -21,6 +21,7 @@ Tous les fichiers sauf `VERSION` et `neutrality.yaml` sont des listes d'entrées
 |---|---|---|
 | `VERSION` | Version de la base | une ligne |
 | `sources.yaml` | Sources citées | `id`, `title`, `publisher`, `url`, `published_on` (facultatif, seulement si le rapport donne le jour) |
+| `sectors.yaml` | Secteurs reconnus | `id`, `label` (libellé affiché dans le rapport) |
 | `facts.yaml` | Faits recueillis auprès du décideur | `id`, `dimension` (une des sept), `kind` (`bool`, `int`, `float`, `enum`, `text`), `choices` (pour `enum`), `prompt_hint`, `stages` (vide = tous les stades), `priority` |
 | `rules.yaml` | Règles et échéances datées | `id`, `statement`, `status` (`applicable`, `adopte_non_applicable`, `projet`, `proposition`, `recommandation`, `jurisprudence`), `effective_on`, `bounds`, `applies_when`, `provenance` |
 | `benchmarks.yaml` | Repères chiffrés | `id`, `indicator`, `value`, `headcount_min`, `headcount_max`, `sectors` (vide = tous), `population`, `fieldwork`, `expires_on`, `provenance` |
@@ -38,7 +39,7 @@ Tous les fichiers sauf `VERSION` et `neutrality.yaml` sont des listes d'entrées
 
 - `expires_on` : un an après la fin du terrain d'enquête ; à défaut, un an après la publication.
 - Pour un même `indicator`, un repère sectoriel remplace le repère tous secteurs.
-- Clés de secteur (ventilation Insee du rapport) : `information_communication`, `activites_specialisees`, `activites_immobilieres`, `energie_eau_dechets`, `services_administratifs`, `industrie_manufacturiere`, `commerce`, `hebergement_restauration`, `construction`, `transports`, et `autre`.
+- Clés de secteur : celles de `sectors.yaml` (ventilations Insee et Banque de France du rapport, plus `autre`). Un repère qui cite un secteur absent de `sectors.yaml` est refusé au chargement, et un audit dont le secteur n'y figure pas est refusé par `audit-ia report`.
 
 ### Neutralité
 

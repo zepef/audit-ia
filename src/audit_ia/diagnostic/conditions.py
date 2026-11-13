@@ -81,8 +81,8 @@ def undecided_facts(cond: Condition, facts: Mapping[str, Fact]) -> set[str]:
         return set()
     match cond:
         case Test():
-            known, _ = _known_value(cond, facts)
-            return set() if known else {cond.fact}
+            # absent, inconnu, ou de type incompatible avec le test : à vérifier
+            return {cond.fact}
         case All() | AnyOf():
             return set().union(*(undecided_facts(c, facts) for c in _children(cond)))
         case Not():

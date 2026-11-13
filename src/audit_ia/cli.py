@@ -8,6 +8,7 @@ from pathlib import Path
 from pydantic import ValidationError
 
 from audit_ia.audit.models import OutOfScopeError, load_audit_state
+from audit_ia.audit.validation import FactValidationError, validate_state
 from audit_ia.diagnostic.engine import diagnose
 from audit_ia.kb.loader import KBError, load_kb
 from audit_ia.report.build import build_report
@@ -73,6 +74,10 @@ def _report(args) -> int:
         kb = load_kb(kb_dir, verified_only=not args.all_confidence)
     except KBError as exc:
         return _kb_error(exc)
+    try:
+        validate_state(state, kb)
+    except FactValidationError as exc:
+        return _fail(f"Fichier d'audit incohérent avec la base de connaissances : {exc}")
 
     today = args.today or date.today()
     report = build_report(state, diagnose(state, kb, today), kb, today)

@@ -95,6 +95,15 @@ class AuditState(BaseModel):
     profile: CompanyProfile
     facts: dict[str, Fact] = {}
 
+    @model_validator(mode="after")
+    def _keys_match_fact_ids(self) -> "AuditState":
+        for key, fact in self.facts.items():
+            if key != fact.fact_id:
+                raise ValueError(
+                    f"clé « {key} » différente de l'identifiant du fait « {fact.fact_id} »"
+                )
+        return self
+
     def record(self, fact: Fact) -> None:
         """Enregistre le fait, en remplaçant celui de même fact_id."""
         self.facts[fact.fact_id] = fact

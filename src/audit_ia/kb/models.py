@@ -46,6 +46,11 @@ class Source(_Strict):
     published_on: date | None = None
 
 
+class Sector(_Strict):
+    id: str
+    label: str
+
+
 class Provenance(_Strict):
     source_id: str
     verified_on: date | None
@@ -159,6 +164,7 @@ class Aid(_Strict):
 class KnowledgeBase(_Strict):
     version: str
     sources: dict[str, Source]
+    sectors: dict[str, Sector]
     facts: dict[str, FactDef]
     rules: dict[str, Rule]
     benchmarks: dict[str, Benchmark]

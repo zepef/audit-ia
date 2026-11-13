@@ -66,6 +66,10 @@ MUTATIONS = {
         "rules.yaml",
         lambda d: _by_id(d, "regle-a")["provenance"].update(verified_on=None),
     ),
+    "benchmark_unknown_sector": (
+        "benchmarks.yaml",
+        lambda d: _by_id(d, "repere-construction").update(sectors=["batiment"]),
+    ),
     "evidence_is_unverified": (
         "benchmarks.yaml",
         lambda d: _by_id(d, "repere-a")["provenance"].update(confidence="B"),

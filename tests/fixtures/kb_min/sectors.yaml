@@ -1,0 +1,8 @@
+- id: commerce
+  label: commerce
+- id: construction
+  label: construction
+- id: peche
+  label: pêche
+- id: autre
+  label: autre secteur

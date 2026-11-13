@@ -102,3 +102,9 @@ def test_deciding_facts_through_not():
 
 def test_deciding_facts_empty_when_unknown():
     assert deciding_facts(_fon_rh(), facts(a=("inconnu", None))) == set()
+
+
+def test_type_mismatch_lists_fact_to_verify():
+    # une incohérence de type ne peut plus venir de l'entrée ; si elle survient,
+    # l'UNKNOWN a toujours un fait à vérifier
+    assert undecided_facts(Test(fact="s", op="gt", value=3), facts(s=("constate", "texte"))) == {"s"}

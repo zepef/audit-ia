@@ -1,0 +1,24 @@
+# Secteurs reconnus. Clés de la ventilation sectorielle des repères (Insee et
+# Banque de France, corpus l. 300 et 307-310), plus « autre ». Un repère qui
+# cite un secteur absent de cette liste est refusé au chargement ; un audit dont
+# le secteur n'y figure pas aussi.
+- id: information_communication
+  label: information et communication
+- id: activites_specialisees
+  label: activités spécialisées, scientifiques et techniques
+- id: activites_immobilieres
+  label: activités immobilières
+- id: services_administratifs
+  label: services administratifs et de soutien
+- id: industrie_manufacturiere
+  label: industrie manufacturière
+- id: commerce
+  label: commerce
+- id: hebergement_restauration
+  label: hébergement et restauration
+- id: construction
+  label: construction
+- id: transports
+  label: transports et entreposage
+- id: autre
+  label: autre secteur

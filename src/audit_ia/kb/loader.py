@@ -15,6 +15,7 @@ from audit_ia.kb.models import (
     KnowledgeBase,
     Problem,
     Rule,
+    Sector,
     Source,
     UseCase,
     referenced_facts,
@@ -75,6 +76,7 @@ def load_kb(
 
     files = {
         "sources": ("sources.yaml", Source),
+        "sectors": ("sectors.yaml", Sector),
         "facts": ("facts.yaml", FactDef),
         "rules": ("rules.yaml", Rule),
         "benchmarks": ("benchmarks.yaml", Benchmark),
@@ -136,6 +138,13 @@ def _cross_check(tables: dict[str, dict[str, Any]], files: dict) -> None:
                     entry.id,
                     f"source inconnue : {entry.provenance.source_id}",
                 )
+
+    for bench in tables["benchmarks"].values():
+        unknown = [s for s in bench.sectors if s not in tables["sectors"]]
+        if unknown:
+            raise KBError(
+                files["benchmarks"][0], bench.id, f"secteur inconnu : {', '.join(unknown)}"
+            )
 
     _check_problem_dependencies(tables, files, after_filter=False)
 

@@ -63,3 +63,21 @@ def test_cli_check_failure_exits_3(tmp_path, audit_json, monkeypatch, capsys):
     assert main(["report", "--kb", str(KB_MIN), "--facts", str(audit_json), "--out", str(out),
                  "--all-confidence"]) == 3  # fmt: skip
     assert "violation test" in capsys.readouterr().err and not out.exists()
+
+
+def test_cli_rejects_fact_of_wrong_kind(tmp_path, capsys):
+    bad = tmp_path / "bad.json"
+    bad.write_text(state(comptes_perso="true").model_dump_json(), encoding="utf-8")
+    out = tmp_path / "x"
+    assert main(["report", "--kb", str(KB_MIN), "--facts", str(bad), "--out", str(out),
+                 "--all-confidence"]) == 1  # fmt: skip
+    err = capsys.readouterr().err.strip()
+    assert "comptes_perso" in err and len(err.splitlines()) == 1 and not out.exists()
+
+
+def test_cli_rejects_unknown_sector(tmp_path, capsys):
+    bad = tmp_path / "bad.json"
+    bad.write_text(state(sector="aeronautique").model_dump_json(), encoding="utf-8")
+    assert main(["report", "--kb", str(KB_MIN), "--facts", str(bad), "--out", str(tmp_path / "x"),
+                 "--all-confidence"]) == 1  # fmt: skip
+    assert "aeronautique" in capsys.readouterr().err

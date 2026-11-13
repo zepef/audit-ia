@@ -80,3 +80,13 @@ def test_loader_other_invalid_input_is_validation_error():
     with pytest.raises(ValidationError) as e:
         load_audit_state(_payload(stage="inconnu"))
     assert not isinstance(e.value, OutOfScopeError)
+
+
+def test_fact_key_must_match_fact_id():
+    with pytest.raises(ValidationError):
+        AuditState(profile=PROFILE, facts={"a": Fact(fact_id="b", value=True, certainty="constate")})
+    with pytest.raises(ValidationError):
+        load_audit_state({
+            "profile": _payload()["profile"],
+            "facts": {"a": {"fact_id": "b", "value": True, "certainty": "constate"}},
+        })  # fmt: skip
