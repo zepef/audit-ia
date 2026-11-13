@@ -6,9 +6,16 @@ from pathlib import Path
 
 import yaml
 
+from audit_ia.kb.loader import load_kb
 from audit_ia.kb.models import Benchmark, Confidence, Provenance, Rule, RuleStatus
 
 KB_MIN = Path(__file__).resolve().parent / "fixtures" / "kb_min"
+
+_BASE = load_kb(KB_MIN)
+# Base de test où seul le repère « construction » subsiste (aucun repère générique).
+KB_SECTOR_ONLY = _BASE.model_copy(
+    update={"benchmarks": {"repere-construction": _BASE.benchmarks["repere-construction"]}}
+)
 
 
 def _edit(root: Path, name: str, fn) -> None:

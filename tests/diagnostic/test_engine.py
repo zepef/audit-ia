@@ -1,6 +1,6 @@
 from datetime import date
 
-from kb_helpers import KB_MIN, state
+from kb_helpers import KB_MIN, KB_SECTOR_ONLY, state
 
 from audit_ia.diagnostic.engine import Finding, diagnose
 from audit_ia.kb.loader import load_kb
@@ -15,9 +15,6 @@ def _kb_with(**changes):
     return KB.model_copy(update=changes)
 
 
-KB_SECTOR_ONLY = _kb_with(
-    benchmarks={"repere-construction": KB.benchmarks["repere-construction"]}
-)
 KB_MANY_USE_CASES = _kb_with(
     use_cases={
         f"cas-priorite-{p}": UseCase(
