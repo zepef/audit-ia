@@ -140,16 +140,16 @@ Définition retenue de « souverain » *(à confirmer)* : opérateur soumis au s
 |---|---|---|
 | Orchestration vocale | Orchestrateur ouvert, auto-hébergé | LiveKit Agents, Pipecat |
 | Transcription | **Voxtral (Mistral)** *(décision du porteur)*, exécuté sur notre infrastructure si les conditions d'hébergement de Mistral ne répondent pas à la définition de « souverain » | Repli : Whisper auto-hébergé, modèles Kyutai |
-| Modèle de langage | Fournisseur européen ou modèle à poids ouverts auto-hébergé, derrière une interface commune | Mistral en premier |
+| Modèle de langage | **Mistral** *(décision du porteur)*, derrière une interface commune qui permet d'en changer | Repli : modèle à poids ouverts auto-hébergé |
 | Synthèse vocale | Famille Voxtral si elle couvre la synthèse en français avec une qualité suffisante *(à vérifier)* ; sinon modèle ouvert auto-hébergé | Modèles Kyutai, autres modèles ouverts en français |
 | Service d'entretien et de diagnostic | Python | — |
 | Interface | Next.js (TypeScript), comme le site tckc.ai | — |
 | Base de connaissances et règles | Fichiers structurés versionnés dans le dépôt, validés par schéma ; règles en code typé | — |
 | Stockage | PostgreSQL | — |
-| Hébergement | Hébergeur français ; offre qualifiée SecNumCloud visée pour l'ouverture au public | Scaleway, OVHcloud, Outscale |
+| Hébergement | **Scaleway** *(décision du porteur)* ; qualification SecNumCloud visée pour l'ouverture au public, état de celle de Scaleway à vérifier | Repli : OVHcloud, Outscale |
 | Rapport | HTML converti en PDF | — |
 
-Les candidats n'ont pas été évalués : disponibilité, qualité en français, latence et conditions d'hébergement sont à vérifier avant tout engagement. Risque assumé : la qualité vocale des briques souveraines peut être inférieure à celle des plateformes américaines ; le bilan confirmé à l'écran et la saisie au clavier en limitent l'effet.
+À vérifier en premier : si les modèles Mistral, Voxtral compris, peuvent être exécutés sur l'infrastructure Scaleway (service géré ou auto-hébergement), ce qui garderait toute la chaîne chez un seul hébergeur français. Les candidats n'ont pas été évalués : disponibilité, qualité en français, latence et conditions d'hébergement sont à vérifier avant tout engagement. Risque assumé : la qualité vocale des briques souveraines peut être inférieure à celle des plateformes américaines ; le bilan confirmé à l'écran et la saisie au clavier en limitent l'effet.
 
 ## 6. Première version : le démonstrateur
 
@@ -214,8 +214,8 @@ Prises le 13 novembre 2026.
 | Sujet | Décision | Conséquence dans ce document |
 |---|---|---|
 | Cible du démonstrateur | Bpifrance, les builders, quelques décideurs | Trois publics et leurs critères de réussite (section 6). |
-| Hébergement | Souverain | Pile technique (section 5). |
-| Fournisseurs de modèles et de voix | Qualité et souveraineté ; Voxtral pour la voix | Souveraineté éliminatoire, qualité pour départager ; Voxtral retenu d'emblée (section 5). |
+| Hébergement | Souverain ; Scaleway | Pile technique (section 5). |
+| Fournisseurs de modèles et de voix | Qualité et souveraineté ; Mistral pour le modèle de langage, Voxtral pour la voix | Souveraineté éliminatoire, qualité pour départager ; Voxtral retenu d'emblée (section 5). |
 | Conservation de l'audio | Aucune | Traitement en flux, seule la transcription est gardée (section 5). |
 | Gouvernance de la neutralité | Totale | Aucune position privilégiée, base et règles publiées (section 3). |
 | Financeur et calendrier | À déterminer | La date du démonstrateur reste ouverte. |
