@@ -224,7 +224,7 @@ Prises le 13 novembre 2026.
 
 Ce sont des lectures de ces décisions, pas des décisions :
 
-1. **Neutralité totale et rôle de TCKC.** Elle est lue ici comme : l'outil n'envoie aucune demande à TCKC. L'accompagnement proposé par TCKC existe alors en dehors de l'outil, au même titre que tout autre accompagnateur.
+1. **Neutralité totale et rôle de TCKC.** *Confirmé par le porteur le 13 novembre 2026* : TCKC reste en dehors de l'outil, qui ne lui transmet aucune demande. Son accompagnement existe à côté, au même titre que celui de tout autre accompagnateur.
 2. **« Builders ».** Lus comme les indépendants et entreprises qui mettent l'IA en œuvre chez les clients. Si le terme désigne plutôt des co-développeurs de l'outil, la question d'une licence ouverte se pose.
 3. **Ouverture du code.** Publier la base de connaissances et les règles est proposé ; publier tout le code sous licence libre ne l'est pas encore.
 4. **Définition de « souverain »** donnée en section 5, et niveau SecNumCloud dès le démonstrateur ou seulement à l'ouverture au public.
