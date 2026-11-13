@@ -78,7 +78,7 @@ tests/
 
 ---
 
-### Tâche 1 : projet et modèle d'audit
+### Task 1: projet et modèle d'audit
 
 **Fichiers**
 - Créer : `pyproject.toml`, `src/audit_ia/__init__.py`, `src/audit_ia/audit/__init__.py`, `src/audit_ia/audit/models.py`
@@ -144,7 +144,7 @@ def test_state_roundtrips_json():
 
 ---
 
-### Tâche 2 : base de connaissances, chargement et péremption
+### Task 2: base de connaissances, chargement et péremption
 
 **Fichiers**
 - Créer : `src/audit_ia/kb/models.py`, `src/audit_ia/kb/loader.py`, `src/audit_ia/kb/freshness.py`, `tests/fixtures/kb_min/*.yaml`
@@ -256,7 +256,7 @@ def test_staleness():
 
 ---
 
-### Tâche 3 : conditions à trois valeurs
+### Task 3: conditions à trois valeurs
 
 **Fichiers**
 - Créer : `src/audit_ia/diagnostic/__init__.py`, `src/audit_ia/diagnostic/conditions.py`
@@ -319,7 +319,7 @@ def test_type_mismatch_is_unknown():
 
 ---
 
-### Tâche 4 : moteur de diagnostic
+### Task 4: moteur de diagnostic
 
 **Fichiers**
 - Créer : `src/audit_ia/diagnostic/engine.py`
@@ -406,7 +406,7 @@ def test_diagnosis_is_deterministic():
 
 ---
 
-### Tâche 5 : planificateur d'entretien
+### Task 5: planificateur d'entretien
 
 **Fichiers**
 - Créer : `src/audit_ia/audit/planner.py`
@@ -458,7 +458,7 @@ def test_terminates():
 
 ---
 
-### Tâche 6 : rapport structuré, traçabilité et neutralité
+### Task 6: rapport structuré, traçabilité et neutralité
 
 **Fichiers**
 - Créer : `src/audit_ia/report/__init__.py`, `src/audit_ia/report/build.py`, `src/audit_ia/report/check.py`
@@ -556,7 +556,7 @@ def test_built_report_is_always_clean():
 
 ---
 
-### Tâche 7 : rendu HTML et ligne de commande
+### Task 7: rendu HTML et ligne de commande
 
 **Fichiers**
 - Créer : `src/audit_ia/report/render.py`, `src/audit_ia/report/templates/report.html.j2`, `src/audit_ia/cli.py`
@@ -621,7 +621,7 @@ def test_cli_exit_codes(tmp_path, capsys):
 
 ---
 
-### Tâche 8 : base de connaissances initiale et audits de référence
+### Task 8: base de connaissances initiale et audits de référence
 
 **Fichiers**
 - Créer : `kb/VERSION`, `kb/sources.yaml`, `kb/facts.yaml`, `kb/rules.yaml`, `kb/benchmarks.yaml`, `kb/problems.yaml`, `kb/use_cases.yaml`, `kb/actions.yaml`, `kb/aids.yaml`, `kb/neutrality.yaml`, `kb/README.md`
