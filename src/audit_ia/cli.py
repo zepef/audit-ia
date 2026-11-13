@@ -10,7 +10,7 @@ from pydantic import ValidationError
 from audit_ia.audit.models import OutOfScopeError, load_audit_state
 from audit_ia.audit.validation import FactValidationError, validate_state
 from audit_ia.diagnostic.engine import diagnose
-from audit_ia.kb.loader import KBError, load_kb, validation_summary
+from audit_ia.kb.loader import KBError, load_kb
 from audit_ia.report.build import build_report
 from audit_ia.report.check import check_report
 from audit_ia.report.render import render_html

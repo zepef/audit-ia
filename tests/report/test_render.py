@@ -1,7 +1,7 @@
 from datetime import date
-from markupsafe import escape
 
 from kb_helpers import KB_SECTOR_ONLY, S_FULL, report_for, state
+from markupsafe import escape
 
 from audit_ia.kb.models import Confidence
 from audit_ia.report.build import STALE_NOTE

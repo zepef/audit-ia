@@ -9,7 +9,13 @@ from typing import Literal
 
 from pydantic import BaseModel
 
-from audit_ia.audit.models import AuditState, Certainty, CompanyProfile, Dimension, Stage
+from audit_ia.audit.models import (
+    AuditState,
+    Certainty,
+    CompanyProfile,
+    Dimension,
+    Stage,
+)
 from audit_ia.diagnostic.engine import Diagnosis
 from audit_ia.kb.freshness import is_stale
 from audit_ia.kb.models import Benchmark, Confidence, Horizon, KnowledgeBase, Provenance

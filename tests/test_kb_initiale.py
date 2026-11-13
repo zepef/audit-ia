@@ -98,9 +98,10 @@ def test_ai_literacy_rule_spares_non_users():
 
 
 def test_screening_use_case_not_proposed_to_company_already_doing_it():
+    from kb_helpers import state
+
     from audit_ia.diagnostic.conditions import Tri, evaluate
     from audit_ia.diagnostic.engine import profile_facts
-    from kb_helpers import state
 
     cond = KB.use_cases["uc-preselection-candidatures"].applies_when
     doing = state(stage="usage_outille", **{"competences.recrutements_reguliers": True,

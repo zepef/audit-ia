@@ -178,7 +178,7 @@ def test_points_to_verify_plural():
 
     problem = KB.problems["HUM-G1"].model_copy(
         update={"triggers": All(all=[Test(fact="charte_ia", op="eq", value=False),
-                                     Test(fact="f1", op="eq", value=False)])}  # fmt: skip
+                                     Test(fact="f1", op="eq", value=False)])}
     )
     kb = KB.model_copy(update={"problems": {**KB.problems, "HUM-G1": problem}})
     text = report_for(state(), kb=kb).by_dimension[Dimension.GOUVERNANCE][0].text
@@ -190,8 +190,10 @@ def test_points_to_verify_plural():
 def test_summary_texts():
     texts = [i.text for i in report_for(S_FULL).summary]
     assert texts == [
-        "1 constat établi : sécurité 1. 1 dimension reste à vérifier. "
-        "5 dimensions non couvertes par la base de connaissances.",
+        (
+            "1 constat établi : sécurité 1. 1 dimension reste à vérifier. "
+            "5 dimensions non couvertes par la base de connaissances."
+        ),
         "Premier cas d'usage à étudier : Rédaction assistée de courriers.",
         "1 obligation applicable et 1 échéance à venir.",
         "1 vérification à mener.",

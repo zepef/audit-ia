@@ -1,7 +1,12 @@
 import pytest
 
 from audit_ia.audit.models import Fact
-from audit_ia.diagnostic.conditions import Tri, deciding_facts, evaluate, undecided_facts
+from audit_ia.diagnostic.conditions import (
+    Tri,
+    deciding_facts,
+    evaluate,
+    undecided_facts,
+)
 from audit_ia.kb.models import All, AnyOf, Not, Test
 
 T, F, U = Tri.TRUE, Tri.FALSE, Tri.UNKNOWN

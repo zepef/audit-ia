@@ -7,10 +7,10 @@ import yaml
 from pydantic import BaseModel, ValidationError
 
 from audit_ia.kb.models import (
+    PROFILE_FACTS,
     Action,
     Aid,
     Benchmark,
-    PROFILE_FACTS,
     Confidence,
     FactDef,
     KnowledgeBase,

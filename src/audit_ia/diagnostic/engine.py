@@ -4,15 +4,19 @@ Déterministe : mêmes entrées, même sortie ; ni réseau ni modèle de langage
 Une condition indécidable produit une vérification, jamais un constat.
 """
 
+from collections.abc import Mapping
 from datetime import date
 from typing import Literal
 
 from pydantic import BaseModel
 
-from collections.abc import Mapping
-
 from audit_ia.audit.models import AuditState, Certainty, Fact
-from audit_ia.diagnostic.conditions import Tri, deciding_facts, evaluate, undecided_facts
+from audit_ia.diagnostic.conditions import (
+    Tri,
+    deciding_facts,
+    evaluate,
+    undecided_facts,
+)
 from audit_ia.kb.freshness import is_stale
 from audit_ia.kb.models import PROFILE_FACTS, Condition, KnowledgeBase, RuleStatus
 

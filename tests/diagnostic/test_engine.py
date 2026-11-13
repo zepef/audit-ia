@@ -143,7 +143,7 @@ def _kb_fon_rh_shape():
             Test(fact="charte_ia", op="eq", value=False),
             AnyOf(any=[Test(fact="comptes_perso", op="eq", value=True),
                        Test(fact="f1", op="eq", value=True)]),
-        ]),  # fmt: skip
+        ]),
         action_ids=["action-charte"],
     )
     return _kb_with(problems={"FON-T1": problem})
@@ -183,7 +183,7 @@ def test_profile_pseudo_facts_are_not_evidence():
 
     problem = KB.problems["HUM-G1"].model_copy(
         update={"triggers": All(all=[Test(fact="profile.headcount", op="gte", value=10),
-                                     Test(fact="charte_ia", op="eq", value=False)])}  # fmt: skip
+                                     Test(fact="charte_ia", op="eq", value=False)])}
     )
     kb = _kb_with(problems={"HUM-G1": problem})
     d = diagnose(state(headcount=45, charte_ia=False), kb, TODAY)
