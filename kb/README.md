@@ -33,7 +33,7 @@ Tous les fichiers sauf `VERSION` et `neutrality.yaml` sont des listes d'entrées
 
 ### Conditions
 
-`applies_when`, `triggers` et `eligibility` sont des arbres de tests sur les faits : `{fact, op, value}` avec `op` parmi `eq`, `ne`, `lt`, `lte`, `gt`, `gte`, `in`, combinés par `all`, `any` et `not`. L'évaluation est à trois valeurs : un fait absent ou `inconnu` rend le test indécidable, et le moteur en tire une vérification à mener, jamais un constat. Les conditions sont écrites pour n'être vraies que sur ce que le décideur a effectivement déclaré. Une règle qui s'impose à toute entreprise (par exemple l'article 4 du règlement IA) n'a pas d'`applies_when`.
+`applies_when`, `triggers` et `eligibility` sont des arbres de tests sur les faits : `{fact, op, value}` avec `op` parmi `eq`, `ne`, `lt`, `lte`, `gt`, `gte`, `in`, combinés par `all`, `any` et `not`. L'évaluation est à trois valeurs : un fait absent ou `inconnu` rend le test indécidable, et le moteur en tire une vérification à mener, jamais un constat. Les conditions sont écrites pour n'être vraies que sur ce que le décideur a effectivement déclaré. Une règle qui s'impose à toute entreprise (par exemple la facturation électronique) n'a pas d'`applies_when`. Trois pseudo-faits tirés du profil, toujours constatés, peuvent être lus sans définition dans `facts.yaml` : `profile.stage`, `profile.headcount`, `profile.sector` ; ils ne sont jamais une vérification ni la preuve d'un constat. L'article 4 du règlement IA porte sur les fournisseurs et les déployeurs (corpus l. 55, [V2]) : il ne s'applique pas à une entreprise non utilisatrice. Un fait réservé à d'autres stades que celui de l'entreprise (`stages`) n'est jamais demandé en vérification, et une condition indécise seulement faute de tels faits n'est pas retenue.
 
 ### Repères
 
@@ -49,6 +49,7 @@ Tous les fichiers sauf `VERSION` et `neutrality.yaml` sont des listes d'entrées
 
 - **Aucun problème vérifié pour les dimensions stratégie et système d'information.** Le catalogue du rapport (l. 252-287) n'a, pour ces deux dimensions, aucune ligne dont la preuve soit marquée [V] ou [V2] : SI-S4, SI-S7, GEN-G3 et GEN-EVAL ne sont pas vérifiés. Les problèmes gardent la dimension que leur donne le rapport. Le planificateur pose quand même des questions sur ces dimensions, mais aucun constat ne peut y être établi tant que le corpus n'a pas été complété.
 - **Deux aides seulement** (Diagnostic Data IA, Accélérateurs IA). IA Booster est écarté, car son statut 2026 est inconnu. Autodiag IA est écarté aussi : la ligne vérifiée (l. 182) ne donne aucun prix.
+- **Interdiction des applications de « nudification »** (règlement IA, art. 5(1) b bis et b ter, corpus l. 59) : retirée de la base, car sans objet pour les entreprises auditées (elle vise les fournisseurs de ces applications). Elle y reviendra si le périmètre s'élargit.
 - **Consultation du CSE** : aucune règle, puisque la jurisprudence n'a pas été lue à la source. Elle entrera après relecture humaine.
 
 ## Licence

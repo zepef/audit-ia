@@ -10,6 +10,7 @@ from audit_ia.kb.models import (
     Action,
     Aid,
     Benchmark,
+    PROFILE_FACTS,
     Confidence,
     FactDef,
     KnowledgeBase,
@@ -124,7 +125,7 @@ def _cross_check(tables: dict[str, dict[str, Any]], files: dict) -> None:
     for key, entry_id, cond in conditions:
         if cond is None:
             continue
-        unknown = referenced_facts(cond) - fact_ids
+        unknown = referenced_facts(cond) - fact_ids - PROFILE_FACTS
         if unknown:
             raise KBError(
                 files[key][0], entry_id, f"fait inconnu : {', '.join(sorted(unknown))}"

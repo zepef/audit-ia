@@ -83,3 +83,29 @@ def test_no_forbidden_term_in_kb_texts():
     # (sources.yaml) sont des citations exactes, exemptées.
     texts += [f"{b.indicator} {b.value} {b.population}" for b in KB.benchmarks.values()]
     assert not [t for t in texts for w in KB.forbidden_terms if w.lower() in t.lower()]
+
+
+def test_nudification_rule_removed():
+    assert "ai-act-art-5-nudification" not in KB.rules
+
+
+def test_ai_literacy_rule_spares_non_users():
+    # corpus l. 55 : « fournisseurs et déployeurs “prennent des mesures pour favoriser” » [V2]
+    cond = KB.rules["ai-act-art-4-maitrise"].applies_when
+    assert cond is not None and cond.model_dump() == {
+        "fact": "profile.stage", "op": "ne", "value": "non_utilisatrice"
+    }
+
+
+def test_screening_use_case_not_proposed_to_company_already_doing_it():
+    from audit_ia.diagnostic.conditions import Tri, evaluate
+    from audit_ia.diagnostic.engine import profile_facts
+    from kb_helpers import state
+
+    cond = KB.use_cases["uc-preselection-candidatures"].applies_when
+    doing = state(stage="usage_outille", **{"competences.recrutements_reguliers": True,
+                                             "gouvernance.ia_recrutement": True})  # fmt: skip
+    assert evaluate(cond, profile_facts(doing)) is Tri.FALSE
+    not_doing = state(stage="usage_outille", **{"competences.recrutements_reguliers": True,
+                                                 "gouvernance.ia_recrutement": False})  # fmt: skip
+    assert evaluate(cond, profile_facts(not_doing)) is Tri.TRUE

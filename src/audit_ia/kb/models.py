@@ -175,6 +175,12 @@ class KnowledgeBase(_Strict):
     forbidden_terms: list[str]
 
 
+# Pseudo-faits toujours constatés, tirés du profil : une condition peut les lire
+# sans définition dans facts.yaml ; ils ne sont jamais une vérification ni la
+# preuve d'un constat.
+PROFILE_FACTS = frozenset({"profile.stage", "profile.headcount", "profile.sector"})
+
+
 def referenced_facts(cond: Condition) -> set[str]:
     """Identifiants de faits cités par une condition (récursivement)."""
     match cond:

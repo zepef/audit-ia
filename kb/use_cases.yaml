@@ -93,7 +93,14 @@
   obstacles: [Intégration avec les systèmes existants, Manque de budget ou de temps, Qualité des données]
   risks: [Recrutement parmi les thématiques prioritaires de contrôle de la CNIL en 2026, Décision sans intervention humaine réelle]
   first_step: Réaliser l'AIPD et définir l'intervention humaine avant tout test.
-  applies_when: {fact: competences.recrutements_reguliers, op: eq, value: true}
+  # Pas proposé à une entreprise qui trie déjà ses candidatures par IA ; une
+  # non-utilisatrice ne le fait pas par définition (la question ne lui est pas posée).
+  applies_when:
+    all:
+      - {fact: competences.recrutements_reguliers, op: eq, value: true}
+      - any:
+          - {fact: profile.stage, op: eq, value: non_utilisatrice}
+          - {fact: gouvernance.ia_recrutement, op: ne, value: true}
   priority: 3
 
 # corpus l. 164, 169

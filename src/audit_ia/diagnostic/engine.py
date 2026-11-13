@@ -9,10 +9,12 @@ from typing import Literal
 
 from pydantic import BaseModel
 
-from audit_ia.audit.models import AuditState, Certainty
+from collections.abc import Mapping
+
+from audit_ia.audit.models import AuditState, Certainty, Fact
 from audit_ia.diagnostic.conditions import Tri, deciding_facts, evaluate, undecided_facts
 from audit_ia.kb.freshness import is_stale
-from audit_ia.kb.models import KnowledgeBase, RuleStatus
+from audit_ia.kb.models import PROFILE_FACTS, Condition, KnowledgeBase, RuleStatus
 
 MAX_USE_CASES = 5
 
@@ -55,6 +57,7 @@ class Diagnosis(BaseModel):
     use_case_ids: list[str]
     verifications: list[Verification]
     indicators_without_benchmark: list[str]
+    undecided_problem_ids: list[str] = []  # problèmes indécis faute de faits du stade
 
 
 def _in_bounds(headcount: int, low: int | None, high: int | None) -> bool:
@@ -71,16 +74,48 @@ def _rule_timing(status: RuleStatus, effective_on: date | None, today: date) -> 
     return "applicable"
 
 
+def profile_facts(state: AuditState) -> dict[str, Fact]:
+    """Faits de l'audit, plus les pseudo-faits du profil (toujours constatés)."""
+    profile = state.profile
+    values = {
+        "profile.stage": profile.stage.value,
+        "profile.headcount": profile.headcount,
+        "profile.sector": profile.sector,
+    }
+    facts: dict[str, Fact] = dict(state.facts)
+    for fact_id, value in values.items():
+        facts[fact_id] = Fact(fact_id=fact_id, value=value, certainty=Certainty.CONSTATE)
+    return facts
+
+
+def _outside_stage(fact_id: str, kb: KnowledgeBase, state: AuditState) -> bool:
+    fact_def = kb.facts.get(fact_id)
+    return (
+        fact_def is not None
+        and bool(fact_def.stages)
+        and state.profile.stage not in fact_def.stages
+    )
+
+
 def diagnose(state: AuditState, kb: KnowledgeBase, today: date) -> Diagnosis:
-    facts = state.facts
+    facts: Mapping[str, Fact] = profile_facts(state)
     profile = state.profile
     blocked: dict[str, set[str]] = {}
+    undecided: set[str] = set()
 
-    def track(entry_id: str, cond) -> Tri:
+    def track(entry_id: str, cond: Condition) -> Tri:
+        """Évalue ; une condition indécise ne devient vérification que pour les
+        faits que le planificateur pose au stade de l'entreprise. Indécise
+        seulement faute de faits d'un autre stade, elle n'est pas retenue."""
         result = evaluate(cond, facts)
         if result is Tri.UNKNOWN:
-            for fact_id in undecided_facts(cond, facts):
+            missing = {
+                f for f in undecided_facts(cond, facts) if not _outside_stage(f, kb, state)
+            }
+            for fact_id in missing:
                 blocked.setdefault(fact_id, set()).add(entry_id)
+            if missing:
+                undecided.add(entry_id)
         return result
 
     findings = []
@@ -88,7 +123,7 @@ def diagnose(state: AuditState, kb: KnowledgeBase, today: date) -> Diagnosis:
         problem = kb.problems[problem_id]
         if track(problem_id, problem.triggers) is not Tri.TRUE:
             continue
-        cited = sorted(deciding_facts(problem.triggers, facts))
+        cited = sorted(deciding_facts(problem.triggers, facts) - PROFILE_FACTS)
         estimated = any(facts[f].certainty is Certainty.ESTIME for f in cited)
         findings.append(
             Finding(
@@ -167,4 +202,5 @@ def diagnose(state: AuditState, kb: KnowledgeBase, today: date) -> Diagnosis:
         use_case_ids=use_case_ids,
         verifications=verifications,
         indicators_without_benchmark=indicators_without_benchmark,
+        undecided_problem_ids=sorted(undecided & set(kb.problems)),
     )

@@ -164,3 +164,48 @@ def test_finding_estimated_when_only_estimated_branch_true():
     assert d.findings == [
         Finding(problem_id="FON-T1", fact_ids=["charte_ia", "f1"], certainty="estime")
     ]
+
+
+# --- F4 : le stade de l'entreprise
+
+def test_conditions_read_profile_pseudo_facts():
+    rule = KB.rules["regle-a"].model_copy(
+        update={"applies_when": Test(fact="profile.stage", op="ne", value="non_utilisatrice")}
+    )
+    kb = _kb_with(rules={"regle-a": rule})
+    assert [h.rule_id for h in diagnose(state(stage="usage_individuel"), kb, TODAY).rules] == ["regle-a"]
+    d = diagnose(state(stage="non_utilisatrice"), kb, TODAY)
+    assert d.rules == [] and not any(v.fact_id.startswith("profile.") for v in d.verifications)
+
+
+def test_profile_pseudo_facts_are_not_evidence():
+    from audit_ia.kb.models import All
+
+    problem = KB.problems["HUM-G1"].model_copy(
+        update={"triggers": All(all=[Test(fact="profile.headcount", op="gte", value=10),
+                                     Test(fact="charte_ia", op="eq", value=False)])}  # fmt: skip
+    )
+    kb = _kb_with(problems={"HUM-G1": problem})
+    d = diagnose(state(headcount=45, charte_ia=False), kb, TODAY)
+    assert d.findings == [Finding(problem_id="HUM-G1", fact_ids=["charte_ia"], certainty="constate")]
+    d = diagnose(state(headcount=45), kb, TODAY)
+    assert {v.fact_id for v in d.verifications} == {"charte_ia"}
+
+
+def _kb_with_staged_problem():
+    problem = KB.problems["HUM-G1"].model_copy(
+        update={"triggers": Test(fact="automatisation.validation_humaine", op="eq", value=False)}
+    )
+    return _kb_with(problems={**KB.problems, "HUM-G1": problem})
+
+
+def test_fact_outside_stage_is_never_a_verification():
+    d = diagnose(state(stage="usage_individuel"), _kb_with_staged_problem(), TODAY)
+    assert "automatisation.validation_humaine" not in {v.fact_id for v in d.verifications}
+    assert "HUM-G1" not in d.undecided_problem_ids
+
+
+def test_fact_in_stage_is_a_verification():
+    d = diagnose(state(stage="processus_transforme"), _kb_with_staged_problem(), TODAY)
+    assert "HUM-G1" in _blocks(d, "automatisation.validation_humaine")
+    assert "HUM-G1" in d.undecided_problem_ids

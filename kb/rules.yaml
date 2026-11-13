@@ -21,6 +21,10 @@
   status: applicable
   effective_on: 2025-02-02
   bounds: Contrôlable par les autorités de surveillance du marché depuis le 2 août 2026.
+  # corpus l. 55 [V2] : « fournisseurs et déployeurs “prennent des mesures pour
+  # favoriser” la maîtrise de l'IA » ; une entreprise qui n'utilise pas l'IA
+  # n'est ni l'un ni l'autre.
+  applies_when: {fact: profile.stage, op: ne, value: non_utilisatrice}
   provenance:
     source_id: commission-faq-maitrise-ia
     verified_on: 2026-11-13
@@ -53,17 +57,6 @@
     source_id: commission-faq-code-pratique-transparence
     verified_on: 2026-11-13
     confidence: V
-    human_reviewed: false
-
-# corpus l. 59, 238 (mois [V], jour [V2])
-- id: ai-act-art-5-nudification
-  statement: "Règlement IA, article 5 : nouvelle interdiction des applications de « nudification », art. 5(1) b bis (contenus intimes non consentis) et b ter (matériel pédocriminel)."
-  status: adopte_non_applicable
-  effective_on: 2026-12-02
-  provenance:
-    source_id: actuia-calendrier-ai-act
-    verified_on: 2026-11-13
-    confidence: V2
     human_reviewed: false
 
 # corpus l. 60, 81, 85

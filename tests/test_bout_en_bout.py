@@ -56,3 +56,20 @@ def test_recruitment_screening_triggers_high_risk_deadline():
 def test_planner_covers_every_dimension_on_real_kb():
     s = load("tpe_non_utilisatrice").model_copy(update={"facts": {}})
     assert {o.dimension for o in all_objectives(s, KB, ids=False)} == set(Dimension)
+
+
+@pytest.mark.parametrize(
+    "name", ["tpe_non_utilisatrice", "pme_usage_individuel", "pme_usage_outille"]
+)
+def test_verifications_only_ask_facts_of_the_stage(name):
+    s = load(name)
+    for v in diagnose(s, KB, TODAY).verifications:
+        stages = KB.facts[v.fact_id].stages
+        assert not stages or s.profile.stage in stages, v.fact_id
+
+
+def test_non_user_gets_no_ai_literacy_obligation():
+    d = diagnose(load("tpe_non_utilisatrice"), KB, TODAY)
+    assert "ai-act-art-4-maitrise" not in {r.rule_id for r in d.rules}
+    d = diagnose(load("pme_usage_individuel"), KB, TODAY)
+    assert "ai-act-art-4-maitrise" in {r.rule_id for r in d.rules}

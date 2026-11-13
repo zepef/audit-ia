@@ -83,3 +83,27 @@ def test_benchmark_with_unknown_sector_is_rejected(tmp_path):
         load_kb(root)
     assert (e.value.file, e.value.entry_id) == ("benchmarks.yaml", "repere-construction")
     assert "secteur inconnu" in e.value.message
+
+
+def _set_trigger(root, fact):
+    path = root / "problems.yaml"
+    data = yaml.safe_load(path.read_text(encoding="utf-8"))
+    next(e for e in data if e["id"] == "HUM-S1")["triggers"] = {"fact": fact, "op": "eq", "value": "x"}
+    path.write_text(yaml.safe_dump(data, allow_unicode=True), encoding="utf-8")
+
+
+@pytest.mark.parametrize("fact", ["profile.stage", "profile.headcount", "profile.sector"])
+def test_profile_pseudo_facts_accepted_in_conditions(tmp_path, fact):
+    root = tmp_path / "kb"
+    shutil.copytree(KB_MIN, root)
+    _set_trigger(root, fact)
+    assert "HUM-S1" in load_kb(root).problems
+
+
+def test_other_profile_name_is_rejected(tmp_path):
+    root = tmp_path / "kb"
+    shutil.copytree(KB_MIN, root)
+    _set_trigger(root, "profile.respondent_role")
+    with pytest.raises(KBError) as e:
+        load_kb(root)
+    assert e.value.entry_id == "HUM-S1"
