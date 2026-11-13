@@ -72,6 +72,10 @@ MUTATIONS = {
     ),
     "rule_without_label": ("rules.yaml", lambda d: _by_id(d, "regle-a").pop("label")),
     "aid_without_label": ("aids.yaml", lambda d: _by_id(d, "aide-a").pop("label")),
+    "source_bad_url": (
+        "sources.yaml",
+        lambda d: _by_id(d, "src-a").update(url="javascript:alert(1)"),
+    ),
     "evidence_is_unverified": (
         "benchmarks.yaml",
         lambda d: _by_id(d, "repere-a")["provenance"].update(confidence="B"),

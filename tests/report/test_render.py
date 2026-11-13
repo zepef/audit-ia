@@ -3,7 +3,6 @@ from markupsafe import escape
 
 from kb_helpers import KB_SECTOR_ONLY, S_FULL, report_for, state
 
-from audit_ia.audit.models import Fact
 from audit_ia.kb.models import Confidence
 from audit_ia.report.build import STALE_NOTE
 from audit_ia.report.render import render_html
@@ -16,10 +15,11 @@ def test_html_sections_in_order():
     assert [html.index(t) for t in titles] == sorted(html.index(t) for t in titles)
 
 
-def test_html_escapes_quotes_from_interview():
+def test_html_escapes_respondent_role():
     s = state()
-    s.record(Fact(fact_id="f1", value="<script>x</script>", certainty="constate"))
-    assert "<script>x" not in render_html(report_for(s))
+    s.profile.respondent_role = "<script>x</script>"
+    html = render_html(report_for(s))
+    assert "<script>x" not in html and "&lt;script&gt;x" in html
 
 
 def test_html_escapes_report_text():
@@ -86,3 +86,9 @@ def test_html_refs_are_attributes_not_text():
     html = render_html(report_for(S_FULL))
     assert "Réf. :" not in html
     assert 'data-refs="problem:HUM-S1 fact:comptes_perso benchmark:repere-a"' in html
+
+
+def test_html_explains_confidence_levels_in_sources():
+    html = render_html(report_for(S_FULL))
+    legend = "V : lu sur la source primaire. V2 : confirmé par une source secondaire lue en entier."
+    assert html.count(legend) == 1 and html.index(legend) > html.index('id="sources"')

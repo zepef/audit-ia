@@ -27,9 +27,7 @@ def load(name: str) -> AuditState:
     "name", ["tpe_non_utilisatrice", "pme_usage_individuel", "pme_usage_outille"]
 )
 def test_reference_audit_produces_clean_report(name):
-    state = AuditState.model_validate_json(
-        (AUDITS / f"{name}.json").read_text(encoding="utf-8")
-    )
+    state = load(name)
     report = build_report(state, diagnose(state, KB, TODAY), KB, TODAY)
     assert check_report(report, state, KB) == []
     assert render_html(report).startswith("<!doctype html>")

@@ -101,6 +101,7 @@
 
 <section id="sources">
 <h2>Sources</h2>
+<p class="meta">Niveaux de confiance. V : lu sur la source primaire. V2 : confirmé par une source secondaire lue en entier.</p>
 {% if report.sources %}
 <ul>{% for s in report.sources %}<li>{{ source_line(s) }}</li>{% endfor %}</ul>
 {% else %}<p>Aucune source citée.</p>{% endif %}

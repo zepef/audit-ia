@@ -81,3 +81,40 @@ def test_cli_rejects_unknown_sector(tmp_path, capsys):
     assert main(["report", "--kb", str(KB_MIN), "--facts", str(bad), "--out", str(tmp_path / "x"),
                  "--all-confidence"]) == 1  # fmt: skip
     assert "aeronautique" in capsys.readouterr().err
+
+
+def _one_line_error(capsys):
+    err = capsys.readouterr().err.strip()
+    assert err and len(err.splitlines()) == 1 and "Traceback" not in err
+    return err
+
+
+def test_cli_validate_kb_on_a_file_fails_cleanly(tmp_path, capsys):
+    f = tmp_path / "kb.yaml"
+    f.write_text("x: 1", encoding="utf-8")
+    assert main(["validate-kb", "--kb", str(f)]) == 1
+    _one_line_error(capsys)
+
+
+def test_cli_validate_kb_non_utf8_fails_cleanly(tmp_path, capsys):
+    import shutil
+
+    root = tmp_path / "kb"
+    shutil.copytree(KB_MIN, root)
+    (root / "rules.yaml").write_bytes("- id: règle\n".encode("latin-1"))
+    assert main(["validate-kb", "--kb", str(root)]) == 1
+    assert "rules.yaml" in _one_line_error(capsys)
+
+
+def test_cli_invalid_audit_states_first_error(tmp_path, capsys):
+    bad = tmp_path / "bad.json"
+    bad.write_text(state().model_dump_json().replace('"usage_individuel"', '"pionniere"'), encoding="utf-8")
+    assert main(["report", "--kb", str(KB_MIN), "--facts", str(bad), "--out", str(tmp_path / "x")]) == 1
+    err = _one_line_error(capsys)
+    assert "Fichier d'audit invalide" in err and "profile.stage" in err
+
+
+def test_cli_invalid_today_exits_1(tmp_path, audit_json, capsys):
+    assert main(["report", "--kb", str(KB_MIN), "--facts", str(audit_json), "--out", str(tmp_path / "x"),
+                 "--today", "13/11/2026"]) == 1  # fmt: skip
+    assert "13/11/2026" in _one_line_error(capsys)

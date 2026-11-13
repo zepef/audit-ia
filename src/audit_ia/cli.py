@@ -10,7 +10,7 @@ from pydantic import ValidationError
 from audit_ia.audit.models import OutOfScopeError, load_audit_state
 from audit_ia.audit.validation import FactValidationError, validate_state
 from audit_ia.diagnostic.engine import diagnose
-from audit_ia.kb.loader import KBError, load_kb
+from audit_ia.kb.loader import KBError, load_kb, validation_summary
 from audit_ia.report.build import build_report
 from audit_ia.report.check import check_report
 from audit_ia.report.render import render_html
@@ -29,7 +29,7 @@ def _parser() -> argparse.ArgumentParser:
     r.add_argument("--facts", required=True)
     r.add_argument("--out", required=True)
     r.add_argument("--kb", default="kb")
-    r.add_argument("--today", type=date.fromisoformat, default=None)
+    r.add_argument("--today", default=None, help="date du rapport, AAAA-MM-JJ")
     r.add_argument("--all-confidence", action="store_true")
     return parser
 
@@ -58,6 +58,10 @@ def _validate_kb(args) -> int:
 
 def _report(args) -> int:
     kb_dir, facts, out = Path(args.kb), Path(args.facts), Path(args.out)
+    try:
+        today = date.fromisoformat(args.today) if args.today else date.today()
+    except ValueError:
+        return _fail(f"Date invalide pour --today : {args.today} (format attendu : AAAA-MM-JJ)")
     if not kb_dir.is_dir():
         return _fail(f"Base de connaissances introuvable : {kb_dir}")
     try:
@@ -68,8 +72,10 @@ def _report(args) -> int:
         state = load_audit_state(data)
     except OutOfScopeError as exc:
         return _fail(str(exc), 2)
-    except ValidationError:
-        return _fail(f"Fichier d'audit invalide : {facts}")
+    except ValidationError as exc:
+        err = exc.errors()[0]
+        where = ".".join(str(p) for p in err["loc"]) or "document"
+        return _fail(f"Fichier d'audit invalide : {facts} ({where} : {err['msg']})")
     try:
         kb = load_kb(kb_dir, verified_only=not args.all_confidence)
     except KBError as exc:
@@ -79,7 +85,6 @@ def _report(args) -> int:
     except FactValidationError as exc:
         return _fail(f"Fichier d'audit incohérent avec la base de connaissances : {exc}")
 
-    today = args.today or date.today()
     report = build_report(state, diagnose(state, kb, today), kb, today)
     violations = check_report(report, state, kb)
     if violations:

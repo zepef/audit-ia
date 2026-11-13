@@ -220,3 +220,29 @@ def test_summary_without_use_case_or_rules():
     assert texts[1] == "Aucun cas d'usage prioritaire ne ressort de vos réponses."
     assert texts[2] == "Aucune obligation applicable ni échéance à venir identifiée."
     assert not any("(s)" in t or " 0 " in f" {t}" for t in texts)
+
+
+# --- F8
+
+def test_annex_deduplicates_on_source_id_and_keeps_stale():
+    old = KB.rules["regle-a"].provenance.model_copy(update={"verified_on": date(2025, 1, 1)})
+    rule = KB.rules["regle-a"].model_copy(update={"provenance": old})
+    kb = KB.model_copy(update={"rules": {**KB.rules, "regle-a": rule}})
+    r = report_for(S_FULL, kb=kb)
+    lines = [s for s in r.sources if s.source_id == "src-a"]
+    assert len(lines) == 1 and lines[0].stale
+
+
+def test_plan_item_shows_effort_and_prerequisites():
+    assert report_for(S_FULL).plan[Horizon.J30][0].text == (
+        "Fournir un outil d'IA officiel (effort faible). "
+        "Critère de réussite : Plus aucun compte personnel utilisé."
+    )
+    action = KB.actions["action-outil-officiel"].model_copy(
+        update={"prerequisites": ["Budget validé", "Choix de l'outil"]}
+    )
+    kb = KB.model_copy(update={"actions": {**KB.actions, "action-outil-officiel": action}})
+    assert report_for(S_FULL, kb=kb).plan[Horizon.J30][0].text == (
+        "Fournir un outil d'IA officiel (effort faible). Prérequis : Budget validé ; Choix de l'outil. "
+        "Critère de réussite : Plus aucun compte personnel utilisé."
+    )

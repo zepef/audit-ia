@@ -34,6 +34,7 @@ def test_require_review_fails_on_unreviewed():
         ("verified_without_date", "rules.yaml", "regle-a"),
         ("rule_without_label", "rules.yaml", "regle-a"),
         ("aid_without_label", "aids.yaml", "aide-a"),
+        ("source_bad_url", "sources.yaml", "src-a"),
     ],
 )
 def test_incoherent_kb_names_file_and_entry(tmp_path, mutation, file, entry_id):

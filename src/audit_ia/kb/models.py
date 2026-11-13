@@ -42,7 +42,7 @@ class Source(_Strict):
     id: str
     title: str
     publisher: str
-    url: str
+    url: str = Field(pattern=r"^https?://")
     published_on: date | None = None
 
 

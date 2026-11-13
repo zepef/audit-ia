@@ -34,13 +34,32 @@ class KBError(Exception):
         super().__init__(f"{where} : {message}")
 
 
-def _read_yaml(root: Path, name: str) -> Any:
+def validation_summary(exc: ValidationError) -> str:
+    """Erreurs de validation pydantic sur une seule ligne : « emplacement : message »."""
+    return " ; ".join(
+        f"{'.'.join(str(p) for p in err['loc']) or 'document'} : {err['msg']}"
+        for err in exc.errors()
+    )
+
+
+def _read_text(root: Path, name: str) -> str:
     try:
-        return yaml.safe_load((root / name).read_text(encoding="utf-8"))
+        return (root / name).read_text(encoding="utf-8")
     except FileNotFoundError:
         raise KBError(name, None, "fichier manquant") from None
+    except UnicodeDecodeError:
+        raise KBError(name, None, "encodage invalide, UTF-8 attendu") from None
+    except OSError as exc:
+        raise KBError(name, None, f"lecture impossible ({exc.strerror})") from None
+
+
+def _read_yaml(root: Path, name: str) -> Any:
+    text = _read_text(root, name)
+    try:
+        return yaml.safe_load(text)
     except yaml.YAMLError as exc:
-        raise KBError(name, None, f"YAML invalide : {exc}") from None
+        detail = " ".join(str(exc).split())
+        raise KBError(name, None, f"YAML invalide : {detail}") from None
 
 
 def _load_entries(root: Path, name: str, model: type[BaseModel]) -> dict[str, Any]:
@@ -53,7 +72,7 @@ def _load_entries(root: Path, name: str, model: type[BaseModel]) -> dict[str, An
         try:
             entry = model.model_validate(item)
         except ValidationError as exc:
-            raise KBError(name, entry_id, str(exc)) from None
+            raise KBError(name, entry_id, validation_summary(exc)) from None
         if entry.id in entries:
             raise KBError(name, entry.id, "identifiant en double")
         entries[entry.id] = entry
@@ -64,10 +83,11 @@ def load_kb(
     root: Path, *, verified_only: bool = False, require_review: bool = False
 ) -> KnowledgeBase:
     root = Path(root)
-    try:
-        version = (root / "VERSION").read_text(encoding="utf-8").strip()
-    except FileNotFoundError:
-        raise KBError("VERSION", None, "fichier manquant") from None
+    if not root.exists():
+        raise KBError(str(root), None, "base de connaissances introuvable")
+    if not root.is_dir():
+        raise KBError(str(root), None, "un répertoire de base de connaissances est attendu")
+    version = _read_text(root, "VERSION").strip()
 
     neutrality = _read_yaml(root, "neutrality.yaml")
     if not isinstance(neutrality, dict) or not isinstance(

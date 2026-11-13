@@ -257,9 +257,12 @@ def build_report(
             for f in diagnosis.findings
             if action_id in kb.problems[f.problem_id].action_ids
         ]
+        text = f"{action.title} (effort {action.effort})."
+        if action.prerequisites:
+            text += f" Prérequis : {' ; '.join(action.prerequisites)}."
         plan[action.horizon].append(
             ReportItem(
-                text=f"{action.title}. Critère de réussite : {action.success_check}",
+                text=f"{text} Critère de réussite : {action.success_check}",
                 refs=[Ref(kind="action", id=action.id), *causes],
             )
         )
@@ -398,15 +401,23 @@ def build_report(
         ),
     ]
 
-    # --- annexe des sources
-    seen: dict[tuple, SourceLine] = {}
-    for item in shown:
+    # --- annexe des sources : une ligne par source ; périmée si l'un de ses
+    # usages l'est ; date de vérification la plus ancienne et niveau de
+    # confiance le plus faible parmi ses usages.
+    by_source: dict[str, SourceLine] = {}
+    confidence_rank = {c: i for i, c in enumerate(Confidence)}
+    for item in shown + verifications:
         for line in item.sources:
-            seen.setdefault(tuple(line.model_dump().values()), line)
-    annex = sorted(
-        seen.values(),
-        key=lambda s: (s.source_id, s.verified_on or date.min, s.confidence.value),
-    )
+            kept = by_source.get(line.source_id)
+            if kept is None:
+                by_source[line.source_id] = line.model_copy()
+                continue
+            kept.stale = kept.stale or line.stale
+            if (line.verified_on or date.min) < (kept.verified_on or date.min):
+                kept.verified_on = line.verified_on
+            if confidence_rank[line.confidence] > confidence_rank[kept.confidence]:
+                kept.confidence = line.confidence
+    annex = [by_source[k] for k in sorted(by_source)]
 
     return Report(
         kb_version=kb.version,
