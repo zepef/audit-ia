@@ -32,7 +32,13 @@ class Horizon(StrEnum):
     M12 = "m12"
 
 
-class Source(BaseModel):
+class _Strict(BaseModel):
+    """Base commune : une clé inconnue (faute de frappe) est une erreur."""
+
+    model_config = ConfigDict(extra="forbid")
+
+
+class Source(_Strict):
     id: str
     title: str
     publisher: str
@@ -40,7 +46,7 @@ class Source(BaseModel):
     published_on: date | None = None
 
 
-class Provenance(BaseModel):
+class Provenance(_Strict):
     source_id: str
     verified_on: date | None
     confidence: Confidence
@@ -48,7 +54,7 @@ class Provenance(BaseModel):
 
 
 # Condition : arbre récursif de tests sur les faits.
-class Test(BaseModel):
+class Test(_Strict):
     __test__: ClassVar[bool] = False  # ne pas collecter par pytest
 
     fact: str
@@ -56,16 +62,16 @@ class Test(BaseModel):
     value: Any
 
 
-class All(BaseModel):
+class All(_Strict):
     all: list["Condition"]
 
 
-class AnyOf(BaseModel):
+class AnyOf(_Strict):
     any: list["Condition"]
 
 
-class Not(BaseModel):
-    model_config = ConfigDict(populate_by_name=True)
+class Not(_Strict):
+    model_config = ConfigDict(extra="forbid", populate_by_name=True)
 
     not_: "Condition" = Field(alias="not")
 
@@ -77,7 +83,7 @@ AnyOf.model_rebuild()
 Not.model_rebuild()
 
 
-class FactDef(BaseModel):
+class FactDef(_Strict):
     id: str
     dimension: Dimension
     kind: Literal["bool", "int", "float", "enum", "text"]
@@ -87,7 +93,7 @@ class FactDef(BaseModel):
     priority: int = 0
 
 
-class Rule(BaseModel):
+class Rule(_Strict):
     id: str
     statement: str
     status: RuleStatus
@@ -97,7 +103,7 @@ class Rule(BaseModel):
     provenance: Provenance
 
 
-class Benchmark(BaseModel):
+class Benchmark(_Strict):
     id: str
     indicator: str
     value: str
@@ -110,7 +116,7 @@ class Benchmark(BaseModel):
     provenance: Provenance
 
 
-class Problem(BaseModel):
+class Problem(_Strict):
     id: str = Field(pattern=r"^(HUM|DAT|SI|GEN|CYB|COU|ENV|FON)-[A-Z0-9]+$")
     symptom: str
     dimension: Dimension
@@ -119,7 +125,7 @@ class Problem(BaseModel):
     action_ids: list[str] = []
 
 
-class UseCase(BaseModel):
+class UseCase(_Strict):
     id: str
     function: str
     title: str
@@ -131,7 +137,7 @@ class UseCase(BaseModel):
     priority: int = 0
 
 
-class Action(BaseModel):
+class Action(_Strict):
     id: str
     title: str
     horizon: Horizon
@@ -140,7 +146,7 @@ class Action(BaseModel):
     success_check: str
 
 
-class Aid(BaseModel):
+class Aid(_Strict):
     id: str
     name: str
     eligibility: Condition | None = None
@@ -150,7 +156,7 @@ class Aid(BaseModel):
     provenance: Provenance
 
 
-class KnowledgeBase(BaseModel):
+class KnowledgeBase(_Strict):
     version: str
     sources: dict[str, Source]
     facts: dict[str, FactDef]

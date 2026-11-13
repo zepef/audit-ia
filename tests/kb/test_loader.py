@@ -1,4 +1,7 @@
+import shutil
+
 import pytest
+import yaml
 from kb_helpers import KB_MIN, mutated_copy
 
 from audit_ia.kb.loader import KBError, load_kb
@@ -43,3 +46,26 @@ def test_verified_only_fails_if_dependency_dropped(tmp_path):
         load_kb(
             mutated_copy(KB_MIN, tmp_path, "evidence_is_unverified"), verified_only=True
         )
+
+
+@pytest.mark.parametrize(
+    "file, entry_id, edit",
+    [
+        ("rules.yaml", "regle-a", lambda e: e.update(applies_whn=None)),
+        ("problems.yaml", "HUM-S1", lambda e: e["triggers"].update(vlaue=True)),
+        (
+            "benchmarks.yaml",
+            "repere-a",
+            lambda e: e["provenance"].update(confidance="V"),
+        ),
+    ],
+)
+def test_unknown_key_fails_with_file_and_entry(tmp_path, file, entry_id, edit):
+    root = tmp_path / "kb"
+    shutil.copytree(KB_MIN, root)
+    data = yaml.safe_load((root / file).read_text(encoding="utf-8"))
+    edit(next(e for e in data if e["id"] == entry_id))
+    (root / file).write_text(yaml.safe_dump(data, allow_unicode=True), encoding="utf-8")
+    with pytest.raises(KBError) as e:
+        load_kb(root)
+    assert (e.value.file, e.value.entry_id) == (file, entry_id)
