@@ -10,9 +10,9 @@ from typing import Literal
 from pydantic import BaseModel
 
 from audit_ia.audit.models import AuditState, Certainty
-from audit_ia.diagnostic.conditions import Tri, evaluate, undecided_facts
+from audit_ia.diagnostic.conditions import Tri, deciding_facts, evaluate, undecided_facts
 from audit_ia.kb.freshness import is_stale
-from audit_ia.kb.models import KnowledgeBase, RuleStatus, referenced_facts
+from audit_ia.kb.models import KnowledgeBase, RuleStatus
 
 MAX_USE_CASES = 5
 
@@ -88,7 +88,7 @@ def diagnose(state: AuditState, kb: KnowledgeBase, today: date) -> Diagnosis:
         problem = kb.problems[problem_id]
         if track(problem_id, problem.triggers) is not Tri.TRUE:
             continue
-        cited = sorted(f for f in referenced_facts(problem.triggers) if f in facts)
+        cited = sorted(deciding_facts(problem.triggers, facts))
         estimated = any(facts[f].certainty is Certainty.ESTIME for f in cited)
         findings.append(
             Finding(

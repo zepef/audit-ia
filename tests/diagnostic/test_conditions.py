@@ -1,7 +1,7 @@
 import pytest
 
 from audit_ia.audit.models import Fact
-from audit_ia.diagnostic.conditions import Tri, evaluate, undecided_facts
+from audit_ia.diagnostic.conditions import Tri, deciding_facts, evaluate, undecided_facts
 from audit_ia.kb.models import All, AnyOf, Not, Test
 
 T, F, U = Tri.TRUE, Tri.FALSE, Tri.UNKNOWN
@@ -60,3 +60,45 @@ def test_undecided_facts():
 
 def test_type_mismatch_is_unknown():
     assert evaluate(Test(fact="s", op="gt", value=3), facts(s=("constate", "texte"))) is U
+
+
+# --- faits décisifs (F1)
+
+def _fon_rh():
+    """Forme de FON-RH : a ET (b = faux OU c = faux)."""
+    return All(all=[
+        Test(fact="a", op="eq", value=True),
+        AnyOf(any=[Test(fact="b", op="eq", value=False), Test(fact="c", op="eq", value=False)]),
+    ])  # fmt: skip
+
+
+def test_deciding_facts_skip_false_branch_of_any():
+    f = facts(a=("constate", True), b=("constate", False), c=("estime", True))
+    assert evaluate(_fon_rh(), f) is T
+    assert deciding_facts(_fon_rh(), f) == {"a", "b"}
+
+
+def test_deciding_facts_mirror_only_estimated_branch_true():
+    f = facts(a=("constate", True), b=("constate", True), c=("estime", False))
+    assert deciding_facts(_fon_rh(), f) == {"a", "c"}
+
+
+def test_deciding_facts_prefers_constated_true_branch():
+    f = facts(a=("constate", True), b=("estime", False), c=("constate", False))
+    assert deciding_facts(_fon_rh(), f) == {"a", "c"}
+    f = facts(a=("constate", True), b=("estime", False), c=("estime", False))
+    assert deciding_facts(_fon_rh(), f) == {"a", "b"}      # aucune branche constatée : la première
+
+
+def test_deciding_facts_through_not():
+    a, b = Test(fact="a", op="eq", value=True), Test(fact="b", op="eq", value=True)
+    # NON(a ET b) vrai : une des branches fausses suffit, de préférence constatée
+    f = facts(a=("estime", False), b=("constate", False))
+    assert deciding_facts(Not(not_=All(all=[a, b])), f) == {"b"}
+    # NON(a OU b) vrai : toutes les branches fausses comptent
+    f = facts(a=("estime", False), b=("constate", False))
+    assert deciding_facts(Not(not_=AnyOf(any=[a, b])), f) == {"a", "b"}
+
+
+def test_deciding_facts_empty_when_unknown():
+    assert deciding_facts(_fon_rh(), facts(a=("inconnu", None))) == set()

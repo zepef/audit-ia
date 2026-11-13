@@ -128,3 +128,39 @@ def test_stale_aid_and_benchmark_are_kept_and_flagged():
     d = diagnose(state(), KB, date(2027, 12, 1))
     assert [h.aid_id for h in d.aids] == ["aide-a"] and d.aids[0].stale
     assert d.benchmarks and all(h.stale for h in d.benchmarks)
+
+
+# --- F1 : seuls les faits qui ont décidé fondent le constat
+
+def _kb_fon_rh_shape():
+    from audit_ia.kb.models import All, AnyOf, Problem
+
+    problem = Problem(
+        id="FON-T1",
+        symptom="Test de forme FON-RH.",
+        dimension="gouvernance",
+        triggers=All(all=[
+            Test(fact="charte_ia", op="eq", value=False),
+            AnyOf(any=[Test(fact="comptes_perso", op="eq", value=True),
+                       Test(fact="f1", op="eq", value=True)]),
+        ]),  # fmt: skip
+        action_ids=["action-charte"],
+    )
+    return _kb_with(problems={"FON-T1": problem})
+
+
+def test_finding_ignores_fact_of_false_branch():
+    s = state(charte_ia=False, comptes_perso=True, f1=("estime", False))
+    d = diagnose(s, _kb_fon_rh_shape(), TODAY)
+    assert d.findings == [
+        Finding(problem_id="FON-T1", fact_ids=["charte_ia", "comptes_perso"], certainty="constate")
+    ]
+    assert d.action_ids == ["action-charte"]
+
+
+def test_finding_estimated_when_only_estimated_branch_true():
+    s = state(charte_ia=False, comptes_perso=False, f1=("estime", True))
+    d = diagnose(s, _kb_fon_rh_shape(), TODAY)
+    assert d.findings == [
+        Finding(problem_id="FON-T1", fact_ids=["charte_ia", "f1"], certainty="estime")
+    ]

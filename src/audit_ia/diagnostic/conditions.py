@@ -89,3 +89,64 @@ def undecided_facts(cond: Condition, facts: Mapping[str, Fact]) -> set[str]:
             return undecided_facts(cond.not_, facts)
         case _:
             raise TypeError(f"condition inconnue : {cond!r}")
+
+
+def _all_constated(fact_ids: set[str], facts: Mapping[str, Fact]) -> bool:
+    return all(
+        fact_id in facts and facts[fact_id].certainty is Certainty.CONSTATE
+        for fact_id in fact_ids
+    )
+
+
+def _one_branch(
+    children: list[Condition], target: Tri, facts: Mapping[str, Fact]
+) -> set[str]:
+    """Une seule branche suffit : la première dont tous les faits décisifs sont
+    constatés, à défaut la première qui vaut `target`."""
+    candidates = [
+        _deciding(c, facts, target) for c in children if evaluate(c, facts) is target
+    ]
+    for fact_ids in candidates:
+        if _all_constated(fact_ids, facts):
+            return fact_ids
+    return candidates[0] if candidates else set()
+
+
+def _every_branch(
+    children: list[Condition], target: Tri, facts: Mapping[str, Fact]
+) -> set[str]:
+    return set().union(*(_deciding(c, facts, target) for c in children))
+
+
+def _deciding(cond: Condition, facts: Mapping[str, Fact], target: Tri) -> set[str]:
+    """Faits qui donnent à `cond` la valeur `target` (TRUE ou FALSE)."""
+    match cond:
+        case Test():
+            return {cond.fact}
+        case All():
+            if target is Tri.TRUE:
+                return _every_branch(cond.all, target, facts)
+            return _one_branch(cond.all, target, facts)
+        case AnyOf():
+            if target is Tri.TRUE:
+                return _one_branch(cond.any, target, facts)
+            return _every_branch(cond.any, target, facts)
+        case Not():
+            inner = Tri.FALSE if target is Tri.TRUE else Tri.TRUE
+            return _deciding(cond.not_, facts, inner)
+        case _:
+            raise TypeError(f"condition inconnue : {cond!r}")
+
+
+def deciding_facts(cond: Condition, facts: Mapping[str, Fact]) -> set[str]:
+    """Faits qui ont décidé du résultat d'une condition tranchée ; vide si UNKNOWN.
+
+    Un « tout » vrai dépend de toutes ses branches ; un « au moins un » vrai,
+    d'une seule branche vraie (de préférence entièrement constatée). « non »
+    inverse : un « tout » faux dépend d'une branche fausse, un « au moins un »
+    faux de toutes ses branches.
+    """
+    result = evaluate(cond, facts)
+    if result is Tri.UNKNOWN:
+        return set()
+    return _deciding(cond, facts, result)
