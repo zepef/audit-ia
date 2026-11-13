@@ -112,3 +112,4 @@ Le dépôt reste privé tant que le démonstrateur ne tourne pas.
 | 13/11/2026 | Spécification 0.3 : Scaleway, Mistral Large 4, Voxtral ; TCKC en dehors de l'outil ; code sous EUPL 1.2, base sous Licence Ouverte 2.0 ; SecNumCloud à l'ouverture au public |
 | 13/11/2026 | Spécification validée ; plan de réalisation 1 sur 6 : socle déterministe (base de connaissances, diagnostic, rapport HTML) |
 | 13/11/2026 | Socle déterministe réalisé : base de connaissances initiale tirée des seules valeurs [V] et [V2] du rapport (18 règles, 26 repères, 17 problèmes, 2 aides), trois audits de référence, rapport HTML de bout en bout |
+| 13/11/2026 | Corrections après revue finale : la règle « nudification » est retirée (17 règles) ; faits d'audit contrôlés contre la base, stade de l'entreprise pris en compte, rapport sans identifiant technique |
