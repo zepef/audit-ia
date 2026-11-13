@@ -246,3 +246,11 @@ def test_plan_item_shows_effort_and_prerequisites():
         "Fournir un outil d'IA officiel (effort faible). Prérequis : Budget validé ; Choix de l'outil. "
         "Critère de réussite : Plus aucun compte personnel utilisé."
     )
+
+
+def test_plan_prerequisite_action_shown_by_title():
+    action = KB.actions["action-charte"].model_copy(update={"prerequisites": ["action-outil-officiel"]})
+    kb = KB.model_copy(update={"actions": {**KB.actions, "action-charte": action}})
+    item = report_for(state(charte_ia=False), kb=kb).plan[Horizon.J90][0]
+    assert "Prérequis : Fournir un outil d'IA officiel." in item.text
+    assert "action-outil-officiel" not in item.text

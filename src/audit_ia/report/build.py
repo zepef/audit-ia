@@ -259,7 +259,11 @@ def build_report(
         ]
         text = f"{action.title} (effort {action.effort})."
         if action.prerequisites:
-            text += f" Prérequis : {' ; '.join(action.prerequisites)}."
+            # un prérequis qui désigne une autre action est affiché par son titre
+            names = [
+                kb.actions[p].title if p in kb.actions else p for p in action.prerequisites
+            ]
+            text += f" Prérequis : {' ; '.join(names)}."
         plan[action.horizon].append(
             ReportItem(
                 text=f"{text} Critère de réussite : {action.success_check}",
