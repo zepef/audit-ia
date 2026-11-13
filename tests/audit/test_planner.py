@@ -2,7 +2,7 @@ from audit_ia.audit.models import Dimension, Fact
 from audit_ia.audit.planner import MIN_FACTS_PER_DIMENSION, coverage, next_objective
 from audit_ia.kb.loader import load_kb
 from audit_ia.kb.models import FactDef
-from kb_helpers import KB_MIN, state
+from kb_helpers import KB_MIN, all_objectives, state
 
 
 def _fd(fact_id: str, dimension: Dimension, priority: int = 0) -> FactDef:
@@ -26,14 +26,6 @@ _EXTRA = [
     _fd("valeur_d", Dimension.VALEUR),
 ]
 KB = _BASE.model_copy(update={"facts": {**_BASE.facts, **{f.id: f for f in _EXTRA}}})
-
-
-def all_objectives(s, kb, *, ids: bool = True):
-    out = []
-    while (obj := next_objective(s, kb)) is not None:
-        out.append(obj.fact_id if ids else obj)
-        s.record(Fact(fact_id=obj.fact_id, value=None, certainty="inconnu"))
-    return out
 
 
 def fully_covered_state(kb):

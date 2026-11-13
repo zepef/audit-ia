@@ -1,0 +1,459 @@
+# Repères chiffrés. Origine : tableau « Benchmarks réutilisables, avec périmètre
+# obligatoire » de corpus/rapport-freins-ia-2026.md (l. 297-322). Valeurs copiées
+# sans reformulation ; « corpus l. N » renvoie à la ligne du tableau.
+# expires_on : un an après la fin du terrain d'enquête, à défaut un an après la
+# publication. Le repère sectoriel remplace le repère tous secteurs de même indicateur.
+
+# corpus l. 299
+- id: insee-2025-adoption
+  indicator: Entreprises utilisant au moins une technologie d'IA
+  value: 18 % (15 %, 31 %, 58 % par taille ; UE 20 %)
+  headcount_min: 10
+  headcount_max: null
+  sectors: []
+  population: Entreprises de 10 salariés et plus ; usage organisé, hors usages individuels ponctuels
+  fieldwork: 2025 (publié le 21 juillet 2026)
+  expires_on: 2027-07-21
+  provenance:
+    source_id: insee-premiere-2120
+    verified_on: 2026-11-13
+    confidence: V
+    human_reviewed: false
+
+# corpus l. 300
+- id: insee-2025-adoption-information-communication
+  indicator: Entreprises utilisant au moins une technologie d'IA
+  value: 59 %
+  headcount_min: 10
+  headcount_max: null
+  sectors:
+  - information_communication
+  population: Entreprises de 10 salariés et plus, secteur information-communication ; usage organisé, hors usages individuels ponctuels
+  fieldwork: 2025 (publié le 21 juillet 2026)
+  expires_on: 2027-07-21
+  provenance:
+    source_id: insee-premiere-2120
+    verified_on: 2026-11-13
+    confidence: V
+    human_reviewed: false
+
+# corpus l. 300
+- id: insee-2025-adoption-activites-specialisees
+  indicator: Entreprises utilisant au moins une technologie d'IA
+  value: 33 %
+  headcount_min: 10
+  headcount_max: null
+  sectors:
+  - activites_specialisees
+  population: Entreprises de 10 salariés et plus, secteur activités spécialisées, scientifiques et techniques ; usage organisé, hors usages individuels ponctuels
+  fieldwork: 2025 (publié le 21 juillet 2026)
+  expires_on: 2027-07-21
+  provenance:
+    source_id: insee-premiere-2120
+    verified_on: 2026-11-13
+    confidence: V
+    human_reviewed: false
+
+# corpus l. 300
+- id: insee-2025-adoption-industrie-manufacturiere
+  indicator: Entreprises utilisant au moins une technologie d'IA
+  value: 17 %
+  headcount_min: 10
+  headcount_max: null
+  sectors:
+  - industrie_manufacturiere
+  population: Entreprises de 10 salariés et plus, secteur industrie manufacturière ; usage organisé, hors usages individuels ponctuels
+  fieldwork: 2025 (publié le 21 juillet 2026)
+  expires_on: 2027-07-21
+  provenance:
+    source_id: insee-premiere-2120
+    verified_on: 2026-11-13
+    confidence: V
+    human_reviewed: false
+
+# corpus l. 300
+- id: insee-2025-adoption-commerce
+  indicator: Entreprises utilisant au moins une technologie d'IA
+  value: 13 %
+  headcount_min: 10
+  headcount_max: null
+  sectors:
+  - commerce
+  population: Entreprises de 10 salariés et plus, secteur commerce ; usage organisé, hors usages individuels ponctuels
+  fieldwork: 2025 (publié le 21 juillet 2026)
+  expires_on: 2027-07-21
+  provenance:
+    source_id: insee-premiere-2120
+    verified_on: 2026-11-13
+    confidence: V
+    human_reviewed: false
+
+# corpus l. 300
+- id: insee-2025-adoption-construction
+  indicator: Entreprises utilisant au moins une technologie d'IA
+  value: 10 %
+  headcount_min: 10
+  headcount_max: null
+  sectors:
+  - construction
+  population: Entreprises de 10 salariés et plus, secteur construction ; usage organisé, hors usages individuels ponctuels
+  fieldwork: 2025 (publié le 21 juillet 2026)
+  expires_on: 2027-07-21
+  provenance:
+    source_id: insee-premiere-2120
+    verified_on: 2026-11-13
+    confidence: V
+    human_reviewed: false
+
+# corpus l. 300
+- id: insee-2025-adoption-transports
+  indicator: Entreprises utilisant au moins une technologie d'IA
+  value: 9 %
+  headcount_min: 10
+  headcount_max: null
+  sectors:
+  - transports
+  population: Entreprises de 10 salariés et plus, secteur transports et entreposage ; usage organisé, hors usages individuels ponctuels
+  fieldwork: 2025 (publié le 21 juillet 2026)
+  expires_on: 2027-07-21
+  provenance:
+    source_id: insee-premiere-2120
+    verified_on: 2026-11-13
+    confidence: V
+    human_reviewed: false
+
+# corpus l. 301
+- id: francenum-2026-adoption
+  indicator: TPE-PME utilisant au moins une solution d'IA
+  value: 40 % (TPE 38 %, PME 53 %)
+  headcount_min: null
+  headcount_max: 249
+  sectors: []
+  population: TPE-PME de 0 à 249 salariés, 9 655 répondants
+  fieldwork: 23 mars-18 avril 2026
+  expires_on: 2027-04-18
+  provenance:
+    source_id: dge-barometre-francenum-2026
+    verified_on: 2026-11-13
+    confidence: V
+    human_reviewed: false
+
+# corpus l. 302
+- id: francenum-2026-outil-payant
+  indicator: TPE-PME payant un outil d'IA
+  value: '19 % (PME : 32 %)'
+  headcount_min: null
+  headcount_max: 249
+  sectors: []
+  population: TPE-PME de 0 à 249 salariés, 9 655 répondants
+  fieldwork: 23 mars-18 avril 2026
+  expires_on: 2027-04-18
+  provenance:
+    source_id: francenum-barometre-2026
+    verified_on: 2026-11-13
+    confidence: V
+    human_reviewed: false
+
+# corpus l. 303
+- id: francenum-2026-automatisation
+  indicator: TPE-PME automatisant des tâches par l'IA
+  value: '11 % (communiqué) ou 9 % (rapport complet) : discordance non levée'
+  headcount_min: null
+  headcount_max: 249
+  sectors: []
+  population: TPE-PME de 0 à 249 salariés, 9 655 répondants
+  fieldwork: 23 mars-18 avril 2026
+  expires_on: 2027-04-18
+  provenance:
+    source_id: dge-barometre-francenum-2026
+    verified_on: 2026-11-13
+    confidence: V
+    human_reviewed: false
+
+# corpus l. 304
+- id: francenum-2026-donnees-pilotage
+  indicator: TPE-PME utilisant l'IA pour exploiter leurs données de pilotage
+  value: 5 %
+  headcount_min: null
+  headcount_max: 249
+  sectors: []
+  population: TPE-PME de 0 à 249 salariés, 9 655 répondants
+  fieldwork: 23 mars-18 avril 2026
+  expires_on: 2027-04-18
+  provenance:
+    source_id: francenum-barometre-2026
+    verified_on: 2026-11-13
+    confidence: V
+    human_reviewed: false
+
+# corpus l. 305
+- id: francenum-2026-priorite-ia
+  indicator: IA parmi les priorités numériques à deux ans
+  value: '18 %, cinquième de dix priorités (facturation électronique : 39 %)'
+  headcount_min: null
+  headcount_max: 249
+  sectors: []
+  population: TPE-PME de 0 à 249 salariés, 9 655 répondants
+  fieldwork: 23 mars-18 avril 2026
+  expires_on: 2027-04-18
+  provenance:
+    source_id: francenum-barometre-2026
+    verified_on: 2026-11-13
+    confidence: V
+    human_reviewed: false
+
+# corpus l. 307
+- id: bdf-2026-adoption-ia-generative
+  indicator: Entreprises utilisant l'IA générative
+  value: 67 % (64 % à 83 % par taille)
+  headcount_min: 20
+  headcount_max: null
+  sectors:
+  - industrie_manufacturiere
+  - construction
+  - information_communication
+  - activites_specialisees
+  - activites_immobilieres
+  - services_administratifs
+  - transports
+  - hebergement_restauration
+  population: Entreprises de 20 salariés et plus, industrie, bâtiment et services marchands hors commerce
+  fieldwork: 25 février-3 avril 2026
+  expires_on: 2027-04-03
+  provenance:
+    source_id: bdf-bulletin-266-1
+    verified_on: 2026-11-13
+    confidence: V
+    human_reviewed: false
+
+# corpus l. 308
+- id: bdf-2026-gain-productivite
+  indicator: Utilisatrices constatant un gain de productivité
+  value: 31 % (IA générative) ; 41 % (IA non générative)
+  headcount_min: 20
+  headcount_max: null
+  sectors:
+  - industrie_manufacturiere
+  - construction
+  - information_communication
+  - activites_specialisees
+  - activites_immobilieres
+  - services_administratifs
+  - transports
+  - hebergement_restauration
+  population: Entreprises de 20 salariés et plus, industrie, bâtiment et services marchands hors commerce, utilisatrices d'IA
+  fieldwork: 25 février-3 avril 2026
+  expires_on: 2027-04-03
+  provenance:
+    source_id: bdf-bulletin-266-1
+    verified_on: 2026-11-13
+    confidence: V
+    human_reviewed: false
+
+# corpus l. 309
+- id: bdf-2026-fonctions-support
+  indicator: Usage d'abord en fonctions support, principalement en production
+  value: 74 %, 14 %
+  headcount_min: 20
+  headcount_max: null
+  sectors:
+  - industrie_manufacturiere
+  - construction
+  - information_communication
+  - activites_specialisees
+  - activites_immobilieres
+  - services_administratifs
+  - transports
+  - hebergement_restauration
+  population: Entreprises de 20 salariés et plus, industrie, bâtiment et services marchands hors commerce, utilisatrices d'IA
+  fieldwork: 25 février-3 avril 2026
+  expires_on: 2027-04-03
+  provenance:
+    source_id: bdf-bulletin-266-1
+    verified_on: 2026-11-13
+    confidence: V
+    human_reviewed: false
+
+# corpus l. 310
+- id: bdf-2026-freins-non-utilisatrices
+  indicator: Non-utilisatrices citant le manque de cas d'usage, les coûts
+  value: 49 %, 9 %
+  headcount_min: 20
+  headcount_max: null
+  sectors:
+  - industrie_manufacturiere
+  - construction
+  - information_communication
+  - activites_specialisees
+  - activites_immobilieres
+  - services_administratifs
+  - transports
+  - hebergement_restauration
+  population: Entreprises de 20 salariés et plus, industrie, bâtiment et services marchands hors commerce, entreprises déclarant ne pas utiliser l'IA
+  fieldwork: 25 février-3 avril 2026
+  expires_on: 2027-04-03
+  provenance:
+    source_id: bdf-bulletin-266-1
+    verified_on: 2026-11-13
+    confidence: V
+    human_reviewed: false
+
+# corpus l. 311
+- id: barometre-data-ia-2026-cadre
+  indicator: Entreprises sans cadre formalisé (35 % sans dispositif ni projet, 25 % en réflexion) ; avec politique définie et communiquée
+  value: 60 % ; 17 %
+  headcount_min: null
+  headcount_max: null
+  sectors: []
+  population: 900 décideurs ; terrain et tailles non publiés
+  fieldwork: baromètre du 5 octobre 2026
+  expires_on: 2027-10-05
+  provenance:
+    source_id: actuia-coface-2026
+    verified_on: 2026-11-13
+    confidence: V2
+    human_reviewed: false
+
+# corpus l. 312
+- id: apec-2026-charte-acces-ia
+  indicator: Entreprises ayant une charte ou des bonnes pratiques ; donnant accès à une IA générative
+  value: TPE 9 %, PME 12 %, ETI-GE 27 % ; TPE 19 %, PME 31 %, ETI-GE 45 % (pas de valeur d'ensemble publiée)
+  headcount_min: null
+  headcount_max: null
+  sectors: []
+  population: 1 000 entreprises employant au moins un cadre
+  fieldwork: mars 2026
+  expires_on: 2027-03-31
+  provenance:
+    source_id: apec-cadres-ia-2026
+    verified_on: 2026-11-13
+    confidence: V
+    human_reviewed: false
+
+# corpus l. 313
+- id: dirigeants-2026-responsable-ia
+  indicator: Entreprises sans Chief Data Officer ni responsable IA ; avec plusieurs cas d'usage à l'échelle ou un portefeuille structuré
+  value: 75 % ; 16 %
+  headcount_min: null
+  headcount_max: null
+  sectors: []
+  population: 802 dirigeants
+  fieldwork: terrain non publié ; article du 10 juillet 2026
+  expires_on: 2027-07-10
+  provenance:
+    source_id: lmi-problemes-organisationnels-2026
+    verified_on: 2026-11-13
+    confidence: V2
+    human_reviewed: false
+
+# corpus l. 314
+- id: ipsos-2026-regle-interne
+  indicator: Salariés déclarant que leur employeur a une règle interne sur l'IA
+  value: '14 % (10 % de 1 à 9 personnes, 14 % de 10 à 249, 28 % à partir de 250) ; unité : le salarié, pas l''entreprise'
+  headcount_min: null
+  headcount_max: null
+  sectors: []
+  population: 2 041 actifs
+  fieldwork: 6-17 novembre 2025, publié le 24 mars 2026
+  expires_on: 2026-11-17
+  provenance:
+    source_id: ipsos-google-2026
+    verified_on: 2026-11-13
+    confidence: V
+    human_reviewed: false
+
+# corpus l. 315
+- id: ipsos-2026-usage-salaries
+  indicator: Salariés utilisant l'IA au travail
+  value: 73 % (55 % régulièrement) ; 45 % disent que leur entreprise a déployé des solutions
+  headcount_min: null
+  headcount_max: null
+  sectors: []
+  population: 1 100 salariés du privé
+  fieldwork: 12-25 mai 2026
+  expires_on: 2027-05-25
+  provenance:
+    source_id: ipsos-ia-au-travail-2026
+    verified_on: 2026-11-13
+    confidence: V
+    human_reviewed: false
+
+# corpus l. 316
+- id: ipsos-2026-outils-homologues
+  indicator: Utilisateurs employant systématiquement des outils homologués par l'entreprise
+  value: 37 %
+  headcount_min: null
+  headcount_max: null
+  sectors: []
+  population: 1 100 salariés du privé utilisateurs de l'IA
+  fieldwork: 12-25 mai 2026
+  expires_on: 2027-05-25
+  provenance:
+    source_id: ipsos-ia-au-travail-2026
+    verified_on: 2026-11-13
+    confidence: V
+    human_reviewed: false
+
+# corpus l. 317
+- id: ipsos-2026-salaries-formes
+  indicator: Salariés formés à l'IA
+  value: 21 % (30 % en grande entreprise, 19 % en PME, 16 % sous 10 personnes)
+  headcount_min: null
+  headcount_max: null
+  sectors: []
+  population: 2 041 actifs
+  fieldwork: novembre 2025, publié le 24 mars 2026
+  expires_on: 2026-11-17
+  provenance:
+    source_id: ipsos-google-2026
+    verified_on: 2026-11-13
+    confidence: V
+    human_reviewed: false
+
+# corpus l. 317
+- id: impact-ai-2026-formes-ia-responsable
+  indicator: Salariés formés à l'IA responsable
+  value: 23 % formés à l'IA responsable
+  headcount_min: null
+  headcount_max: null
+  sectors: []
+  population: 1 000 salariés du privé
+  fieldwork: février 2026
+  expires_on: 2027-02-26
+  provenance:
+    source_id: observatoire-ia-responsable-2026
+    verified_on: 2026-11-13
+    confidence: V
+    human_reviewed: false
+
+# corpus l. 318
+- id: ipsos-2026-compte-personnel
+  indicator: Usage surtout par compte personnel
+  value: 42 % des utilisateurs (21 % autant personnel que professionnel, 29 % surtout professionnel)
+  headcount_min: null
+  headcount_max: null
+  sectors: []
+  population: Actifs utilisant l'IA au travail
+  fieldwork: novembre 2025, publié le 24 mars 2026
+  expires_on: 2026-11-17
+  provenance:
+    source_id: ipsos-google-infographie-2026
+    verified_on: 2026-11-13
+    confidence: V
+    human_reviewed: false
+
+# corpus l. 319
+- id: insee-2025-raisons-non-usage
+  indicator: Raisons de non-usage, classement complet
+  value: Pas d'utilité 71 %, manque d'expertise 54 %, incompatibilité 38 %, protection des données 38 %, clarté juridique 38 %, coûts 32 % (sixième), données 29 %, éthique 25 %
+  headcount_min: 10
+  headcount_max: null
+  sectors: []
+  population: Non-utilisatrices de 10 salariés et plus
+  fieldwork: 2025 (publié le 21 juillet 2026)
+  expires_on: 2027-07-21
+  provenance:
+    source_id: insee-premiere-2120
+    verified_on: 2026-11-13
+    confidence: V
+    human_reviewed: false

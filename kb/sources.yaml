@@ -1,0 +1,148 @@
+# Sources citées par les règles, repères et aides. URL copiées depuis
+# corpus/rapport-freins-ia-2026.md ; published_on renseigné seulement quand le
+# rapport donne la date de publication au jour près.
+
+# --- Adoption et repères
+- id: insee-premiere-2120
+  title: Insee Première n° 2120
+  publisher: Insee
+  url: https://www.insee.fr/fr/statistiques/9025878
+  published_on: 2026-07-21
+- id: dge-barometre-francenum-2026
+  title: "Baromètre France Num 2026 : quatre TPE-PME sur dix utilisent désormais l'intelligence artificielle"
+  publisher: Direction générale des Entreprises
+  url: https://www.entreprises.gouv.fr/espace-presse/barometre-france-num-2026-quatre-tpe-pme-sur-dix-utilisent-desormais-lintelligence
+  published_on: 2026-09-28
+- id: francenum-barometre-2026
+  title: "Baromètre France Num 2026 : le numérique et l'intelligence artificielle dans les TPE et PME"
+  publisher: France Num
+  url: https://www.francenum.gouv.fr/guides-et-conseils/strategie-numerique/comprendre-le-numerique/barometre-france-num-2026-le
+- id: bdf-bulletin-266-1
+  title: "L'IA s'installe dans les entreprises françaises : une diffusion rapide, mais des gains de productivité encore limités – Bulletin n° 266/1"
+  publisher: Banque de France
+  url: https://www.banque-france.fr/system/files/2026-09/BDF266-1_IA-et-entreprises_web.pdf
+- id: actuia-coface-2026
+  title: "Six entreprises sur dix utilisent l'IA sans cadre, selon Coface (Baromètre Data & IA 2026, avec Les Echos Études)"
+  publisher: ActuIA
+  url: https://www.actuia.com/actualite/six-entreprises-sur-dix-utilisent-lia-sans-cadre-selon-coface/
+- id: apec-cadres-ia-2026
+  title: Les cadres et l'IA
+  publisher: Apec
+  url: https://www.banquedesterritoires.fr/sites/default/files/2026-05/210526%20-%20Etude%20Apec%20-%20Cadres%20et%20IA.pdf
+- id: lmi-problemes-organisationnels-2026
+  title: Face à l'IA, les entreprises confrontées à des problèmes organisationnels
+  publisher: Le Monde Informatique
+  url: https://www.lemondeinformatique.fr/actualites/lire-face-a-l-ia-les-entreprises-confrontees-a-des-problemes-organisationnels-100673.html
+  published_on: 2026-07-10
+- id: ipsos-google-2026
+  title: "IA en entreprise : état des lieux et leviers d'accélération"
+  publisher: Ipsos bva pour Google
+  url: https://www.ipsos.com/fr-fr/node/1070646
+  published_on: 2026-03-24
+- id: ipsos-google-infographie-2026
+  title: Infographie Ipsos bva pour Google (IA et travail)
+  publisher: Ipsos bva / Google
+  url: https://www.ipsos.com/sites/default/files/ct/news/documents/2026-03/doc_google_ai_digital-infographie.pdf
+  published_on: 2026-03-24
+- id: ipsos-ia-au-travail-2026
+  title: "IA au travail : derrière l'adoption massive, des usages fantômes et des managers en première ligne (Greenworking x Ipsos bva, 2e édition)"
+  publisher: Ipsos
+  url: https://www.ipsos.com/fr-fr/ia-au-travail-derriere-ladoption-massive-des-usages-fantomes-et-des-managers-en-premiere-ligne
+  published_on: 2026-09-23
+- id: observatoire-ia-responsable-2026
+  title: "En 2026, un employé sur deux utilise déjà l'IA au bureau (Observatoire de l'IA responsable, 6e éd.)"
+  publisher: KPMG France / Impact AI / Bouygues (ViaVoice)
+  url: https://kpmg.com/fr/fr/media/press-releases/2026/06/observatoire-ia-responsable-2026.html
+  published_on: 2026-06-11
+
+# --- Cadre juridique
+- id: commission-cadre-reglementaire
+  title: Législation sur l'IA (page du cadre réglementaire)
+  publisher: Commission européenne
+  url: https://digital-strategy.ec.europa.eu/fr/policies/regulatory-framework-ai
+- id: commission-faq-maitrise-ia
+  title: Alphabétisation à l'IA – Questions & Réponses
+  publisher: Commission européenne
+  url: https://digital-strategy.ec.europa.eu/fr/faqs/ai-literacy-questions-answers
+  published_on: 2026-10-20
+- id: commission-quick-facts-transparence
+  title: Quick facts – transparency rules for AI systems
+  publisher: Commission européenne
+  url: https://digital-strategy.ec.europa.eu/fr/factpages/quick-facts-transparency-rules-ai-systems
+- id: commission-faq-code-pratique-transparence
+  title: FAQ – Code de bonnes pratiques transparence des contenus générés par IA
+  publisher: Commission européenne
+  url: https://digital-strategy.ec.europa.eu/fr/faqs/code-practice-transparency-ai-generated-content
+- id: actuia-calendrier-ai-act
+  title: "Calendrier AI Act : ce qui s'applique, ce que l'omnibus reporte"
+  publisher: ActuIA
+  url: https://www.actuia.com/actualite/calendrier-ai-act-ce-qui-sapplique-ce-que-lomnibus-reporte/
+- id: commission-omnibus-2026
+  title: AI Omnibus enters into force
+  publisher: Commission européenne
+  url: https://digital-strategy.ec.europa.eu/en/news/ai-omnibus-enters-force
+  published_on: 2026-07-27
+- id: senat-dossier-ddadue
+  title: Adaptation au droit de l'Union européenne (dossier législatif du projet de loi DDADUE)
+  publisher: Sénat
+  url: https://www.senat.fr/dossier-legislatif/pjl25-118.html
+- id: actuia-cse-ca-paris-2026
+  title: "La justice française suspend l'usage de ChatGPT dans une entreprise : un signal fort pour tous les projets IA"
+  publisher: ActuIA
+  url: https://www.actuia.com/actualite/la-justice-francaise-suspend-lusage-de-chatgpt-dans-une-entreprise-un-signal-fort-pour-tous-les-projets-ia/
+  published_on: 2026-06-19
+- id: cnil-controles-2026
+  title: "Les contrôles en 2026 : recrutement, répertoire électoral unique et fédérations sportives"
+  publisher: CNIL
+  url: https://cnil.fr/fr/controles-prioritaires-2026
+  published_on: 2026-04-03
+- id: service-public-facturation-electronique
+  title: Facturation électronique (actualité A18953)
+  publisher: Entreprendre.Service-Public.fr
+  url: https://entreprendre.service-public.gouv.fr/actualites/A18953?lang=fr
+  published_on: 2026-09-02
+- id: lmi-nis2-resilience
+  title: "NIS 2 : la loi Résilience arrive enfin à l'Assemblée"
+  publisher: Le Monde Informatique
+  url: https://www.lemondeinformatique.fr/cybersecurite-conformite/nis-2-la-loi-resilience-arrive-enfin-a-l-assemblee
+  published_on: 2026-11-10
+- id: acpr-faq-dora
+  title: FAQ du webinaire DORA du 23/01/2026
+  publisher: ACPR
+  url: https://acpr.banque-france.fr/system/files/2026-03/20260320_FAQ_webinaire_DORA_du_23-01-2026.pdf
+  published_on: 2026-03-20
+- id: senat-ppl-contenus-culturels
+  title: Proposition de loi relative à l'instauration d'une présomption d'utilisation des contenus culturels par les fournisseurs d'intelligence artificielle – texte n° 85 adopté
+  publisher: Sénat
+  url: https://www.senat.fr/leg/tas25-085.html
+  published_on: 2026-04-08
+- id: cnil-note-cianum-2026
+  title: Note « IA agentique et protection des données personnelles »
+  publisher: CNIL / CIANum
+  url: https://www.cnil.fr/sites/default/files/2026-07/ia-cianum-cnil.pdf
+- id: cnil-cepd-action-coordonnee
+  title: "Actualité du CEPD : adéquation de la Corée du Sud, versions finales des BCR-ST, et action coordonnée sur le recrutement via IA"
+  publisher: CNIL
+  url: https://cnil.fr/fr/actualite-du-cepd-adequation-de-la-coree-du-sud-versions-finales-des-bcr-st-et-action-coordonnee-sur
+  published_on: 2026-11-12
+- id: commission-en-18286
+  title: Première norme harmonisée à l'appui du règlement sur l'IA publiée au Journal officiel
+  publisher: Commission européenne
+  url: https://digital-strategy.ec.europa.eu/fr/library/first-harmonised-standard-supporting-ai-act-published-official-journal
+  published_on: 2026-10-19
+- id: cnil-sanction-decisions-automatisees
+  title: "Décisions automatisées : sanction de près de 825 millions d'euros à l'encontre d'UBER"
+  publisher: CNIL
+  url: https://cnil.fr/fr/decisions-automatisees-sanction-de-pres-de-825-millions-deuros-lencontre-duber
+  published_on: 2026-08-24
+
+# --- Aides
+- id: dge-osez-lia
+  title: Plan « Osez l'IA »
+  publisher: Direction générale des Entreprises
+  url: https://www.entreprises.gouv.fr/osez-lia
+- id: dge-ia-booster-2023
+  title: Lancement du programme IA Booster France 2030
+  publisher: Direction générale des Entreprises
+  url: https://www.entreprises.gouv.fr/la-dge/actualites/lancement-du-programme-ia-booster-france-2030
+  published_on: 2023-06-16

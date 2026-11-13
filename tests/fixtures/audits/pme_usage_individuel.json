@@ -1,0 +1,123 @@
+{
+  "profile": {
+    "headcount": 45,
+    "sector": "commerce",
+    "stage": "usage_individuel",
+    "respondent_role": "directrice générale"
+  },
+  "facts": {
+    "competences.salaries_utilisent_ia": {
+      "fact_id": "competences.salaries_utilisent_ia",
+      "value": true,
+      "certainty": "constate",
+      "quote": "Les commerciaux s'en servent pour leurs mails, ça c'est sûr."
+    },
+    "securite.comptes_personnels": {
+      "fact_id": "securite.comptes_personnels",
+      "value": true,
+      "certainty": "estime",
+      "quote": "J'imagine qu'ils passent par leurs comptes perso, on ne leur a rien fourni."
+    },
+    "gouvernance.charte_ia": {
+      "fact_id": "gouvernance.charte_ia",
+      "value": false,
+      "certainty": "constate",
+      "quote": "Non, aucune charte, rien d'écrit."
+    },
+    "gouvernance.outils_ia_deployes_officiellement": {
+      "fact_id": "gouvernance.outils_ia_deployes_officiellement",
+      "value": false,
+      "certainty": "constate"
+    },
+    "gouvernance.responsable_ia": {
+      "fact_id": "gouvernance.responsable_ia",
+      "value": false,
+      "certainty": "constate"
+    },
+    "gouvernance.registre_formations_ia": {
+      "fact_id": "gouvernance.registre_formations_ia",
+      "value": false,
+      "certainty": "constate"
+    },
+    "competences.part_salaries_formes": {
+      "fact_id": "competences.part_salaries_formes",
+      "value": "aucun",
+      "certainty": "constate"
+    },
+    "strategie.strategie_ia_formalisee": {
+      "fact_id": "strategie.strategie_ia_formalisee",
+      "value": false,
+      "certainty": "constate"
+    },
+    "strategie.fournisseur_systeme_ia": {
+      "fact_id": "strategie.fournisseur_systeme_ia",
+      "value": false,
+      "certainty": "constate"
+    },
+    "gouvernance.cse_present": {
+      "fact_id": "gouvernance.cse_present",
+      "value": false,
+      "certainty": "constate"
+    },
+    "gouvernance.ia_recrutement": {
+      "fact_id": "gouvernance.ia_recrutement",
+      "value": false,
+      "certainty": "constate"
+    },
+    "si.chatbot_client": {
+      "fact_id": "si.chatbot_client",
+      "value": false,
+      "certainty": "constate"
+    },
+    "si.contenus_synthetiques_publies": {
+      "fact_id": "si.contenus_synthetiques_publies",
+      "value": false,
+      "certainty": "constate"
+    },
+    "si.saisie_factures_manuelle": {
+      "fact_id": "si.saisie_factures_manuelle",
+      "value": true,
+      "certainty": "constate"
+    },
+    "si.rapprochement_bancaire_manuel": {
+      "fact_id": "si.rapprochement_bancaire_manuel",
+      "value": true,
+      "certainty": "constate"
+    },
+    "si.paie_internalisee": {
+      "fact_id": "si.paie_internalisee",
+      "value": false,
+      "certainty": "constate"
+    },
+    "valeur.prevision_tresorerie_tableur": {
+      "fact_id": "valeur.prevision_tresorerie_tableur",
+      "value": true,
+      "certainty": "constate"
+    },
+    "securite.rappel_changement_rib": {
+      "fact_id": "securite.rappel_changement_rib",
+      "value": false,
+      "certainty": "estime"
+    },
+    "donnees.referentiels_reconcilies": {
+      "fact_id": "donnees.referentiels_reconcilies",
+      "value": false,
+      "certainty": "constate"
+    },
+    "donnees.rejets_factures_electroniques": {
+      "fact_id": "donnees.rejets_factures_electroniques",
+      "value": false,
+      "certainty": "constate"
+    },
+    "competences.recrutements_reguliers": {
+      "fact_id": "competences.recrutements_reguliers",
+      "value": false,
+      "certainty": "constate"
+    },
+    "valeur.gain_constate": {
+      "fact_id": "valeur.gain_constate",
+      "value": null,
+      "certainty": "inconnu"
+    }
+  }
+}

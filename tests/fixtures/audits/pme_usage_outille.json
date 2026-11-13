@@ -1,0 +1,173 @@
+{
+  "profile": {
+    "headcount": 120,
+    "sector": "activites_specialisees",
+    "stage": "usage_outille",
+    "respondent_role": "directeur administratif et financier"
+  },
+  "facts": {
+    "competences.salaries_utilisent_ia": {
+      "fact_id": "competences.salaries_utilisent_ia",
+      "value": true,
+      "certainty": "constate"
+    },
+    "gouvernance.outils_ia_deployes_officiellement": {
+      "fact_id": "gouvernance.outils_ia_deployes_officiellement",
+      "value": true,
+      "certainty": "constate"
+    },
+    "gouvernance.ia_recrutement": {
+      "fact_id": "gouvernance.ia_recrutement",
+      "value": true,
+      "certainty": "constate",
+      "quote": "Le logiciel de recrutement classe les CV avec de l'IA depuis cette année."
+    },
+    "gouvernance.aipd_recrutement": {
+      "fact_id": "gouvernance.aipd_recrutement",
+      "value": false,
+      "certainty": "constate",
+      "quote": "Une analyse d'impact ? Non, pas à ma connaissance."
+    },
+    "gouvernance.intervention_humaine_decisions": {
+      "fact_id": "gouvernance.intervention_humaine_decisions",
+      "value": true,
+      "certainty": "estime"
+    },
+    "gouvernance.charte_ia": {
+      "fact_id": "gouvernance.charte_ia",
+      "value": true,
+      "certainty": "constate"
+    },
+    "gouvernance.charte_connue": {
+      "fact_id": "gouvernance.charte_connue",
+      "value": false,
+      "certainty": "estime"
+    },
+    "gouvernance.responsable_ia": {
+      "fact_id": "gouvernance.responsable_ia",
+      "value": true,
+      "certainty": "constate"
+    },
+    "gouvernance.registre_formations_ia": {
+      "fact_id": "gouvernance.registre_formations_ia",
+      "value": true,
+      "certainty": "constate"
+    },
+    "gouvernance.cse_present": {
+      "fact_id": "gouvernance.cse_present",
+      "value": true,
+      "certainty": "constate"
+    },
+    "gouvernance.drh_ipr_associes": {
+      "fact_id": "gouvernance.drh_ipr_associes",
+      "value": false,
+      "certainty": "constate"
+    },
+    "gouvernance.evaluation_dependance_fournisseurs": {
+      "fact_id": "gouvernance.evaluation_dependance_fournisseurs",
+      "value": false,
+      "certainty": "constate"
+    },
+    "gouvernance.protocole_decision_erronee": {
+      "fact_id": "gouvernance.protocole_decision_erronee",
+      "value": false,
+      "certainty": "constate"
+    },
+    "gouvernance.entite_financiere_dora": {
+      "fact_id": "gouvernance.entite_financiere_dora",
+      "value": false,
+      "certainty": "constate"
+    },
+    "gouvernance.ia_haut_risque_autre": {
+      "fact_id": "gouvernance.ia_haut_risque_autre",
+      "value": false,
+      "certainty": "constate"
+    },
+    "strategie.strategie_ia_formalisee": {
+      "fact_id": "strategie.strategie_ia_formalisee",
+      "value": true,
+      "certainty": "constate"
+    },
+    "strategie.fournisseur_systeme_ia": {
+      "fact_id": "strategie.fournisseur_systeme_ia",
+      "value": false,
+      "certainty": "constate"
+    },
+    "strategie.chiffre_affaires_superieur_8m": {
+      "fact_id": "strategie.chiffre_affaires_superieur_8m",
+      "value": true,
+      "certainty": "constate"
+    },
+    "strategie.anciennete_3_ans": {
+      "fact_id": "strategie.anciennete_3_ans",
+      "value": true,
+      "certainty": "constate"
+    },
+    "valeur.indicateurs_valeur_suivis": {
+      "fact_id": "valeur.indicateurs_valeur_suivis",
+      "value": false,
+      "certainty": "constate"
+    },
+    "valeur.gain_constate": {
+      "fact_id": "valeur.gain_constate",
+      "value": false,
+      "certainty": "constate"
+    },
+    "valeur.reporting_empreinte_attendu": {
+      "fact_id": "valeur.reporting_empreinte_attendu",
+      "value": false,
+      "certainty": "constate"
+    },
+    "competences.part_salaries_formes": {
+      "fact_id": "competences.part_salaries_formes",
+      "value": "minorite",
+      "certainty": "constate"
+    },
+    "competences.recrutements_reguliers": {
+      "fact_id": "competences.recrutements_reguliers",
+      "value": true,
+      "certainty": "constate"
+    },
+    "securite.comptes_personnels": {
+      "fact_id": "securite.comptes_personnels",
+      "value": false,
+      "certainty": "estime"
+    },
+    "donnees.pilote_non_generalise": {
+      "fact_id": "donnees.pilote_non_generalise",
+      "value": true,
+      "certainty": "constate"
+    },
+    "donnees.referentiels_reconcilies": {
+      "fact_id": "donnees.referentiels_reconcilies",
+      "value": false,
+      "certainty": "constate"
+    },
+    "si.hausse_facture_ia_incluse": {
+      "fact_id": "si.hausse_facture_ia_incluse",
+      "value": true,
+      "certainty": "constate",
+      "quote": "L'abonnement a augmenté avec un assistant IA qu'on n'a pas demandé."
+    },
+    "si.paie_internalisee": {
+      "fact_id": "si.paie_internalisee",
+      "value": true,
+      "certainty": "constate"
+    },
+    "si.chatbot_client": {
+      "fact_id": "si.chatbot_client",
+      "value": false,
+      "certainty": "constate"
+    },
+    "si.contenus_synthetiques_publies": {
+      "fact_id": "si.contenus_synthetiques_publies",
+      "value": false,
+      "certainty": "constate"
+    },
+    "si.ia_dans_produit_reglemente": {
+      "fact_id": "si.ia_dans_produit_reglemente",
+      "value": false,
+      "certainty": "constate"
+    }
+  }
+}

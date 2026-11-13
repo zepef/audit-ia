@@ -1,0 +1,82 @@
+{
+  "profile": {
+    "headcount": 6,
+    "sector": "construction",
+    "stage": "non_utilisatrice",
+    "respondent_role": "gérant"
+  },
+  "facts": {
+    "strategie.cas_usage_identifies": {
+      "fact_id": "strategie.cas_usage_identifies",
+      "value": false,
+      "certainty": "constate",
+      "quote": "On ne voit pas trop à quoi ça nous servirait sur les chantiers."
+    },
+    "strategie.strategie_ia_formalisee": {
+      "fact_id": "strategie.strategie_ia_formalisee",
+      "value": false,
+      "certainty": "constate"
+    },
+    "gouvernance.charte_ia": {
+      "fact_id": "gouvernance.charte_ia",
+      "value": false,
+      "certainty": "constate"
+    },
+    "gouvernance.outils_ia_deployes_officiellement": {
+      "fact_id": "gouvernance.outils_ia_deployes_officiellement",
+      "value": false,
+      "certainty": "constate"
+    },
+    "gouvernance.cse_present": {
+      "fact_id": "gouvernance.cse_present",
+      "value": false,
+      "certainty": "constate"
+    },
+    "si.saisie_factures_manuelle": {
+      "fact_id": "si.saisie_factures_manuelle",
+      "value": true,
+      "certainty": "constate",
+      "quote": "C'est ma femme qui saisit les factures le soir."
+    },
+    "securite.rappel_changement_rib": {
+      "fact_id": "securite.rappel_changement_rib",
+      "value": true,
+      "certainty": "constate"
+    },
+    "competences.salaries_utilisent_ia": {
+      "fact_id": "competences.salaries_utilisent_ia",
+      "value": null,
+      "certainty": "inconnu"
+    },
+    "securite.comptes_personnels": {
+      "fact_id": "securite.comptes_personnels",
+      "value": null,
+      "certainty": "inconnu"
+    },
+    "gouvernance.responsable_ia": {
+      "fact_id": "gouvernance.responsable_ia",
+      "value": null,
+      "certainty": "inconnu"
+    },
+    "donnees.referentiels_reconcilies": {
+      "fact_id": "donnees.referentiels_reconcilies",
+      "value": null,
+      "certainty": "inconnu"
+    },
+    "donnees.rejets_factures_electroniques": {
+      "fact_id": "donnees.rejets_factures_electroniques",
+      "value": null,
+      "certainty": "inconnu"
+    },
+    "si.rapprochement_bancaire_manuel": {
+      "fact_id": "si.rapprochement_bancaire_manuel",
+      "value": null,
+      "certainty": "inconnu"
+    },
+    "valeur.prevision_tresorerie_tableur": {
+      "fact_id": "valeur.prevision_tresorerie_tableur",
+      "value": null,
+      "certainty": "inconnu"
+    }
+  }
+}

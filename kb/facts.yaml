@@ -1,0 +1,247 @@
+# Faits recueillis auprès du décideur. Chaque fait sert au moins une
+# condition (problème, règle, cas d'usage ou aide), sauf mention contraire.
+# stages vide = posé à tous les stades.
+
+# --- Stratégie
+- id: strategie.cas_usage_identifies
+  dimension: strategie
+  kind: bool
+  prompt_hint: Des cas d'usage de l'IA ont-ils été identifiés pour votre activité ?
+  priority: 10  # question d'entretien : absence de cas d'usage, premier frein des non-utilisatrices
+- id: strategie.strategie_ia_formalisee
+  dimension: strategie
+  kind: bool
+  prompt_hint: L'entreprise a-t-elle une stratégie IA formalisée ou annoncée ?
+  priority: 8
+- id: strategie.fournisseur_systeme_ia
+  dimension: strategie
+  kind: bool
+  prompt_hint: L'entreprise met-elle elle-même sur le marché un système ou un produit d'IA (en tant que fournisseur) ?
+  priority: 5
+- id: strategie.chiffre_affaires_superieur_8m
+  dimension: strategie
+  kind: bool
+  prompt_hint: Le chiffre d'affaires dépasse-t-il 8 M€ ?
+  priority: 2
+- id: strategie.anciennete_3_ans
+  dimension: strategie
+  kind: bool
+  prompt_hint: L'entreprise a-t-elle au moins 3 ans d'existence ?
+  priority: 1
+
+# --- Gouvernance, risque et conformité
+- id: gouvernance.charte_ia
+  dimension: gouvernance
+  kind: bool
+  prompt_hint: Existe-t-il une charte ou une politique d'usage de l'IA, définie et communiquée aux salariés ?
+  priority: 10
+- id: gouvernance.charte_connue
+  dimension: gouvernance
+  kind: bool
+  prompt_hint: Les équipes connaissent-elles la charte d'usage de l'IA et savent-elles à qui poser leurs questions ?
+  stages: [usage_individuel, usage_outille, processus_transforme]
+  priority: 6
+- id: gouvernance.responsable_ia
+  dimension: gouvernance
+  kind: bool
+  prompt_hint: Un responsable de l'IA ou une instance transverse est-il identifié ?
+  priority: 9
+- id: gouvernance.outils_ia_deployes_officiellement
+  dimension: gouvernance
+  kind: bool
+  prompt_hint: L'entreprise a-t-elle déployé officiellement des outils d'IA pour ses salariés ?
+  priority: 9
+- id: gouvernance.registre_formations_ia
+  dimension: gouvernance
+  kind: bool
+  prompt_hint: Les actions de formation et de sensibilisation à l'IA sont-elles consignées dans un registre interne ?
+  stages: [usage_individuel, usage_outille, processus_transforme]
+  priority: 7
+- id: gouvernance.cse_present
+  dimension: gouvernance
+  kind: bool
+  prompt_hint: L'entreprise a-t-elle un comité social et économique (CSE) ?
+  priority: 5
+- id: gouvernance.drh_ipr_associes
+  dimension: gouvernance
+  kind: bool
+  prompt_hint: La DRH et les représentants du personnel sont-ils associés à la gouvernance de l'IA ?
+  stages: [usage_individuel, usage_outille, processus_transforme]
+  priority: 4
+- id: gouvernance.evaluation_dependance_fournisseurs
+  dimension: gouvernance
+  kind: bool
+  prompt_hint: La dépendance aux fournisseurs d'IA a-t-elle été évaluée ?
+  stages: [usage_outille, processus_transforme]
+  priority: 3
+- id: gouvernance.protocole_decision_erronee
+  dimension: gouvernance
+  kind: bool
+  prompt_hint: Existe-t-il un protocole à suivre en cas de décision erronée produite avec l'IA ?
+  stages: [usage_outille, processus_transforme]
+  priority: 3
+- id: gouvernance.ia_recrutement
+  dimension: gouvernance
+  kind: bool
+  prompt_hint: L'IA est-elle utilisée pour trier ou présélectionner des candidatures ?
+  stages: [usage_individuel, usage_outille, processus_transforme]
+  priority: 8
+- id: gouvernance.aipd_recrutement
+  dimension: gouvernance
+  kind: bool
+  prompt_hint: Une analyse d'impact relative à la protection des données (AIPD) a-t-elle été réalisée pour le tri de candidatures par IA ?
+  stages: [usage_individuel, usage_outille, processus_transforme]
+  priority: 6
+- id: gouvernance.intervention_humaine_decisions
+  dimension: gouvernance
+  kind: bool
+  prompt_hint: Les décisions individuelles prises avec l'IA (candidats, salariés, clients) font-elles l'objet d'une intervention humaine réelle ?
+  stages: [usage_individuel, usage_outille, processus_transforme]
+  priority: 6
+- id: gouvernance.outil_surveillance_conteste
+  dimension: gouvernance
+  kind: bool
+  prompt_hint: Un outil d'IA analysant l'activité des salariés a-t-il été contesté comme une forme de surveillance ?
+  stages: [usage_outille, processus_transforme]
+  priority: 2
+- id: gouvernance.ia_haut_risque_autre
+  dimension: gouvernance
+  kind: bool
+  prompt_hint: L'IA est-elle utilisée pour des décisions de gestion des salariés, d'octroi de crédit ou d'éducation ?
+  stages: [usage_individuel, usage_outille, processus_transforme]
+  priority: 4
+- id: gouvernance.entite_financiere_dora
+  dimension: gouvernance
+  kind: bool
+  prompt_hint: L'entreprise est-elle une entité financière soumise au règlement DORA ?
+  priority: 1
+
+# --- Données et référentiels
+- id: donnees.referentiels_reconcilies
+  dimension: donnees
+  kind: bool
+  prompt_hint: Les données de base (clients, fournisseurs, articles) sont-elles uniques et réconciliées entre logiciels ?
+  priority: 8
+- id: donnees.pilote_non_generalise
+  dimension: donnees
+  kind: bool
+  prompt_hint: Un pilote d'IA est-il resté sans généralisation faute de données exploitables ?
+  stages: [usage_outille, processus_transforme]
+  priority: 6
+- id: donnees.rejets_factures_electroniques
+  dimension: donnees
+  kind: bool
+  prompt_hint: Des factures électroniques ont-elles été rejetées pour des erreurs de données (SIREN, adresse, TVA, totaux) ?
+  priority: 7
+- id: donnees.historiques_exploitables
+  dimension: donnees
+  kind: bool
+  prompt_hint: Les historiques de production, de devis ou de ventes sont-ils compilés et exploitables ?
+  priority: 5
+
+# --- Système d'information et intégration
+- id: si.hausse_facture_ia_incluse
+  dimension: si
+  kind: bool
+  prompt_hint: Un logiciel a-t-il augmenté son prix à périmètre constant en incluant d'office une option d'IA ?
+  priority: 6
+- id: si.saisie_factures_manuelle
+  dimension: si
+  kind: bool
+  prompt_hint: La saisie des factures fournisseurs est-elle faite à la main ?
+  priority: 8
+- id: si.rapprochement_bancaire_manuel
+  dimension: si
+  kind: bool
+  prompt_hint: Le rapprochement bancaire est-il fait à la main ?
+  priority: 7
+- id: si.paie_internalisee
+  dimension: si
+  kind: bool
+  prompt_hint: La paie est-elle produite en interne (et non par un prestataire) ?
+  priority: 5
+- id: si.chatbot_client
+  dimension: si
+  kind: bool
+  prompt_hint: Un agent conversationnel (chatbot) est-il proposé aux clients ou au public ?
+  priority: 4
+- id: si.contenus_synthetiques_publies
+  dimension: si
+  kind: bool
+  prompt_hint: L'entreprise publie-t-elle des images, vidéos ou sons générés par IA représentant des personnes ou des faits réels (hypertrucages) ?
+  priority: 2
+- id: si.ia_dans_produit_reglemente
+  dimension: si
+  kind: bool
+  prompt_hint: L'IA est-elle intégrée à un produit réglementé (machine, dispositif médical, jouet...) que l'entreprise met sur le marché ?
+  priority: 2
+
+# --- Sécurité et souveraineté
+- id: securite.comptes_personnels
+  dimension: securite
+  kind: bool
+  prompt_hint: Des salariés utilisent-ils des comptes personnels d'outils d'IA pour des tâches professionnelles ?
+  priority: 10
+- id: securite.rappel_changement_rib
+  dimension: securite
+  kind: bool
+  prompt_hint: Un rappel téléphonique est-il systématique lors d'un changement de coordonnées bancaires d'un fournisseur ?
+  priority: 5
+- id: securite.agents_autonomes_postes
+  dimension: securite
+  kind: bool
+  prompt_hint: Des agents d'IA autonomes ou des extensions d'IA sont-ils installés sur les postes de travail ?
+  priority: 6  # sert au plan d'entretien ; aucun problème vérifié ne l'exploite encore (CYB-C1 non vérifié)
+- id: securite.habilitations_connecteurs_revues
+  dimension: securite
+  kind: bool
+  prompt_hint: Les habilitations des connecteurs d'IA (messagerie, stockage, logiciel de gestion) ont-elles été revues ?
+  stages: [usage_outille, processus_transforme]
+  priority: 4  # sert au plan d'entretien ; aucun problème vérifié ne l'exploite encore
+
+# --- Compétences, formation et conduite du changement
+- id: competences.salaries_utilisent_ia
+  dimension: competences
+  kind: bool
+  prompt_hint: Des salariés utilisent-ils l'IA dans leur travail, même sans outil fourni par l'entreprise ?
+  priority: 10
+- id: competences.part_salaries_formes
+  dimension: competences
+  kind: enum
+  choices: [aucun, minorite, majorite, tous]
+  prompt_hint: Quelle part des salariés qui utilisent l'IA a reçu une formation à l'IA ?
+  stages: [usage_individuel, usage_outille, processus_transforme]
+  priority: 8
+- id: competences.embauches_juniors_gelees
+  dimension: competences
+  kind: bool
+  prompt_hint: Les embauches de juniors ont-elles été gelées ou réduites sur des métiers exposés à l'IA ?
+  priority: 2
+- id: competences.recrutements_reguliers
+  dimension: competences
+  kind: bool
+  prompt_hint: L'entreprise recrute-t-elle régulièrement (plusieurs recrutements par an) ?
+  priority: 4
+
+# --- Valeur, coûts et frugalité
+- id: valeur.indicateurs_valeur_suivis
+  dimension: valeur
+  kind: bool
+  prompt_hint: Un indicateur de valeur (temps par tâche, erreurs, coûts) est-il suivi pour les usages de l'IA ?
+  priority: 8
+- id: valeur.gain_constate
+  dimension: valeur
+  kind: bool
+  prompt_hint: Un gain de productivité a-t-il été constaté grâce à l'IA ?
+  stages: [usage_individuel, usage_outille, processus_transforme]
+  priority: 9
+- id: valeur.reporting_empreinte_attendu
+  dimension: valeur
+  kind: bool
+  prompt_hint: L'entreprise doit-elle ou souhaite-t-elle rendre compte de l'empreinte environnementale de ses usages d'IA ?
+  priority: 3
+- id: valeur.prevision_tresorerie_tableur
+  dimension: valeur
+  kind: bool
+  prompt_hint: Les prévisions de trésorerie sont-elles construites à la main dans un tableur ?
+  priority: 5

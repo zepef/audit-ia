@@ -1,0 +1,69 @@
+# Termes interdits dans tout texte de rapport (comparaison sans casse, par
+# sous-chaîne) : TCKC, éditeurs de logiciels et de services d'IA, prestataires
+# et cabinets cités par le corpus. Les organismes et dispositifs publics
+# (Bpifrance, France Num, CNIL, Insee, DGE, « Diagnostic Data IA », « Osez
+# l'IA »...) ne sont pas interdits : les aides les nomment.
+# Un nom qui est aussi une sous-chaîne d'un mot courant est saisi sous une forme
+# plus longue pour éviter les faux positifs : « Sage » (usage, message),
+# « Infor » (information), « EY » , « Bleu », « Orange », « Joule ».
+forbidden_terms:
+  - TCKC
+  # éditeurs de logiciels de gestion et d'IA, hébergeurs
+  - Pennylane
+  - Sage 100
+  - Sage X3
+  - Sage Intacct
+  - Cegid
+  - SAP API
+  - SAP Joule
+  - Microsoft
+  - Copilot
+  - GitHub
+  - Esker
+  - Snowflake
+  - Payfit
+  - Infor/YouGov
+  - Okta
+  - Cloudera
+  - Divalto
+  - Odoo
+  - Oracle
+  - EBP
+  - IBM
+  - Google
+  - Vertex AI
+  - OpenAI
+  - ChatGPT
+  - Claude Cowork
+  - OpenClaw
+  - Mistral
+  - S3NS
+  - Premi3ns
+  - OVHcloud
+  - Outscale
+  - Scaleway
+  - Orange Cloud Avenue
+  - Nvidia
+  - ADP
+  # cabinets de conseil, d'études commerciales et d'avocats, prestataires
+  - KPMG
+  - EY France
+  - EY CEO Outlook
+  - BCG
+  - McKinsey
+  - Gartner
+  - Forrester
+  - Kéa
+  - Saegus
+  - Julhiet Sterwen
+  - Forvis Mazars
+  - Greenworking
+  - Asterès
+  - IntoTheMinds
+  - Tensoria
+  - Cegos
+  - Jedha
+  - Coface
+  - Allianz Trade
+  - CMS Francis Lefebvre
+  - Kohen Avocats

@@ -6,6 +6,8 @@ from pathlib import Path
 
 import yaml
 
+from audit_ia.audit.models import Fact
+from audit_ia.audit.planner import next_objective
 from audit_ia.diagnostic.engine import diagnose
 from audit_ia.kb.loader import load_kb
 from audit_ia.kb.models import Benchmark, Confidence, Provenance, Rule, RuleStatus
@@ -139,3 +141,12 @@ S_FULL = state(headcount=45, comptes_perso=True)
 
 def report_for(s, today=TODAY, kb=KB):
     return build_report(s, diagnose(s, kb, today), kb, today)
+
+
+def all_objectives(s, kb, *, ids: bool = True):
+    """Déroule le planificateur jusqu'au bout, chaque réponse valant « inconnu »."""
+    out = []
+    while (obj := next_objective(s, kb)) is not None:
+        out.append(obj.fact_id if ids else obj)
+        s.record(Fact(fact_id=obj.fact_id, value=None, certainty="inconnu"))
+    return out

@@ -1,0 +1,108 @@
+# Cas d'usage. Origine : section « Fonction par fonction : où l'IA entre et où
+# elle cale » de corpus/rapport-freins-ia-2026.md (tableau l. 159-170, et
+# l. 172-174), fonctions finance-comptabilité et ressources humaines-paie.
+# Ordre de priorité : rédaction individuelle, puis capture de documents
+# entrants, puis le reste (l. 157). Unité de preuve retenue : temps par tâche
+# avant et après, validation humaine comprise (l. 174).
+
+# corpus l. 161
+- id: uc-capture-factures
+  function: finance
+  title: Capture et imputation des factures fournisseurs
+  prerequisites: ["Données de base fournisseurs fiables (SIREN, adresses, TVA)"]
+  obstacles: [Qualité des données de base, Dépendance à l'éditeur du logiciel de gestion]
+  risks: [Taux d'automatisation revendiqués par les éditeurs et non mesurés indépendamment]
+  first_step: Mesurer le temps de saisie d'un lot de factures avant et après, validation humaine comprise.
+  applies_when: {fact: si.saisie_factures_manuelle, op: eq, value: true}
+  priority: 9
+
+# corpus l. 163, 172
+- id: uc-controle-donnees-facturation
+  function: finance
+  title: Contrôle des données de base avant l'émission de factures électroniques
+  prerequisites: [Accès aux motifs de rejet des factures]
+  obstacles: ["Rejets liés aux données de base (SIREN, adresses, TVA incohérente, totaux)"]
+  risks: [Une entreprise qui subit des rejets n'a pas les prérequis d'une automatisation comptable fiable]
+  first_step: Classer les motifs de rejet des trois derniers mois et corriger les données de base concernées.
+  applies_when: {fact: donnees.rejets_factures_electroniques, op: eq, value: true}
+  priority: 8
+
+# corpus l. 161
+- id: uc-rapprochement-bancaire
+  function: finance
+  title: Rapprochement bancaire assisté
+  prerequisites: [Données de base réconciliées]
+  obstacles: [Lien usage-résultat difficile à établir, Qualité des données de base]
+  risks: [Les défauts de données de base font échouer un rapprochement automatisé]
+  first_step: Mesurer le temps de rapprochement d'un mois avant et après, validation humaine comprise.
+  applies_when: {fact: si.rapprochement_bancaire_manuel, op: eq, value: true}
+  priority: 7
+
+# corpus l. 165, 172
+- id: uc-controle-paie
+  function: paie
+  title: Contrôle des anomalies de paie avant la DSN
+  prerequisites: [Validation humaine de chaque sortie de paie]
+  obstacles: [La conformité déclarative passe avant l'IA]
+  risks: [Une sortie de paie non validée par un humain avant la DSN]
+  first_step: Lister les anomalies de paie des six derniers mois et vérifier qu'une validation humaine précède chaque DSN.
+  applies_when: {fact: si.paie_internalisee, op: eq, value: true}
+  priority: 6
+
+# corpus l. 170
+- id: uc-detection-fraude-paiements
+  function: finance
+  title: Détection de fraude sur les paiements et les changements de coordonnées bancaires
+  prerequisites: [Rappel téléphonique systématique lors d'un changement de coordonnées bancaires]
+  obstacles: [L'IA arme d'abord le fraudeur]
+  risks: [Un outil de détection qui remplacerait le contrôle par rappel]
+  first_step: Instaurer un rappel téléphonique systématique lors de tout changement de coordonnées bancaires d'un fournisseur.
+  applies_when: {fact: securite.rappel_changement_rib, op: eq, value: false}
+  priority: 6
+
+# corpus l. 161
+- id: uc-prevision-tresorerie
+  function: finance
+  title: Prévision de trésorerie assistée
+  prerequisites: [Historiques bancaires et comptables exploitables]
+  obstacles: [Lien usage-résultat difficile à établir, Qualité des données de base]
+  risks: [Une prévision non vérifiée utilisée pour décider]
+  first_step: Comparer pendant trois mois la prévision assistée et la prévision actuelle au réalisé.
+  applies_when: {fact: valeur.prevision_tresorerie_tableur, op: eq, value: true}
+  priority: 5
+
+# corpus l. 162
+- id: uc-lettrage-comptable
+  function: comptabilite
+  title: Saisie et lettrage comptables assistés
+  prerequisites: [Données de base réconciliées]
+  obstacles: [Usage laissé à l'initiative individuelle]
+  risks: [Secret professionnel et confidentialité des données clients]
+  first_step: Choisir un journal comptable et mesurer le temps de lettrage avant et après, validation humaine comprise.
+  applies_when:
+    all:
+      - {fact: si.saisie_factures_manuelle, op: eq, value: true}
+      - {fact: donnees.referentiels_reconcilies, op: eq, value: true}
+  priority: 4
+
+# corpus l. 164
+- id: uc-preselection-candidatures
+  function: rh
+  title: Présélection de candidatures assistée
+  prerequisites: [Analyse d'impact relative à la protection des données (AIPD), Information des candidats, Intervention humaine réelle]
+  obstacles: [Intégration avec les systèmes existants, Manque de budget ou de temps, Qualité des données]
+  risks: [Recrutement parmi les thématiques prioritaires de contrôle de la CNIL en 2026, Décision sans intervention humaine réelle]
+  first_step: Réaliser l'AIPD et définir l'intervention humaine avant tout test.
+  applies_when: {fact: competences.recrutements_reguliers, op: eq, value: true}
+  priority: 3
+
+# corpus l. 164, 169
+- id: uc-assistant-rh
+  function: rh
+  title: Assistant répondant aux questions courantes des salariés sur les règles RH
+  prerequisites: [Documents RH de référence à jour]
+  obstacles: [Intégration avec les systèmes existants, Qualité des documents sources]
+  risks: [Confidentialité des données des salariés]
+  first_step: Rassembler et mettre à jour les documents RH de référence avant d'y brancher un assistant.
+  applies_when: {fact: gouvernance.outils_ia_deployes_officiellement, op: eq, value: true}
+  priority: 2

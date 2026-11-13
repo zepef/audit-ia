@@ -1,0 +1,127 @@
+# Actions du plan. Horizons : j30 (30 jours), j90 (90 jours), m12 (12 mois).
+# Les textes ne nomment aucun éditeur ni prestataire.
+
+- id: action-cartographie-usages
+  title: Recenser les usages d'IA des salariés (qui, quel outil, quel compte, quelles données)
+  horizon: j30
+  effort: faible
+  success_check: Un inventaire des usages est tenu à jour et partagé avec la direction.
+- id: action-politique-usage
+  title: Rédiger et communiquer une politique d'usage de l'IA générative (outils autorisés, données interdites, interlocuteur)
+  horizon: j30
+  effort: faible
+  prerequisites: [action-cartographie-usages]
+  success_check: La politique est diffusée à tous les salariés et un interlocuteur est nommé.
+- id: action-outil-officiel
+  title: Fournir aux salariés un outil d'IA validé par l'entreprise, accessible avec un compte professionnel
+  horizon: j90
+  effort: moyen
+  prerequisites: [action-politique-usage]
+  success_check: Plus aucun usage professionnel par compte personnel n'est déclaré au point de suivi.
+- id: action-diffuser-charte
+  title: Présenter la charte aux équipes et la relier à un interlocuteur identifié
+  horizon: j30
+  effort: faible
+  success_check: Les salariés interrogés savent où trouver la charte et à qui poser leurs questions.
+- id: action-referents-ia
+  title: Désigner des référents IA et instaurer un rituel de partage des usages
+  horizon: j90
+  effort: moyen
+  success_check: Chaque service a un référent et un point de partage se tient au moins une fois par mois.
+- id: action-plan-formation
+  title: Former les utilisateurs avant ou avec le déploiement, non-managers compris, sur des cas d'usage concrets
+  horizon: j90
+  effort: moyen
+  success_check: La part de salariés formés rejoint la part d'utilisateurs.
+- id: action-registre-maitrise-ia
+  title: Tenir un registre interne des actions de maîtrise de l'IA (formations, sensibilisations, dates, participants)
+  horizon: j30
+  effort: faible
+  success_check: Le registre existe et recense chaque action menée depuis le début de l'année.
+- id: action-designer-responsable
+  title: Désigner un responsable de l'IA rattaché à la direction
+  horizon: j30
+  effort: faible
+  success_check: Le nom du responsable est communiqué à l'ensemble des salariés.
+- id: action-instance-transverse
+  title: Réunir une instance transverse (direction, métiers, informatique, ressources humaines) qui arbitre les cas d'usage
+  horizon: j90
+  effort: moyen
+  prerequisites: [action-designer-responsable]
+  success_check: L'instance s'est réunie et a priorisé les cas d'usage.
+- id: action-indicateurs-valeur
+  title: Associer à chaque cas d'usage un indicateur de valeur suivi (temps par tâche, erreurs, coûts)
+  horizon: j90
+  effort: moyen
+  success_check: Chaque cas d'usage en service a un indicateur mesuré au moins une fois par trimestre.
+- id: action-mesure-avant-apres
+  title: Mesurer le temps par tâche avant et après l'usage de l'IA, validation humaine comprise, sur un cas d'usage
+  horizon: j30
+  effort: faible
+  success_check: Une mesure avant et une mesure après sont consignées pour au moins une tâche.
+- id: action-consigne-temps-gagne
+  title: Fixer une consigne explicite sur l'emploi du temps gagné grâce à l'IA
+  horizon: j90
+  effort: faible
+  success_check: La consigne est écrite et connue des équipes concernées.
+- id: action-protocole-erreur
+  title: Écrire un protocole à suivre en cas de décision erronée produite avec l'IA
+  horizon: j90
+  effort: moyen
+  success_check: Le protocole est validé par la direction et testé sur un cas fictif.
+- id: action-evaluer-dependance
+  title: Évaluer la dépendance aux fournisseurs d'IA (réversibilité, export des données, clauses contractuelles)
+  horizon: m12
+  effort: moyen
+  success_check: Une évaluation écrite existe pour chaque outil d'IA en service.
+- id: action-associer-rh-cse
+  title: Associer la direction des ressources humaines et les représentants du personnel à la gouvernance de l'IA
+  horizon: j90
+  effort: moyen
+  success_check: Les ressources humaines et les représentants du personnel participent à l'instance de gouvernance de l'IA.
+- id: action-intervention-humaine
+  title: Garantir une intervention humaine réelle avant toute décision individuelle produite avec l'IA
+  horizon: j30
+  effort: moyen
+  success_check: Chaque décision individuelle est validée et tracée par une personne habilitée.
+- id: action-aipd-recrutement
+  title: Réaliser une analyse d'impact relative à la protection des données (AIPD) sur le tri de candidatures par IA
+  horizon: j30
+  effort: moyen
+  success_check: L'AIPD est rédigée et validée avant toute nouvelle campagne de recrutement.
+- id: action-informer-candidats
+  title: Informer les candidats de l'usage de l'IA dans le traitement de leur candidature
+  horizon: j30
+  effort: faible
+  success_check: L'information figure dans chaque offre d'emploi et chaque accusé de réception.
+- id: action-preparer-haut-risque
+  title: Préparer la mise en conformité des usages à haut risque (recrutement, gestion des salariés) avant le 2 décembre 2027
+  horizon: m12
+  effort: fort
+  prerequisites: [action-aipd-recrutement]
+  success_check: Un plan de mise en conformité daté couvre chaque usage concerné.
+- id: action-nettoyer-historiques
+  title: Compiler et nettoyer les historiques de données nécessaires avant de relancer le pilote
+  horizon: j90
+  effort: moyen
+  success_check: Le jeu de données du pilote est complet et documenté.
+- id: action-referentiel-donnees
+  title: Constituer un référentiel unique des données de base (clients, fournisseurs, articles)
+  horizon: m12
+  effort: fort
+  success_check: Chaque donnée de base a une seule source de référence, utilisée par tous les logiciels.
+- id: action-revue-contrats
+  title: Relire les contrats logiciels en vigueur (options d'IA imposées, hausses de prix, clauses d'usage des interfaces de programmation)
+  horizon: j90
+  effort: faible
+  success_check: Chaque contrat a été relu et les options d'IA non souhaitées sont identifiées.
+- id: action-plan-competences-juniors
+  title: Examiner dans le plan de développement des compétences l'effet de l'IA sur les postes de juniors
+  horizon: m12
+  effort: moyen
+  success_check: Le plan de développement des compétences traite explicitement des recrutements de juniors.
+- id: action-empreinte-estimee
+  title: Estimer l'empreinte environnementale des usages d'IA à l'aide du référentiel général pour l'IA frugale de l'AFNOR
+  horizon: m12
+  effort: moyen
+  success_check: Une estimation documentée, avec ses hypothèses, est disponible.

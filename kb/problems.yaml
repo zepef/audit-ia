@@ -1,0 +1,181 @@
+# Problèmes auditables. Origine : tableau « Catalogue de problèmes auditables »
+# de corpus/rapport-freins-ia-2026.md (l. 252-287), lignes dont la preuve est
+# marquée [V] ou [V2]. « corpus l. N » renvoie à la ligne ; la dimension du
+# rapport est indiquée quand elle a dû être rattachée à l'une des sept dimensions
+# (l. 244).
+# Les déclencheurs ne sont vrais que sur ce que le décideur a dit : un fait
+# absent ou « inconnu » produit une vérification, pas un constat.
+
+# corpus l. 254 (Compétences)
+- id: HUM-F1
+  symptom: Le taux de salariés formés à l'IA est très inférieur au taux d'utilisateurs.
+  dimension: competences
+  triggers:
+    all:
+      - {fact: competences.salaries_utilisent_ia, op: eq, value: true}
+      - {fact: competences.part_salaries_formes, op: in, value: [aucun, minorite]}
+  evidence_benchmark_ids: [ipsos-2026-salaries-formes, impact-ai-2026-formes-ia-responsable]
+  action_ids: [action-plan-formation, action-registre-maitrise-ia]
+
+# corpus l. 257 (Conformité -> gouvernance)
+- id: HUM-F6
+  symptom: Aucune trace documentée des actions de maîtrise de l'IA (article 4 du règlement IA).
+  dimension: gouvernance
+  triggers:
+    all:
+      - {fact: competences.salaries_utilisent_ia, op: eq, value: true}
+      - {fact: gouvernance.registre_formations_ia, op: eq, value: false}
+  action_ids: [action-registre-maitrise-ia]
+
+# corpus l. 258 (Sécurité)
+- id: HUM-S1
+  symptom: Des comptes personnels d'IA sont utilisés pour des tâches professionnelles.
+  dimension: securite
+  triggers: {fact: securite.comptes_personnels, op: eq, value: true}
+  evidence_benchmark_ids: [ipsos-2026-compte-personnel, ipsos-2026-outils-homologues]
+  action_ids: [action-outil-officiel, action-politique-usage]
+
+# corpus l. 259 (Gouvernance)
+- id: HUM-S2
+  symptom: Les salariés utilisent l'IA alors que l'entreprise n'a déployé officiellement aucun outil.
+  dimension: gouvernance
+  triggers:
+    all:
+      - {fact: competences.salaries_utilisent_ia, op: eq, value: true}
+      - {fact: gouvernance.outils_ia_deployes_officiellement, op: eq, value: false}
+  evidence_benchmark_ids: [ipsos-2026-usage-salaries]
+  action_ids: [action-cartographie-usages, action-outil-officiel]
+
+# corpus l. 261 (Gouvernance)
+- id: HUM-S4
+  symptom: La charte d'usage de l'IA existe mais reste inconnue des équipes.
+  dimension: gouvernance
+  triggers:
+    all:
+      - {fact: gouvernance.charte_ia, op: eq, value: true}
+      - {fact: gouvernance.charte_connue, op: eq, value: false}
+  evidence_benchmark_ids: [ipsos-2026-regle-interne]
+  action_ids: [action-diffuser-charte, action-referents-ia]
+
+# corpus l. 262 (Valeur -> stratégie : la ligne porte sur la stratégie affichée,
+# et la dimension stratégie couvre la priorisation valeur x complexité, l. 244)
+- id: HUM-G1
+  symptom: La stratégie IA est affichée sans indicateur de valeur suivi.
+  dimension: strategie
+  triggers:
+    all:
+      - {fact: strategie.strategie_ia_formalisee, op: eq, value: true}
+      - {fact: valeur.indicateurs_valeur_suivis, op: eq, value: false}
+  action_ids: [action-indicateurs-valeur]
+
+# corpus l. 263 (Gouvernance)
+- id: HUM-G2
+  symptom: Aucune instance transverse ni aucun responsable de l'IA n'est identifié, alors que l'IA est utilisée.
+  dimension: gouvernance
+  triggers:
+    all:
+      - {fact: gouvernance.responsable_ia, op: eq, value: false}
+      - any:
+          - {fact: competences.salaries_utilisent_ia, op: eq, value: true}
+          - {fact: gouvernance.outils_ia_deployes_officiellement, op: eq, value: true}
+  evidence_benchmark_ids: [dirigeants-2026-responsable-ia]
+  action_ids: [action-designer-responsable, action-instance-transverse]
+
+# corpus l. 264 (Gouvernance)
+- id: HUM-G5
+  symptom: Ni évaluation de la dépendance aux fournisseurs ni protocole en cas de décision erronée.
+  dimension: gouvernance
+  triggers:
+    all:
+      - {fact: gouvernance.evaluation_dependance_fournisseurs, op: eq, value: false}
+      - {fact: gouvernance.protocole_decision_erronee, op: eq, value: false}
+  action_ids: [action-protocole-erreur, action-evaluer-dependance]
+
+# corpus l. 265 (Gouvernance)
+- id: HUM-G4
+  symptom: La direction des ressources humaines et les représentants du personnel sont absents de la gouvernance de l'IA.
+  dimension: gouvernance
+  triggers:
+    all:
+      - {fact: gouvernance.cse_present, op: eq, value: true}
+      - {fact: gouvernance.drh_ipr_associes, op: eq, value: false}
+  action_ids: [action-associer-rh-cse]
+
+# corpus l. 266 (Valeur)
+- id: HUM-R1
+  symptom: L'IA est utilisée sans gain constaté.
+  dimension: valeur
+  triggers:
+    all:
+      - {fact: competences.salaries_utilisent_ia, op: eq, value: true}
+      - {fact: valeur.gain_constate, op: eq, value: false}
+  evidence_benchmark_ids: [bdf-2026-gain-productivite]
+  action_ids: [action-mesure-avant-apres, action-consigne-temps-gagne]
+
+# corpus l. 268 (Changement -> compétences)
+- id: HUM-H3
+  symptom: Les embauches de juniors sont gelées sur des métiers exposés à l'IA.
+  dimension: competences
+  triggers: {fact: competences.embauches_juniors_gelees, op: eq, value: true}
+  action_ids: [action-plan-competences-juniors]
+
+# corpus l. 270 (Conformité -> gouvernance)
+- id: HUM-H7
+  symptom: Un outil d'analyse d'activité est perçu comme une surveillance, ou une décision est prise sans intervention humaine réelle.
+  dimension: gouvernance
+  triggers:
+    any:
+      - {fact: gouvernance.outil_surveillance_conteste, op: eq, value: true}
+      - {fact: gouvernance.intervention_humaine_decisions, op: eq, value: false}
+  action_ids: [action-intervention-humaine]
+
+# corpus l. 271 (Données)
+- id: DAT-D1
+  symptom: Un pilote ne se généralise pas faute de données réconciliées.
+  dimension: donnees
+  triggers:
+    all:
+      - {fact: donnees.pilote_non_generalise, op: eq, value: true}
+      - any:
+          - {fact: donnees.referentiels_reconcilies, op: eq, value: false}
+          - {fact: donnees.historiques_exploitables, op: eq, value: false}
+  evidence_benchmark_ids: [insee-2025-raisons-non-usage]
+  action_ids: [action-nettoyer-historiques, action-referentiel-donnees]
+
+# corpus l. 274 (Coûts -> système d'information : la dimension SI couvre les
+# clauses contractuelles des logiciels, l. 244 ; verrouillage contractuel, l. 139)
+- id: SI-S1
+  symptom: La facture logicielle augmente à périmètre constant, avec une IA incluse d'office.
+  dimension: si
+  triggers: {fact: si.hausse_facture_ia_incluse, op: eq, value: true}
+  action_ids: [action-revue-contrats]
+
+# corpus l. 281 (Sécurité)
+- id: CYB-C4
+  symptom: Aucune politique d'usage de l'IA générative n'existe, alors que l'IA est utilisée.
+  dimension: securite
+  triggers:
+    all:
+      - {fact: competences.salaries_utilisent_ia, op: eq, value: true}
+      - {fact: gouvernance.charte_ia, op: eq, value: false}
+  evidence_benchmark_ids: [barometre-data-ia-2026-cadre]
+  action_ids: [action-politique-usage, action-cartographie-usages]
+
+# corpus l. 284 (Frugalité -> valeur)
+- id: ENV-E6
+  symptom: L'empreinte environnementale de l'IA n'est pas chiffrable par mesure directe, alors qu'un compte rendu est attendu.
+  dimension: valeur
+  triggers: {fact: valeur.reporting_empreinte_attendu, op: eq, value: true}
+  action_ids: [action-empreinte-estimee]
+
+# corpus l. 286 (Conformité -> gouvernance)
+- id: FON-RH
+  symptom: Des candidatures sont triées par IA sans AIPD ou sans intervention humaine réelle.
+  dimension: gouvernance
+  triggers:
+    all:
+      - {fact: gouvernance.ia_recrutement, op: eq, value: true}
+      - any:
+          - {fact: gouvernance.aipd_recrutement, op: eq, value: false}
+          - {fact: gouvernance.intervention_humaine_decisions, op: eq, value: false}
+  action_ids: [action-aipd-recrutement, action-intervention-humaine, action-informer-candidats, action-preparer-haut-risque]
