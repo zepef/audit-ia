@@ -1,0 +1,18 @@
+- id: HUM-S1
+  symptom: Des comptes personnels sont utilisés pour des outils d'IA.
+  dimension: securite
+  triggers:
+    fact: comptes_perso
+    op: eq
+    value: true
+  evidence_benchmark_ids: [repere-a]
+  action_ids: [action-outil-officiel]
+- id: HUM-G1
+  symptom: Aucune charte d'usage de l'IA n'existe.
+  dimension: gouvernance
+  triggers:
+    fact: charte_ia
+    op: eq
+    value: false
+  evidence_benchmark_ids: []
+  action_ids: [action-charte]

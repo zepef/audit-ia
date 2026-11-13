@@ -1,0 +1,20 @@
+- id: regle-a
+  statement: Règle applicable de test.
+  status: applicable
+  effective_on: 2025-02-02
+  bounds: null
+  provenance:
+    source_id: src-a
+    verified_on: 2026-11-13
+    confidence: V
+    human_reviewed: false
+- id: regle-b
+  statement: Règle adoptée mais pas encore applicable.
+  status: adopte_non_applicable
+  effective_on: 2027-12-02
+  bounds: null
+  provenance:
+    source_id: src-b
+    verified_on: 2026-11-13
+    confidence: B
+    human_reviewed: false

@@ -1,0 +1,17 @@
+- id: f1
+  dimension: strategie
+  kind: bool
+  prompt_hint: L'entreprise a-t-elle une stratégie IA formalisée ?
+- id: comptes_perso
+  dimension: securite
+  kind: bool
+  prompt_hint: Des comptes personnels sont-ils utilisés pour les outils d'IA ?
+- id: automatisation.validation_humaine
+  dimension: valeur
+  kind: bool
+  prompt_hint: Les sorties automatisées sont-elles validées par un humain ?
+  stages: [processus_transforme]
+- id: charte_ia
+  dimension: gouvernance
+  kind: bool
+  prompt_hint: Existe-t-il une charte d'usage de l'IA ?

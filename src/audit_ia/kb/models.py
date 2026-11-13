@@ -1,0 +1,179 @@
+"""Modèles de la base de connaissances : sources, règles, repères, problèmes."""
+
+from datetime import date
+from enum import StrEnum
+from typing import Any, ClassVar, Literal
+
+from pydantic import BaseModel, ConfigDict, Field
+
+from audit_ia.audit.models import Dimension, Stage
+
+
+class Confidence(StrEnum):
+    V = "V"
+    V2 = "V2"
+    A = "A"
+    B = "B"
+    C = "C"
+
+
+class RuleStatus(StrEnum):
+    APPLICABLE = "applicable"
+    ADOPTE_NON_APPLICABLE = "adopte_non_applicable"
+    PROJET = "projet"
+    PROPOSITION = "proposition"
+    RECOMMANDATION = "recommandation"
+    JURISPRUDENCE = "jurisprudence"
+
+
+class Horizon(StrEnum):
+    J30 = "j30"
+    J90 = "j90"
+    M12 = "m12"
+
+
+class Source(BaseModel):
+    id: str
+    title: str
+    publisher: str
+    url: str
+    published_on: date | None = None
+
+
+class Provenance(BaseModel):
+    source_id: str
+    verified_on: date | None
+    confidence: Confidence
+    human_reviewed: bool = False
+
+
+# Condition : arbre récursif de tests sur les faits.
+class Test(BaseModel):
+    __test__: ClassVar[bool] = False  # ne pas collecter par pytest
+
+    fact: str
+    op: Literal["eq", "ne", "lt", "lte", "gt", "gte", "in"]
+    value: Any
+
+
+class All(BaseModel):
+    all: list["Condition"]
+
+
+class AnyOf(BaseModel):
+    any: list["Condition"]
+
+
+class Not(BaseModel):
+    model_config = ConfigDict(populate_by_name=True)
+
+    not_: "Condition" = Field(alias="not")
+
+
+Condition = Test | All | AnyOf | Not
+
+All.model_rebuild()
+AnyOf.model_rebuild()
+Not.model_rebuild()
+
+
+class FactDef(BaseModel):
+    id: str
+    dimension: Dimension
+    kind: Literal["bool", "int", "float", "enum", "text"]
+    choices: list[str] | None = None
+    prompt_hint: str
+    stages: list[Stage] = []  # vide = tous les stades
+    priority: int = 0
+
+
+class Rule(BaseModel):
+    id: str
+    statement: str
+    status: RuleStatus
+    effective_on: date | None = None
+    bounds: str | None = None
+    applies_when: Condition | None = None
+    provenance: Provenance
+
+
+class Benchmark(BaseModel):
+    id: str
+    indicator: str
+    value: str
+    headcount_min: int | None = None
+    headcount_max: int | None = None
+    sectors: list[str] = []  # vide = tous secteurs
+    population: str
+    fieldwork: str
+    expires_on: date
+    provenance: Provenance
+
+
+class Problem(BaseModel):
+    id: str = Field(pattern=r"^(HUM|DAT|SI|GEN|CYB|COU|ENV|FON)-[A-Z0-9]+$")
+    symptom: str
+    dimension: Dimension
+    triggers: Condition
+    evidence_benchmark_ids: list[str] = []
+    action_ids: list[str] = []
+
+
+class UseCase(BaseModel):
+    id: str
+    function: str
+    title: str
+    prerequisites: list[str]
+    obstacles: list[str]
+    risks: list[str]
+    first_step: str
+    applies_when: Condition | None = None
+    priority: int = 0
+
+
+class Action(BaseModel):
+    id: str
+    title: str
+    horizon: Horizon
+    effort: Literal["faible", "moyen", "fort"]
+    prerequisites: list[str] = []
+    success_check: str
+
+
+class Aid(BaseModel):
+    id: str
+    name: str
+    eligibility: Condition | None = None
+    headcount_min: int | None = None
+    headcount_max: int | None = None
+    amount: str
+    provenance: Provenance
+
+
+class KnowledgeBase(BaseModel):
+    version: str
+    sources: dict[str, Source]
+    facts: dict[str, FactDef]
+    rules: dict[str, Rule]
+    benchmarks: dict[str, Benchmark]
+    problems: dict[str, Problem]
+    use_cases: dict[str, UseCase]
+    actions: dict[str, Action]
+    aids: dict[str, Aid]
+    forbidden_terms: list[str]
+
+
+def referenced_facts(cond: Condition) -> set[str]:
+    """Identifiants de faits cités par une condition (récursivement)."""
+    match cond:
+        case Test():
+            return {cond.fact}
+        case All():
+            children = cond.all
+        case AnyOf():
+            children = cond.any
+        case Not():
+            return referenced_facts(cond.not_)
+        case _:
+            raise TypeError(f"condition inconnue : {cond!r}")
+    return set().union(*(referenced_facts(c) for c in children)) if children else set()

@@ -1,0 +1,28 @@
+- id: repere-a
+  indicator: adoption
+  value: "40 %"
+  headcount_min: null
+  headcount_max: null
+  sectors: []
+  population: Entreprises de 1 à 249 salariés
+  fieldwork: T1 2026
+  expires_on: 2027-06-30
+  provenance:
+    source_id: src-a
+    verified_on: 2026-11-13
+    confidence: V
+    human_reviewed: false
+- id: repere-construction
+  indicator: adoption
+  value: "25 %"
+  headcount_min: null
+  headcount_max: null
+  sectors: [construction]
+  population: Entreprises du bâtiment
+  fieldwork: T1 2026
+  expires_on: 2027-06-30
+  provenance:
+    source_id: src-a
+    verified_on: 2026-11-13
+    confidence: V
+    human_reviewed: false

@@ -1,0 +1,11 @@
+- id: aide-a
+  name: Aide de test
+  eligibility: null
+  headcount_min: 10
+  headcount_max: 249
+  amount: Jusqu'à 5 000 €
+  provenance:
+    source_id: src-a
+    verified_on: 2026-11-13
+    confidence: V
+    human_reviewed: false

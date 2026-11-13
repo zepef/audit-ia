@@ -1,0 +1,8 @@
+- id: cas-a
+  function: administration
+  title: Rédaction assistée de courriers
+  prerequisites: [Un outil validé]
+  obstacles: [Peur de l'erreur]
+  risks: [Fuite de données]
+  first_step: Tester sur trois courriers types.
+  priority: 0

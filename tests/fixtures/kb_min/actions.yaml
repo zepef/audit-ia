@@ -1,0 +1,12 @@
+- id: action-outil-officiel
+  title: Fournir un outil d'IA officiel
+  horizon: j30
+  effort: faible
+  prerequisites: []
+  success_check: Plus aucun compte personnel utilisé.
+- id: action-charte
+  title: Rédiger une charte d'usage
+  horizon: j90
+  effort: moyen
+  prerequisites: []
+  success_check: Charte diffusée et signée.

@@ -1,0 +1,10 @@
+- id: src-a
+  title: Source A
+  publisher: Éditeur A
+  url: https://example.org/a
+  published_on: 2025-01-15
+- id: src-b
+  title: Source B
+  publisher: Éditeur B
+  url: https://example.org/b
+  published_on: 2025-06-01
