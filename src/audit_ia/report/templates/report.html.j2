@@ -54,6 +54,10 @@
 <h3>{{ dimension_labels[d] | capitalize }}</h3>
 {{ items(report.by_dimension[d]) }}
 {% endfor %}
+{% if report.benchmarks %}
+<h3>Repères pour votre taille et votre secteur</h3>
+{{ items(report.benchmarks) }}
+{% endif %}
 </section>
 
 <section id="cas-usage">

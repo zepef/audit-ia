@@ -1,7 +1,11 @@
-from kb_helpers import S_FULL, report_for, state
+from datetime import date
+from html import escape
+
+from kb_helpers import KB_SECTOR_ONLY, S_FULL, report_for, state
 
 from audit_ia.audit.models import Fact
 from audit_ia.kb.models import Confidence
+from audit_ia.report.build import STALE_NOTE
 from audit_ia.report.render import render_html
 
 
@@ -43,3 +47,32 @@ def test_html_is_standalone_french_document():
     html = render_html(report_for(S_FULL))
     assert html.startswith("<!doctype html>") and '<html lang="fr">' in html
     assert "13 novembre 2026" in html
+
+
+BENCH_TITLE = "Repères pour votre taille et votre secteur"
+
+
+def test_html_renders_segment_benchmarks_in_place():
+    r = report_for(S_FULL)
+    assert r.benchmarks
+    html = render_html(r)
+    value = r.benchmarks[0].text
+    assert value.split(" — ")[0] in html or "40 %" in html
+    pos = [html.index("Bilan par dimension"), html.index(BENCH_TITLE), html.index("40 %", html.index(BENCH_TITLE)),
+           html.index("Cas d'usage prioritaires")]  # fmt: skip
+    assert pos == sorted(pos)
+    assert "Vérifié le" in html[html.index(BENCH_TITLE) : html.index("Cas d'usage prioritaires")]
+
+
+def test_html_stale_benchmark_shows_note():
+    r = report_for(state(), today=date(2027, 12, 3))
+    assert r.benchmarks and r.benchmarks[0].note == STALE_NOTE
+    page = render_html(r)
+    section = page[page.index(BENCH_TITLE) : page.index("Cas d'usage prioritaires")]
+    assert escape(STALE_NOTE) in section
+
+
+def test_html_without_benchmark_omits_subsection():
+    r = report_for(state(sector="peche"), kb=KB_SECTOR_ONLY)
+    assert not r.benchmarks
+    assert BENCH_TITLE not in render_html(r)
