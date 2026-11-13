@@ -1,5 +1,4 @@
-from kb_helpers import state
-from test_build import KB, S_FULL, report_for
+from kb_helpers import KB, S_FULL, report_for, state
 
 from audit_ia.audit.models import Dimension
 from audit_ia.report.build import Ref

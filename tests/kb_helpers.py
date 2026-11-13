@@ -6,12 +6,16 @@ from pathlib import Path
 
 import yaml
 
+from audit_ia.diagnostic.engine import diagnose
 from audit_ia.kb.loader import load_kb
 from audit_ia.kb.models import Benchmark, Confidence, Provenance, Rule, RuleStatus
+from audit_ia.report.build import build_report
 
 KB_MIN = Path(__file__).resolve().parent / "fixtures" / "kb_min"
 
-_BASE = load_kb(KB_MIN)
+TODAY = date(2026, 11, 13)
+KB = load_kb(KB_MIN)
+_BASE = KB
 # Base de test où seul le repère « construction » subsiste (aucun repère générique).
 KB_SECTOR_ONLY = _BASE.model_copy(
     update={"benchmarks": {"repere-construction": _BASE.benchmarks["repere-construction"]}}
@@ -128,3 +132,10 @@ def state(headcount: int = 45, sector: str = "commerce", stage: str = "usage_ind
         headcount=headcount, sector=sector, stage=stage, respondent_role="dirigeant"
     )
     return AuditState(profile=profile, facts=built)
+
+
+S_FULL = state(headcount=45, comptes_perso=True)
+
+
+def report_for(s, today=TODAY, kb=KB):
+    return build_report(s, diagnose(s, kb, today), kb, today)

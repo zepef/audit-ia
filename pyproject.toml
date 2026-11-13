@@ -21,3 +21,6 @@ where = ["src"]
 [tool.pytest.ini_options]
 testpaths = ["tests"]
 pythonpath = ["tests"]
+
+[tool.setuptools.package-data]
+audit_ia = ["report/templates/*.j2"]

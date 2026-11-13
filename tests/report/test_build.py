@@ -1,21 +1,12 @@
 from datetime import date
 
-from kb_helpers import KB_MIN, KB_SECTOR_ONLY, state
+from kb_helpers import KB, KB_SECTOR_ONLY, S_FULL, TODAY, report_for, state
 
 from audit_ia.audit.models import Dimension
 from audit_ia.diagnostic.engine import diagnose
-from audit_ia.kb.loader import load_kb
 from audit_ia.kb.models import Horizon
 from audit_ia.report.build import ESTIMATED_NOTE, STALE_NOTE, build_report
 from audit_ia.report.check import check_report
-
-TODAY = date(2026, 11, 13)
-KB = load_kb(KB_MIN)
-S_FULL = state(headcount=45, comptes_perso=True)
-
-
-def report_for(s, today=TODAY, kb=KB):
-    return build_report(s, diagnose(s, kb, today), kb, today)
 
 
 def test_sections_always_present():
