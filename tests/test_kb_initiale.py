@@ -109,3 +109,10 @@ def test_screening_use_case_not_proposed_to_company_already_doing_it():
     not_doing = state(stage="usage_outille", **{"competences.recrutements_reguliers": True,
                                                  "gouvernance.ia_recrutement": False})  # fmt: skip
     assert evaluate(cond, profile_facts(not_doing)) is Tri.TRUE
+
+
+def test_benchmark_scope_and_stages_follow_corpus():
+    unpublished = {i for i, b in KB.benchmarks.items() if not b.scope_published}
+    assert {"barometre-data-ia-2026-cadre", "dirigeants-2026-responsable-ia"} <= unpublished
+    non_users = {i for i, b in KB.benchmarks.items() if b.stages == ["non_utilisatrice"]}
+    assert non_users == {"insee-2025-raisons-non-usage", "bdf-2026-freins-non-utilisatrices"}

@@ -11,11 +11,12 @@ from pydantic import BaseModel
 
 from audit_ia.audit.models import AuditState, Certainty, CompanyProfile, Dimension
 from audit_ia.diagnostic.engine import Diagnosis
-from audit_ia.kb.models import Confidence, Horizon, KnowledgeBase, Provenance
+from audit_ia.kb.models import Benchmark, Confidence, Horizon, KnowledgeBase, Provenance
 
 STALE_NOTE = "À revérifier : cette information n'a pas été recontrôlée récemment."
 ESTIMATED_NOTE = "Fondé sur une estimation du décideur, à confirmer."
 NO_FINDING_TEXT = "Aucun constat établi sur cette dimension."
+UNPUBLISHED_SCOPE = "Taille des entreprises interrogées non publiée."
 
 _MONTHS = [
     "janvier", "février", "mars", "avril", "mai", "juin", "juillet",
@@ -92,6 +93,14 @@ def _source_line(kb: KnowledgeBase, provenance: Provenance, stale: bool) -> Sour
     )
 
 
+def benchmark_sentence(b: Benchmark) -> str:
+    """Indicateur, valeur, population et terrain, en une phrase."""
+    text = f"{b.indicator} — {b.value} ({b.population}, {b.fieldwork})."
+    if not b.scope_published:
+        text += f" {UNPUBLISHED_SCOPE}"
+    return text
+
+
 def _notes(*notes: str | None) -> str | None:
     kept = [n for n in notes if n]
     return " ".join(kept) if kept else None
@@ -103,6 +112,7 @@ def build_report(
     # --- constats par dimension
     by_dimension: dict[Dimension, list[ReportItem]] = {d: [] for d in Dimension}
     benchmark_hits = {h.benchmark_id: h for h in diagnosis.benchmarks}
+    shown_with_finding: set[str] = set()
     for finding in diagnosis.findings:
         problem = kb.problems[finding.problem_id]
         refs = [Ref(kind="problem", id=problem.id)]
@@ -115,7 +125,8 @@ def build_report(
             if hit is None:
                 continue
             refs.append(Ref(kind="benchmark", id=bid))
-            text += f" Repère : {kb.benchmarks[bid].indicator} : {kb.benchmarks[bid].value}."
+            text += f" Repère : {benchmark_sentence(kb.benchmarks[bid])}"
+            shown_with_finding.add(bid)
             sources.append(_source_line(kb, kb.benchmarks[bid].provenance, hit.stale))
             stale = stale or hit.stale
         by_dimension[problem.dimension].append(
@@ -153,13 +164,15 @@ def build_report(
             )
         )
 
-    # --- repères du segment
+    # --- autres repères du segment (ceux déjà cités près d'un constat exclus)
     benchmarks = []
     for hit in diagnosis.benchmarks:
+        if hit.benchmark_id in shown_with_finding:
+            continue
         b = kb.benchmarks[hit.benchmark_id]
         benchmarks.append(
             ReportItem(
-                text=f"{b.indicator} : {b.value} — {b.population}, {b.fieldwork}",
+                text=benchmark_sentence(b),
                 refs=[Ref(kind="benchmark", id=b.id)],
                 sources=[_source_line(kb, b.provenance, hit.stale)],
                 note=STALE_NOTE if hit.stale else None,

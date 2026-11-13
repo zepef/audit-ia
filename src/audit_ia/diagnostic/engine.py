@@ -146,9 +146,12 @@ def diagnose(state: AuditState, kb: KnowledgeBase, today: date) -> Diagnosis:
             )
         )
 
+    # Un repère réservé à d'autres stades (raisons de non-usage...) n'est ni
+    # affiché ni compté parmi les indicateurs sans repère.
+    for_stage = [b for b in kb.benchmarks.values() if not b.stages or profile.stage in b.stages]
     compatible = {
         b.id: b
-        for b in kb.benchmarks.values()
+        for b in for_stage
         if _in_bounds(profile.headcount, b.headcount_min, b.headcount_max)
         and (not b.sectors or profile.sector in b.sectors)
     }
@@ -162,7 +165,7 @@ def diagnose(state: AuditState, kb: KnowledgeBase, today: date) -> Diagnosis:
             benchmarks.append(BenchmarkHit(benchmark_id=b.id, stale=is_stale(b, today)))
     benchmarks.sort(key=lambda h: h.benchmark_id)
     indicators_without_benchmark = sorted(
-        {b.indicator for b in kb.benchmarks.values()} - set(chosen)
+        {b.indicator for b in for_stage} - set(chosen)
     )
 
     aids = []

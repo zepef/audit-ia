@@ -24,7 +24,7 @@ Tous les fichiers sauf `VERSION` et `neutrality.yaml` sont des listes d'entrées
 | `sectors.yaml` | Secteurs reconnus | `id`, `label` (libellé affiché dans le rapport) |
 | `facts.yaml` | Faits recueillis auprès du décideur | `id`, `dimension` (une des sept), `kind` (`bool`, `int`, `float`, `enum`, `text`), `choices` (pour `enum`), `prompt_hint`, `stages` (vide = tous les stades), `priority` |
 | `rules.yaml` | Règles et échéances datées | `id`, `statement`, `status` (`applicable`, `adopte_non_applicable`, `projet`, `proposition`, `recommandation`, `jurisprudence`), `effective_on`, `bounds`, `applies_when`, `provenance` |
-| `benchmarks.yaml` | Repères chiffrés | `id`, `indicator`, `value`, `headcount_min`, `headcount_max`, `sectors` (vide = tous), `population`, `fieldwork`, `expires_on`, `provenance` |
+| `benchmarks.yaml` | Repères chiffrés | `id`, `indicator`, `value`, `headcount_min`, `headcount_max`, `sectors` (vide = tous), `scope_published` (faux si la source ne publie pas la taille des entreprises interrogées), `stages` (vide = tous les stades), `population`, `fieldwork`, `expires_on`, `provenance` |
 | `problems.yaml` | Problèmes auditables | `id` (préfixe `HUM`, `DAT`, `SI`, `GEN`, `CYB`, `COU`, `ENV` ou `FON`), `symptom`, `dimension`, `triggers`, `evidence_benchmark_ids`, `action_ids` |
 | `use_cases.yaml` | Cas d'usage | `id`, `function`, `title`, `prerequisites`, `obstacles`, `risks`, `first_step`, `applies_when`, `priority` |
 | `actions.yaml` | Actions du plan | `id`, `title`, `horizon` (`j30`, `j90`, `m12`), `effort` (`faible`, `moyen`, `fort`), `prerequisites`, `success_check` |
@@ -39,6 +39,8 @@ Tous les fichiers sauf `VERSION` et `neutrality.yaml` sont des listes d'entrées
 
 - `expires_on` : un an après la fin du terrain d'enquête ; à défaut, un an après la publication.
 - Pour un même `indicator`, un repère sectoriel remplace le repère tous secteurs.
+- `headcount_min` et `headcount_max` nuls signifient « toutes tailles » seulement si `scope_published` est vrai. Sinon le rapport précise « Taille des entreprises interrogées non publiée. » (corpus l. 311, 313, 315, 316, 317 pour Impact AI, 318 : aucune taille d'entreprise donnée).
+- `stages: [non_utilisatrice]` réserve aux entreprises qui n'utilisent pas l'IA les repères sur les raisons de non-usage (corpus l. 310 et 319).
 - Clés de secteur : celles de `sectors.yaml` (ventilations Insee et Banque de France du rapport, plus `autre`). Un repère qui cite un secteur absent de `sectors.yaml` est refusé au chargement, et un audit dont le secteur n'y figure pas est refusé par `audit-ia report`.
 
 ### Neutralité

@@ -209,3 +209,20 @@ def test_fact_in_stage_is_a_verification():
     d = diagnose(state(stage="processus_transforme"), _kb_with_staged_problem(), TODAY)
     assert "HUM-G1" in _blocks(d, "automatisation.validation_humaine")
     assert "HUM-G1" in d.undecided_problem_ids
+
+
+# --- F5 : repères réservés à un stade
+
+def _kb_non_user_benchmark():
+    return _kb_with(benchmarks={
+        i: b.model_copy(update={"stages": ["non_utilisatrice"]}) for i, b in KB.benchmarks.items()
+    })  # fmt: skip
+
+
+def test_benchmark_of_other_stage_is_not_retained():
+    kb = _kb_non_user_benchmark()
+    d = diagnose(state(stage="usage_individuel", comptes_perso=True), kb, TODAY)
+    assert d.benchmarks == [] and d.findings      # ni dans la liste, ni comme preuve
+    assert d.indicators_without_benchmark == []   # pas « aucun repère » pour un repère hors stade
+    d = diagnose(state(stage="non_utilisatrice"), kb, TODAY)
+    assert [h.benchmark_id for h in d.benchmarks] == ["repere-a"]

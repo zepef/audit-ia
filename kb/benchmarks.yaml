@@ -289,6 +289,7 @@
   - services_administratifs
   - transports
   - hebergement_restauration
+  stages: [non_utilisatrice]
   population: Entreprises de 20 salariés et plus, industrie, bâtiment et services marchands hors commerce, entreprises déclarant ne pas utiliser l'IA
   fieldwork: 25 février-3 avril 2026
   expires_on: 2027-04-03
@@ -305,6 +306,7 @@
   headcount_min: null
   headcount_max: null
   sectors: []
+  scope_published: false
   population: 900 décideurs ; terrain et tailles non publiés
   fieldwork: baromètre du 5 octobre 2026
   expires_on: 2027-10-05
@@ -337,6 +339,7 @@
   headcount_min: null
   headcount_max: null
   sectors: []
+  scope_published: false
   population: 802 dirigeants
   fieldwork: terrain non publié ; article du 10 juillet 2026
   expires_on: 2027-07-10
@@ -369,6 +372,7 @@
   headcount_min: null
   headcount_max: null
   sectors: []
+  scope_published: false
   population: 1 100 salariés du privé
   fieldwork: 12-25 mai 2026
   expires_on: 2027-05-25
@@ -385,6 +389,7 @@
   headcount_min: null
   headcount_max: null
   sectors: []
+  scope_published: false
   population: 1 100 salariés du privé utilisateurs de l'IA
   fieldwork: 12-25 mai 2026
   expires_on: 2027-05-25
@@ -417,6 +422,7 @@
   headcount_min: null
   headcount_max: null
   sectors: []
+  scope_published: false
   population: 1 000 salariés du privé
   fieldwork: février 2026
   expires_on: 2027-02-26
@@ -433,6 +439,7 @@
   headcount_min: null
   headcount_max: null
   sectors: []
+  scope_published: false
   population: Actifs utilisant l'IA au travail
   fieldwork: novembre 2025, publié le 24 mars 2026
   expires_on: 2026-11-17
@@ -449,6 +456,7 @@
   headcount_min: 10
   headcount_max: null
   sectors: []
+  stages: [non_utilisatrice]
   population: Non-utilisatrices de 10 salariés et plus
   fieldwork: 2025 (publié le 21 juillet 2026)
   expires_on: 2027-07-21

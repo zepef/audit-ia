@@ -95,6 +95,27 @@ def test_stale_benchmark_is_flagged():
     assert all(s.stale for i in r.benchmarks for s in i.sources)
 
 
-def test_finding_shows_evidence_benchmark_value():
-    text = report_for(S_FULL).by_dimension[Dimension.SECURITE][0].text
-    assert "Repère : adoption : 40 %." in text
+
+
+# --- F5 : repères affichés avec leur périmètre, sans doublon
+
+def test_finding_evidence_sentence_with_scope():
+    item = report_for(S_FULL).by_dimension[Dimension.SECURITE][0]
+    assert item.text == (
+        "Des comptes personnels sont utilisés pour des outils d'IA. "
+        "Repère : adoption — 40 % (Entreprises de 1 à 249 salariés, T1 2026)."
+    )
+
+
+def test_unpublished_scope_is_stated():
+    b = KB.benchmarks["repere-a"].model_copy(update={"scope_published": False})
+    kb = KB.model_copy(update={"benchmarks": {**KB.benchmarks, "repere-a": b}})
+    item = report_for(S_FULL, kb=kb).by_dimension[Dimension.SECURITE][0]
+    assert item.text.endswith("(Entreprises de 1 à 249 salariés, T1 2026). Taille des entreprises interrogées non publiée.")
+    other = report_for(state(), kb=kb).benchmarks[0]
+    assert other.text.endswith("Taille des entreprises interrogées non publiée.")
+
+
+def test_benchmark_shown_with_finding_is_not_repeated():
+    assert report_for(S_FULL).benchmarks == []
+    assert [i.refs[0].id for i in report_for(state()).benchmarks] == ["repere-a"]

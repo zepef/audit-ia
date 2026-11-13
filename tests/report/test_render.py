@@ -49,15 +49,13 @@ def test_html_is_standalone_french_document():
     assert "13 novembre 2026" in html
 
 
-BENCH_TITLE = "Repères pour votre taille et votre secteur"
+BENCH_TITLE = "Autres repères"
 
 
 def test_html_renders_segment_benchmarks_in_place():
-    r = report_for(S_FULL)
+    r = report_for(state())
     assert r.benchmarks
     html = render_html(r)
-    value = r.benchmarks[0].text
-    assert value.split(" — ")[0] in html or "40 %" in html
     pos = [html.index("Bilan par dimension"), html.index(BENCH_TITLE), html.index("40 %", html.index(BENCH_TITLE)),
            html.index("Cas d'usage prioritaires")]  # fmt: skip
     assert pos == sorted(pos)

@@ -115,6 +115,10 @@ class Benchmark(_Strict):
     headcount_min: int | None = None
     headcount_max: int | None = None
     sectors: list[str] = []  # vide = tous secteurs
+    # False : la source ne publie pas la taille des entreprises interrogées
+    # (headcount_min/max nuls ne veulent alors pas dire « toutes tailles »).
+    scope_published: bool = True
+    stages: list[Stage] = []  # vide = tous les stades
     population: str
     fieldwork: str
     expires_on: date

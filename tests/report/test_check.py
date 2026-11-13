@@ -39,6 +39,6 @@ def test_check_catches_missing_keys():
 
 
 def test_check_catches_benchmark_item_without_source():
-    r = report_for(S_FULL)
+    r = report_for(state())
     r.benchmarks[0].sources = []
-    assert any("benchmarks" in v and "sans ligne de source" in v for v in check_report(r, S_FULL, KB))
+    assert any("benchmarks" in v and "sans ligne de source" in v for v in check_report(r, state(), KB))
