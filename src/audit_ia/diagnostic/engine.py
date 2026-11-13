@@ -43,7 +43,7 @@ class AidHit(BaseModel):
 
 class Verification(BaseModel):
     fact_id: str
-    blocks: list[str]  # identifiants des problèmes, règles, aides non tranchés
+    blocks: list[str]  # identifiants des problèmes, règles, aides, cas d'usage
 
 
 class Diagnosis(BaseModel):
@@ -148,7 +148,7 @@ def diagnose(state: AuditState, kb: KnowledgeBase, today: date) -> Diagnosis:
     applicable_cases = [
         uc
         for uc in kb.use_cases.values()
-        if uc.applies_when is None or evaluate(uc.applies_when, facts) is Tri.TRUE
+        if uc.applies_when is None or track(uc.id, uc.applies_when) is Tri.TRUE
     ]
     applicable_cases.sort(key=lambda uc: (-uc.priority, uc.id))
     use_case_ids = [uc.id for uc in applicable_cases[:MAX_USE_CASES]]

@@ -4,7 +4,7 @@ from kb_helpers import KB_MIN, state
 
 from audit_ia.diagnostic.engine import Finding, diagnose
 from audit_ia.kb.loader import load_kb
-from audit_ia.kb.models import UseCase
+from audit_ia.kb.models import Test, UseCase
 
 TODAY = date(2026, 11, 13)
 KB = load_kb(KB_MIN)
@@ -101,3 +101,33 @@ def test_actions_deduplicated_in_finding_order():
 
 def test_diagnosis_is_deterministic():
     assert diagnose(S, KB, TODAY) == diagnose(S, KB, TODAY)
+
+
+def _blocks(d, fact_id):
+    return next(v.blocks for v in d.verifications if v.fact_id == fact_id)
+
+
+def test_undecided_use_case_becomes_verification():
+    uc = KB.use_cases["cas-a"].model_copy(
+        update={"applies_when": Test(fact="charte_ia", op="eq", value=True)}
+    )
+    kb = _kb_with(use_cases={"cas-a": uc})
+    d = diagnose(state(), kb, TODAY)
+    assert d.use_case_ids == []
+    assert "cas-a" in _blocks(d, "charte_ia")
+
+
+def test_undecided_rule_is_excluded_and_verified():
+    rule = KB.rules["regle-a"].model_copy(
+        update={"applies_when": Test(fact="f1", op="eq", value=True)}
+    )
+    kb = _kb_with(rules={"regle-a": rule})
+    d = diagnose(state(), kb, TODAY)
+    assert [h.rule_id for h in d.rules] == []
+    assert "regle-a" in _blocks(d, "f1")
+
+
+def test_stale_aid_and_benchmark_are_kept_and_flagged():
+    d = diagnose(state(), KB, date(2027, 12, 1))
+    assert [h.aid_id for h in d.aids] == ["aide-a"] and d.aids[0].stale
+    assert d.benchmarks and all(h.stale for h in d.benchmarks)
