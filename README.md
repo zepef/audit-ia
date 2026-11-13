@@ -101,6 +101,20 @@ Décidé le 13 novembre 2026, fichiers de licence à ajouter :
 
 Le dépôt reste privé tant que le démonstrateur ne tourne pas.
 
+## Points ouverts du socle
+
+Relevés par la relecture finale du plan 1 et non corrigés :
+
+- **Stratégie et système d'information sans problème auditable** : le corpus n'en fournit aucun de vérifié ; le rapport l'indique pour ces deux dimensions.
+- **Deux aides seulement** dans la base (Diagnostic Data IA, Accélérateurs IA) ; aucune pour les entreprises de moins de 10 salariés.
+- **Relecture humaine de la base** non faite : toutes les entrées portent `human_reviewed: false`.
+- **Trois repères Ipsos/Google expirent le 17 novembre 2026** et seront signalés « à revérifier » ensuite.
+- **Vérifications peu pertinentes pour une entreprise non utilisatrice** (chatbot, hypertrucages, produit réglementé) : ces faits n'ont pas de restriction de stade.
+- **Plan d'action non filtré par les faits** : un constat propose toutes les actions de son problème, y compris sur un point que le décideur estime déjà traité.
+- **Phrases de repère** parfois lourdes (double parenthèse, majuscule en cours de phrase).
+- **« Uber » dans le texte de la règle sur les décisions automatisées**, comme sanction citée.
+- **Fichiers de licence** à ajouter.
+
 ## Journal
 
 | Date | Changement |
@@ -113,3 +127,4 @@ Le dépôt reste privé tant que le démonstrateur ne tourne pas.
 | 13/11/2026 | Spécification validée ; plan de réalisation 1 sur 6 : socle déterministe (base de connaissances, diagnostic, rapport HTML) |
 | 13/11/2026 | Socle déterministe réalisé : base de connaissances initiale tirée des seules valeurs [V] et [V2] du rapport (18 règles, 26 repères, 17 problèmes, 2 aides), trois audits de référence, rapport HTML de bout en bout |
 | 13/11/2026 | Corrections après revue finale : la règle « nudification » est retirée (17 règles) ; faits d'audit contrôlés contre la base, stade de l'entreprise pris en compte, rapport sans identifiant technique |
+| 13/11/2026 | Relecture d'ensemble du socle et vague de corrections : contrôle des faits contre la base, conditions sur le profil, états des dimensions, rapport sans identifiant technique ; 174 tests |
