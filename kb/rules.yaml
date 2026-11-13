@@ -104,18 +104,6 @@
     confidence: V
     human_reviewed: false
 
-# corpus l. 63, 91 ([V2] : seules les références des deux arrêts sont confirmées)
-- id: cse-consultation-ia
-  statement: "Consultation du CSE (art. L. 2312-8 du Code du travail) avant déploiement d'un outil d'IA, pilote compris : jurisprudence de référé 2025-2026, casuistique. La cour d'appel de Paris (pôle 1, ch. 2, 21 mai 2026, RG n° 25/13232 et 25/13234) a suspendu l'usage d'une IA générative et d'un assistant interne, dans des affaires concernant des sociétés de presse, avec octroi de dommages et intérêts provisionnels."
-  status: jurisprudence
-  bounds: Aucune décision lue à la source ; les deux arrêts sont confirmés de seconde main.
-  applies_when: {fact: gouvernance.cse_present, op: eq, value: true}
-  provenance:
-    source_id: actuia-cse-ca-paris-2026
-    verified_on: 2026-11-13
-    confidence: V2
-    human_reviewed: false
-
 # corpus l. 64, 95
 - id: cnil-controles-2026-recrutement
   statement: "CNIL : le recrutement figure parmi les thématiques prioritaires de contrôle 2026 (annonce du 3 avril 2026), avec le répertoire électoral unique et les fédérations sportives ; cible : « prioritairement les grandes entreprises et les cabinets de recrutement », dont « les systèmes de prise de décision automatisée »."
@@ -211,7 +199,7 @@
 - id: en-18286-presomption-art-17
   statement: "Norme harmonisée EN 18286:2026 (système de management de la qualité) : référence publiée par la décision d'exécution (UE) 2026/2274 ; présomption de conformité limitée aux exigences de l'article 17 du règlement IA."
   status: applicable
-  bounds: Présomption limitée à l'article 17, pas une conformité générale au règlement ; date de publication au JOUE non retrouvée.
+  bounds: Présomption de conformité limitée aux exigences de l'article 17, pas une conformité générale au règlement ; annonce de la Commission du 19 octobre 2026 ; date de publication au JOUE non retrouvée sur la source citée.
   applies_when: {fact: strategie.fournisseur_systeme_ia, op: eq, value: true}
   provenance:
     source_id: commission-en-18286
@@ -223,7 +211,6 @@
 - id: rgpd-art-22-decisions-automatisees
   statement: "RGPD, article 22 (décisions individuelles automatisées) : le 24 août 2026, la CNIL annonce que l'autorité néerlandaise, « en coopération avec la CNIL », a infligé à Uber une amende de 824 990 000 € pour des décisions automatisées concernant les chauffeurs (« absence totale d'intervention humaine »)."
   status: jurisprudence
-  effective_on: 2026-08-24
   bounds: Ce n'est pas une sanction de la CNIL.
   applies_when: {fact: gouvernance.intervention_humaine_decisions, op: eq, value: false}
   provenance:

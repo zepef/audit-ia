@@ -1,6 +1,9 @@
 # Aides publiques. Origine : section « 35 000 entreprises sensibilisées, 70
 # diagnostics engagés » de corpus/rapport-freins-ia-2026.md (tableau l. 192-200,
 # et l. 202). Seuls les dispositifs dont les paramètres sont marqués [V] entrent.
+# IA Booster (l. 196) est écarté : statut 2026 inconnu, aucune éligibilité donnée.
+# Autodiag IA (l. 182, [V]) est écarté : la ligne vérifiée ne donne ni prix ni
+# prise en charge (« gratuit » n'apparaît qu'à la l. 208, non marquée).
 
 # corpus l. 194, 202, 218
 - id: diagnostic-data-ia
@@ -25,16 +28,6 @@
   amount: 18 mois, pris en charge à 46 % par France 2030 ; chiffre d'affaires supérieur à 8 M€, plus de 50 collaborateurs et au moins 3 ans d'existence ; diagnostic 360° de 12 jours puis deux modules de 13 jours (paramètres datés de juin et septembre 2026)
   provenance:
     source_id: dge-osez-lia
-    verified_on: 2026-11-13
-    confidence: V
-    human_reviewed: false
-
-# corpus l. 196, 219
-- id: ia-booster-france-2030
-  name: IA Booster France 2030
-  amount: Prise en charge « pouvant aller jusqu'à 80 % du montant de la prestation visée » (lancement du 16 juin 2023) ; statut 2026 non confirmé
-  provenance:
-    source_id: dge-ia-booster-2023
     verified_on: 2026-11-13
     confidence: V
     human_reviewed: false

@@ -413,7 +413,7 @@
 # corpus l. 317
 - id: impact-ai-2026-formes-ia-responsable
   indicator: Salariés formés à l'IA responsable
-  value: 23 % formés à l'IA responsable
+  value: 23 %
   headcount_min: null
   headcount_max: null
   sectors: []

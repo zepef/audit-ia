@@ -86,11 +86,6 @@
   title: Adaptation au droit de l'Union européenne (dossier législatif du projet de loi DDADUE)
   publisher: Sénat
   url: https://www.senat.fr/dossier-legislatif/pjl25-118.html
-- id: actuia-cse-ca-paris-2026
-  title: "La justice française suspend l'usage de ChatGPT dans une entreprise : un signal fort pour tous les projets IA"
-  publisher: ActuIA
-  url: https://www.actuia.com/actualite/la-justice-francaise-suspend-lusage-de-chatgpt-dans-une-entreprise-un-signal-fort-pour-tous-les-projets-ia/
-  published_on: 2026-06-19
 - id: cnil-controles-2026
   title: "Les contrôles en 2026 : recrutement, répertoire électoral unique et fédérations sportives"
   publisher: CNIL
@@ -141,8 +136,3 @@
   title: Plan « Osez l'IA »
   publisher: Direction générale des Entreprises
   url: https://www.entreprises.gouv.fr/osez-lia
-- id: dge-ia-booster-2023
-  title: Lancement du programme IA Booster France 2030
-  publisher: Direction générale des Entreprises
-  url: https://www.entreprises.gouv.fr/la-dge/actualites/lancement-du-programme-ia-booster-france-2030
-  published_on: 2023-06-16

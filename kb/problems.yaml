@@ -57,11 +57,10 @@
   evidence_benchmark_ids: [ipsos-2026-regle-interne]
   action_ids: [action-diffuser-charte, action-referents-ia]
 
-# corpus l. 262 (Valeur -> stratégie : la ligne porte sur la stratégie affichée,
-# et la dimension stratégie couvre la priorisation valeur x complexité, l. 244)
+# corpus l. 262 (Valeur)
 - id: HUM-G1
   symptom: La stratégie IA est affichée sans indicateur de valeur suivi.
-  dimension: strategie
+  dimension: valeur
   triggers:
     all:
       - {fact: strategie.strategie_ia_formalisee, op: eq, value: true}
@@ -142,11 +141,10 @@
   evidence_benchmark_ids: [insee-2025-raisons-non-usage]
   action_ids: [action-nettoyer-historiques, action-referentiel-donnees]
 
-# corpus l. 274 (Coûts -> système d'information : la dimension SI couvre les
-# clauses contractuelles des logiciels, l. 244 ; verrouillage contractuel, l. 139)
+# corpus l. 274 (Coûts -> valeur)
 - id: SI-S1
   symptom: La facture logicielle augmente à périmètre constant, avec une IA incluse d'office.
-  dimension: si
+  dimension: valeur
   triggers: {fact: si.hausse_facture_ia_incluse, op: eq, value: true}
   action_ids: [action-revue-contrats]
 
