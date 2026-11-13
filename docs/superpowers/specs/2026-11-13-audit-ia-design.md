@@ -140,7 +140,7 @@ Définition retenue de « souverain » *(à confirmer)* : opérateur soumis au s
 |---|---|---|
 | Orchestration vocale | Orchestrateur ouvert, auto-hébergé | LiveKit Agents, Pipecat |
 | Transcription | **Voxtral (Mistral)** *(décision du porteur)*, exécuté sur notre infrastructure si les conditions d'hébergement de Mistral ne répondent pas à la définition de « souverain » | Repli : Whisper auto-hébergé, modèles Kyutai |
-| Modèle de langage | **Mistral** *(décision du porteur)*, derrière une interface commune qui permet d'en changer | Repli : modèle à poids ouverts auto-hébergé |
+| Modèle de langage | **Mistral Large 4** *(décision du porteur)*, derrière une interface commune qui permet d'en changer ; identifiant exact, disponibilité et lieu d'exécution à vérifier | Repli : modèle à poids ouverts auto-hébergé |
 | Synthèse vocale | Famille Voxtral si elle couvre la synthèse en français avec une qualité suffisante *(à vérifier)* ; sinon modèle ouvert auto-hébergé | Modèles Kyutai, autres modèles ouverts en français |
 | Service d'entretien et de diagnostic | Python | — |
 | Interface | Next.js (TypeScript), comme le site tckc.ai | — |
@@ -215,7 +215,7 @@ Prises le 13 novembre 2026.
 |---|---|---|
 | Cible du démonstrateur | Bpifrance, les builders, quelques décideurs | Trois publics et leurs critères de réussite (section 6). |
 | Hébergement | Souverain ; Scaleway | Pile technique (section 5). |
-| Fournisseurs de modèles et de voix | Qualité et souveraineté ; Mistral pour le modèle de langage, Voxtral pour la voix | Souveraineté éliminatoire, qualité pour départager ; Voxtral retenu d'emblée (section 5). |
+| Fournisseurs de modèles et de voix | Qualité et souveraineté ; Mistral Large 4 pour le modèle de langage, Voxtral pour la voix | Souveraineté éliminatoire, qualité pour départager ; Voxtral retenu d'emblée (section 5). |
 | Conservation de l'audio | Aucune | Traitement en flux, seule la transcription est gardée (section 5). |
 | Gouvernance de la neutralité | Totale ; TCKC en dehors de l'outil ; tout le code en licence libre | Aucune position privilégiée, code, base et règles publiés (section 3). |
 | Financeur et calendrier | À déterminer | La date du démonstrateur reste ouverte. |
