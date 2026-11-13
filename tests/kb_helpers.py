@@ -8,7 +8,7 @@ import yaml
 
 from audit_ia.kb.models import Benchmark, Confidence, Provenance, Rule, RuleStatus
 
-KB_MIN = Path(__file__).resolve().parent.parent / "fixtures" / "kb_min"
+KB_MIN = Path(__file__).resolve().parent / "fixtures" / "kb_min"
 
 
 def _edit(root: Path, name: str, fn) -> None:
@@ -107,3 +107,17 @@ def benchmark(
     )
     fields.update(overrides)
     return Benchmark(**fields)
+
+
+def state(headcount: int = 45, sector: str = "commerce", stage: str = "usage_individuel", **facts):
+    """Construit un AuditState ; chaque fait est une valeur (constatée) ou un couple (certitude, valeur)."""
+    from audit_ia.audit.models import AuditState, CompanyProfile, Fact
+
+    built = {}
+    for fact_id, raw in facts.items():
+        certainty, value = raw if isinstance(raw, tuple) else ("constate", raw)
+        built[fact_id] = Fact(fact_id=fact_id, value=value, certainty=certainty)
+    profile = CompanyProfile(
+        headcount=headcount, sector=sector, stage=stage, respondent_role="dirigeant"
+    )
+    return AuditState(profile=profile, facts=built)
