@@ -18,7 +18,7 @@ Le constat de départ, tiré du corpus : en 2026, le problème n'est plus l'acc�
 | Élément | État | Dernière mise à jour |
 |---|---|---|
 | Corpus documentaire (rapport + notes) | Rédigé ; 210 affirmations contrôlées sur sources primaires (128 confirmées, 32 corrigées, 4 infirmées, 23 non retrouvées, 23 inaccessibles) | 13/11/2026 |
-| Spécification de l'application | À faire | — |
+| Spécification de l'application | Version 0.1 rédigée, à valider (`docs/superpowers/specs/2026-11-13-audit-ia-design.md`) | 13/11/2026 |
 | Modèle de données (règles datées, benchmarks, problèmes auditables) | À faire | — |
 | Code | Non commencé | — |
 
@@ -29,6 +29,7 @@ corpus/
   rapport-freins-ia-2026.md     synthèse : freins à l'intégration de l'IA en France (2026)
   notes/                        six notes de recherche, une par axe
   verification/                 trois notes de vérification sur sources primaires
+docs/superpowers/specs/         spécification de l'application
 ```
 
 Les six axes des notes : baromètres d'adoption, cadre juridique et conformité, freins humains et organisationnels, freins techniques (données, SI, cybersécurité, souveraineté, coûts), fonctions de gestion et d'administration, méthodes d'audit et dispositifs d'aide.
@@ -70,7 +71,8 @@ Deux conséquences pour la conception :
 
 - [ ] Relire le rapport et arbitrer les contradictions restées ouvertes
 - [ ] Vérifier à la main les sources restées inaccessibles (textes officiels, jurisprudence, ANSSI)
-- [ ] Rédiger la spécification : périmètre de la première version, public visé, parcours d'audit
+- [x] Rédiger la spécification (version 0.1)
+- [ ] Valider la spécification et trancher ses six décisions ouvertes
 - [ ] Définir le modèle de données : règle datée, benchmark, problème auditable, action, aide
 - [ ] Extraire du rapport les jeux de données initiaux dans un format exploitable par le code
 - [ ] Choisir l'architecture et la pile technique
@@ -81,3 +83,4 @@ Deux conséquences pour la conception :
 |---|---|
 | 12/11/2026 | Recherche documentaire sur six axes et première version du rapport, à partir d'extraits de moteur de recherche (aucune page source ouverte) |
 | 13/11/2026 | Passe de vérification sur sources primaires (20 hôtes autorisés) ; rapport corrigé et annoté ; création du dépôt et de ce README |
+| 13/11/2026 | Spécification 0.1 : entretien vocal avec un décideur, bilan déterministe, rapport de mise en œuvre ; première version en démonstrateur |
