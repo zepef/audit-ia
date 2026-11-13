@@ -1,7 +1,15 @@
+import json
+
 import pytest
 from pydantic import ValidationError
 
-from audit_ia.audit.models import AuditState, CompanyProfile, Fact, OutOfScopeError
+from audit_ia.audit.models import (
+    AuditState,
+    CompanyProfile,
+    Fact,
+    OutOfScopeError,
+    load_audit_state,
+)
 
 PROFILE = CompanyProfile(
     headcount=40, sector="construction", stage="usage_individuel",
@@ -40,3 +48,35 @@ def test_record_replaces():
 
 def test_state_roundtrips_json():
     assert AuditState.model_validate_json(STATE.model_dump_json()) == STATE
+
+
+def _payload(**profile):
+    base = {"headcount": 40, "sector": "construction",
+            "stage": "usage_individuel", "respondent_role": "dirigeant"}
+    base.update(profile)
+    return {"profile": base, "facts": {}}
+
+
+@pytest.mark.parametrize("headcount", [0, 250, "0", 250.0])
+def test_loader_refuses_out_of_scope_from_dict_and_json(headcount):
+    payload = _payload(headcount=headcount)
+    for data in (payload, json.dumps(payload), json.dumps(payload).encode()):
+        with pytest.raises(OutOfScopeError) as e:
+            load_audit_state(data)
+        assert "1 à 249 salariés" in str(e.value)
+
+
+@pytest.mark.parametrize("headcount", [1, 249])
+def test_boundaries_accepted_by_constructor_and_loader(headcount):
+    p = CompanyProfile(headcount=headcount, sector="construction",
+                       stage="usage_individuel", respondent_role="dirigeant")
+    assert p.headcount == headcount
+    payload = _payload(headcount=headcount)
+    assert load_audit_state(payload).profile.headcount == headcount
+    assert load_audit_state(json.dumps(payload)).profile.headcount == headcount
+
+
+def test_loader_other_invalid_input_is_validation_error():
+    with pytest.raises(ValidationError) as e:
+        load_audit_state(_payload(stage="inconnu"))
+    assert not isinstance(e.value, OutOfScopeError)

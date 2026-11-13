@@ -2,7 +2,7 @@
 
 from enum import StrEnum
 
-from pydantic import BaseModel, field_validator, model_validator
+from pydantic import BaseModel, ValidationError, field_validator, model_validator
 
 HEADCOUNT_MIN = 1
 HEADCOUNT_MAX = 249
@@ -36,6 +36,15 @@ class OutOfScopeError(ValueError):
 
 
 class CompanyProfile(BaseModel):
+    """Profil de l'entreprise auditée (1 à 249 salariés).
+
+    Le constructeur lève OutOfScopeError pour un effectif entier hors
+    périmètre. Via model_validate / model_validate_json, ou avec une entrée
+    non entière ("0", 250.0), pydantic lève une ValidationError : pour un
+    refus cohérent quel que soit le mode de chargement, passer par
+    load_audit_state.
+    """
+
     headcount: int
     sector: str
     stage: Stage
@@ -89,3 +98,24 @@ class AuditState(BaseModel):
     def record(self, fact: Fact) -> None:
         """Enregistre le fait, en remplaçant celui de même fact_id."""
         self.facts[fact.fact_id] = fact
+
+
+def load_audit_state(data: str | bytes | dict) -> AuditState:
+    """Charge un état d'audit depuis du JSON (texte ou octets) ou un dict.
+
+    Point d'entrée unique pour relire un audit. Lève OutOfScopeError (message
+    contenant « 1 à 249 salariés ») dès que l'effectif est hors périmètre,
+    y compris pour des entrées coercées comme "0" ou 250.0. Toute autre
+    erreur de validation (stade inconnu, JSON invalide...) lève la
+    ValidationError de pydantic.
+    """
+    try:
+        if isinstance(data, dict):
+            return AuditState.model_validate(data)
+        return AuditState.model_validate_json(data)
+    except ValidationError as exc:
+        for err in exc.errors():
+            cause = (err.get("ctx") or {}).get("error")
+            if isinstance(cause, OutOfScopeError):
+                raise cause from None
+        raise
