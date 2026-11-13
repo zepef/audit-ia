@@ -1,0 +1,91 @@
+"""Modèle de domaine de l'audit : profil, faits, certitude."""
+
+from enum import StrEnum
+
+from pydantic import BaseModel, field_validator, model_validator
+
+HEADCOUNT_MIN = 1
+HEADCOUNT_MAX = 249
+
+
+class Stage(StrEnum):
+    NON_UTILISATRICE = "non_utilisatrice"
+    USAGE_INDIVIDUEL = "usage_individuel"
+    USAGE_OUTILLE = "usage_outille"
+    PROCESSUS_TRANSFORME = "processus_transforme"
+
+
+class Dimension(StrEnum):
+    STRATEGIE = "strategie"
+    GOUVERNANCE = "gouvernance"
+    DONNEES = "donnees"
+    SI = "si"
+    SECURITE = "securite"
+    COMPETENCES = "competences"
+    VALEUR = "valeur"
+
+
+class Certainty(StrEnum):
+    CONSTATE = "constate"
+    ESTIME = "estime"
+    INCONNU = "inconnu"
+
+
+class OutOfScopeError(ValueError):
+    """Entreprise hors du périmètre de l'audit."""
+
+
+class CompanyProfile(BaseModel):
+    headcount: int
+    sector: str
+    stage: Stage
+    respondent_role: str
+
+    def __init__(self, **data):
+        # Pydantic encapsule les ValueError levées par un validateur dans une
+        # ValidationError ; on contrôle donc l'effectif avant pour lever
+        # OutOfScopeError telle quelle. Le validateur ci-dessous couvre
+        # model_validate / model_validate_json.
+        headcount = data.get("headcount")
+        if isinstance(headcount, int) and not isinstance(headcount, bool):
+            _check_headcount(headcount)
+        super().__init__(**data)
+
+    @field_validator("headcount")
+    @classmethod
+    def _headcount_in_scope(cls, value: int) -> int:
+        return _check_headcount(value)
+
+
+def _check_headcount(value: int) -> int:
+    if not HEADCOUNT_MIN <= value <= HEADCOUNT_MAX:
+        raise OutOfScopeError(
+            f"Hors périmètre : l'audit couvre les entreprises de "
+            f"1 à 249 salariés (effectif reçu : {value})."
+        )
+    return value
+
+
+class Fact(BaseModel):
+    fact_id: str
+    value: bool | int | float | str | None
+    certainty: Certainty
+    quote: str | None = None
+
+    @model_validator(mode="after")
+    def _value_matches_certainty(self) -> "Fact":
+        unknown = self.certainty == Certainty.INCONNU
+        if unknown and self.value is not None:
+            raise ValueError("un fait inconnu ne peut pas avoir de valeur")
+        if not unknown and self.value is None:
+            raise ValueError("un fait constaté ou estimé doit avoir une valeur")
+        return self
+
+
+class AuditState(BaseModel):
+    profile: CompanyProfile
+    facts: dict[str, Fact] = {}
+
+    def record(self, fact: Fact) -> None:
+        """Enregistre le fait, en remplaçant celui de même fact_id."""
+        self.facts[fact.fact_id] = fact
