@@ -18,7 +18,7 @@ Le constat de départ, tiré du corpus : en 2026, le problème n'est plus l'acc�
 | Élément | État | Dernière mise à jour |
 |---|---|---|
 | Corpus documentaire (rapport + notes) | Rédigé ; 210 affirmations contrôlées sur sources primaires (128 confirmées, 32 corrigées, 4 infirmées, 23 non retrouvées, 23 inaccessibles) | 13/11/2026 |
-| Spécification de l'application | Version 0.1 rédigée, à valider (`docs/superpowers/specs/2026-11-13-audit-ia-design.md`) | 13/11/2026 |
+| Spécification de l'application | Version 0.2 rédigée (décisions de cadrage intégrées), à valider (`docs/superpowers/specs/2026-11-13-audit-ia-design.md`) | 13/11/2026 |
 | Modèle de données (règles datées, benchmarks, problèmes auditables) | À faire | — |
 | Code | Non commencé | — |
 
@@ -72,7 +72,8 @@ Deux conséquences pour la conception :
 - [ ] Relire le rapport et arbitrer les contradictions restées ouvertes
 - [ ] Vérifier à la main les sources restées inaccessibles (textes officiels, jurisprudence, ANSSI)
 - [x] Rédiger la spécification (version 0.1)
-- [ ] Valider la spécification et trancher ses six décisions ouvertes
+- [ ] Valider la spécification et confirmer ses cinq points ouverts
+- [ ] Évaluer les briques vocales et le modèle de langage souverains sur un jeu d'entretiens en français
 - [ ] Définir le modèle de données : règle datée, benchmark, problème auditable, action, aide
 - [ ] Extraire du rapport les jeux de données initiaux dans un format exploitable par le code
 - [ ] Choisir l'architecture et la pile technique
@@ -84,3 +85,4 @@ Deux conséquences pour la conception :
 | 12/11/2026 | Recherche documentaire sur six axes et première version du rapport, à partir d'extraits de moteur de recherche (aucune page source ouverte) |
 | 13/11/2026 | Passe de vérification sur sources primaires (20 hôtes autorisés) ; rapport corrigé et annoté ; création du dépôt et de ce README |
 | 13/11/2026 | Spécification 0.1 : entretien vocal avec un décideur, bilan déterministe, rapport de mise en œuvre ; première version en démonstrateur |
+| 13/11/2026 | Spécification 0.2 : hébergement et fournisseurs souverains, aucune conservation de l'audio, neutralité totale, démonstrateur pour Bpifrance, builders et décideurs |

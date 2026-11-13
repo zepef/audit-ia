@@ -1,6 +1,6 @@
 # audit-ia — spécification
 
-Version 0.1 du 13 novembre 2026. **Statut : proposition à valider.**
+Version 0.2 du 13 novembre 2026. **Statut : proposition à valider.** Les six décisions de cadrage ont été prises par le porteur du projet (section 9) ; leurs conséquences sont intégrées ci-dessous.
 
 Ce document est rédigé sous l'angle d'un dossier présentable à un financeur public : un outil gratuit et neutre, inséré dans les dispositifs existants, dont la première version est un démonstrateur. Les éléments marqués *(choix proposé)* sont des propositions de rédaction, pas des décisions prises par le porteur du projet.
 
@@ -70,7 +70,7 @@ Le catalogue de problèmes auditables du corpus (33 entrées, identifiants `HUM-
 
 Ces engagements conditionnent la crédibilité d'un outil gratuit financé sur fonds publics.
 
-- **Neutralité.** Le rapport se suffit à lui-même et ne recommande aucun prestataire ni éditeur nommé. La demande d'accompagnement est une étape séparée, déclenchée par le décideur. TCKC y est un accompagnateur parmi d'autres ; la liste s'ouvre ensuite à des indépendants et à des entreprises spécialisées.
+- **Neutralité totale** *(décision du porteur)*. Le rapport se suffit à lui-même et ne recommande aucun prestataire ni éditeur nommé. L'outil ne donne à aucun accompagnateur, TCKC compris, une position privilégiée : pas de transmission automatique, pas de mise en avant. Conséquences proposées : l'orientation renvoie vers les annuaires publics existants ; la base de connaissances et les règles de diagnostic sont publiées et leurs modifications tracées ; toute future mise en relation obéit à des règles d'admission publiques, identiques pour tous.
 - **Complémentarité.** Le rapport oriente vers les dispositifs existants quand le profil y correspond (Diagnostic Data IA, catalogue de prestataires et ambassadeurs du plan Osez l'IA, France Num) au lieu de les doubler.
 - **Traçabilité.** Aucune règle, échéance, aide ou repère chiffré n'est affiché sans sa source, sa date et son niveau de confiance.
 - **Exemplarité.** L'outil est lui-même un système d'IA qui écoute des informations confidentielles. La crainte sur les données est le frein le plus spécifiquement français : hébergement, choix des modèles et transparence doivent pouvoir être montrés.
@@ -125,14 +125,39 @@ Profil de l'entreprise ; transcription ; faits (énoncé, valeur, certitude, ext
 
 - Annonce claire, dès l'ouverture, que l'interlocuteur est une IA (article 50 du règlement IA, applicable depuis le 2 août 2026 **[V]**).
 - Consentement distinct pour l'enregistrement, pour la transmission à un accompagnateur et pour l'observatoire.
-- Audio supprimé après transcription *(choix proposé)* ; transcription et rapport supprimables par le décideur.
-- Hébergement et traitement dans l'Union européenne, avec des modèles dont le lieu d'exécution est maîtrisé *(choix proposé ; le niveau d'exigence, jusqu'à SecNumCloud, est à trancher)*.
+- **Aucune conservation de l'audio** *(décision du porteur)* : le son est traité en flux et n'est jamais écrit sur disque ; seule la transcription est gardée. Transcription et rapport sont supprimables par le décideur.
+- **Hébergement et traitement souverains** *(décision du porteur)* : voir la pile technique ci-dessous.
 - Aucune donnée d'entretien réutilisée pour entraîner un modèle.
 - Analyse d'impact relative à la protection des données menée avant l'ouverture à de vrais utilisateurs.
 
+### Pile technique
+
+Les décisions « hébergement souverain », « fournisseurs choisis sur la qualité et la souveraineté » et « aucune conservation de l'audio » écartent les plateformes vocales intégrées et les modèles voix-à-voix des fournisseurs américains. Reste la chaîne composée et auto-orchestrée.
+
+Définition retenue de « souverain » *(à confirmer)* : opérateur soumis au seul droit européen, données et calculs en France, sans appel à un service relevant d'une loi extraterritoriale. La souveraineté est un critère éliminatoire ; la qualité départage ensuite les candidats, mesurée sur un jeu d'entretiens de test en français.
+
+| Couche | Choix | Candidats à évaluer |
+|---|---|---|
+| Orchestration vocale | Orchestrateur ouvert, auto-hébergé | LiveKit Agents, Pipecat |
+| Transcription | Modèle européen ou à poids ouverts, exécuté sur notre infrastructure | Voxtral (Mistral), Whisper auto-hébergé, modèles Kyutai |
+| Modèle de langage | Fournisseur européen ou modèle à poids ouverts auto-hébergé, derrière une interface commune | Mistral en premier |
+| Synthèse vocale | Idem | Modèles Kyutai, autres modèles ouverts en français |
+| Service d'entretien et de diagnostic | Python | — |
+| Interface | Next.js (TypeScript), comme le site tckc.ai | — |
+| Base de connaissances et règles | Fichiers structurés versionnés dans le dépôt, validés par schéma ; règles en code typé | — |
+| Stockage | PostgreSQL | — |
+| Hébergement | Hébergeur français ; offre qualifiée SecNumCloud visée pour l'ouverture au public | Scaleway, OVHcloud, Outscale |
+| Rapport | HTML converti en PDF | — |
+
+Les candidats n'ont pas été évalués : disponibilité, qualité en français, latence et conditions d'hébergement sont à vérifier avant tout engagement. Risque assumé : la qualité vocale des briques souveraines peut être inférieure à celle des plateformes américaines ; le bilan confirmé à l'écran et la saisie au clavier en limitent l'effet.
+
 ## 6. Première version : le démonstrateur
 
-But : montrer à un financeur, sur quelques entreprises volontaires, que le parcours complet fonctionne et produit un rapport utile.
+But : montrer que le parcours complet fonctionne et produit un rapport utile, devant trois publics *(décision du porteur)* :
+
+- **Bpifrance**, comme financeur potentiel : il doit voir le besoin, le parcours et les engagements tenus.
+- **Les « builders »**, ceux qui construisent et mettent en œuvre l'IA en entreprise : ils doivent pouvoir lire l'architecture, la base de connaissances et les règles, et juger s'ils s'appuieraient dessus.
+- **Quelques décideurs** : ils passent réellement l'entretien et jugent le rapport.
 
 **Inclus**
 
@@ -142,7 +167,8 @@ But : montrer à un financeur, sur quelques entreprises volontaires, que le parc
 - Sept dimensions, quatre stades.
 - Fonctions de gestion et d'administration couvertes en profondeur : finance-comptabilité et ressources humaines-paie, les deux seules documentées de bout en bout dans le corpus. Les autres fonctions sont traitées plus légèrement.
 - Base de connaissances initiale limitée aux entrées **[V]** et **[V2]** du corpus.
-- Demande d'accompagnement transmise à TCKC seul.
+- Orientation vers les annuaires publics d'accompagnateurs, sans transmission à un prestataire.
+- Dépôt lisible par les builders : architecture, base de connaissances et règles documentées.
 
 **Exclus de cette version**
 
@@ -155,8 +181,9 @@ But : montrer à un financeur, sur quelques entreprises volontaires, que le parc
 
 **Critères de réussite** *(choix proposés)*
 
-- Dix entretiens menés à terme avec de vrais décideurs.
-- Un rapport jugé « utilisable tel quel » par au moins sept d'entre eux.
+- Entretiens menés à terme avec les décideurs volontaires (objectif proposé : dix).
+- Un rapport jugé « utilisable tel quel » par au moins sept décideurs sur dix.
+- Retour écrit d'au moins trois builders sur l'architecture et la base de connaissances.
 - Aucune règle, échéance ou aide erronée relevée à la relecture humaine des dix rapports.
 - Entretien bouclé en 30 minutes ou moins.
 
@@ -180,15 +207,29 @@ But : montrer à un financeur, sur quelques entreprises volontaires, que le parc
 | Défiance sur la confidentialité | Engagements de la section 5 affichés avant l'entretien. |
 | Lacunes du corpus (pas de taux d'échec français, peu de gains mesurés indépendants) | Aucune extrapolation : le rapport dit ce qui n'est pas mesuré. |
 
-## 9. Décisions à prendre par le porteur du projet
+## 9. Décisions du porteur du projet
 
-1. **Cible du démonstrateur** : 1 à 249 salariés, ou un segment plus étroit (un secteur, une région) ?
-2. **Niveau d'exigence d'hébergement** : Union européenne, ou offre qualifiée SecNumCloud dès le démonstrateur ?
-3. **Fournisseurs de modèles et de voix** : critères de choix (européen, exécution locale, qualité du français) et arbitrage qualité vocale contre souveraineté.
-4. **Conservation de l'audio** : suppression après transcription, ou conservation pour améliorer l'outil avec consentement ?
-5. **Gouvernance de la neutralité** : qui valide la base de connaissances et les règles d'admission des accompagnateurs ?
-6. **Financeur visé et calendrier**, qui fixent la date du démonstrateur.
+Prises le 13 novembre 2026.
+
+| Sujet | Décision | Conséquence dans ce document |
+|---|---|---|
+| Cible du démonstrateur | Bpifrance, les builders, quelques décideurs | Trois publics et leurs critères de réussite (section 6). |
+| Hébergement | Souverain | Pile technique (section 5). |
+| Fournisseurs de modèles et de voix | Qualité et souveraineté | Souveraineté éliminatoire, qualité pour départager (section 5). |
+| Conservation de l'audio | Aucune | Traitement en flux, seule la transcription est gardée (section 5). |
+| Gouvernance de la neutralité | Totale | Aucune position privilégiée, base et règles publiées (section 3). |
+| Financeur et calendrier | À déterminer | La date du démonstrateur reste ouverte. |
+
+### Points à confirmer
+
+Ce sont des lectures de ces décisions, pas des décisions :
+
+1. **Neutralité totale et rôle de TCKC.** Elle est lue ici comme : l'outil n'envoie aucune demande à TCKC. L'accompagnement proposé par TCKC existe alors en dehors de l'outil, au même titre que tout autre accompagnateur.
+2. **« Builders ».** Lus comme les indépendants et entreprises qui mettent l'IA en œuvre chez les clients. Si le terme désigne plutôt des co-développeurs de l'outil, la question d'une licence ouverte se pose.
+3. **Ouverture du code.** Publier la base de connaissances et les règles est proposé ; publier tout le code sous licence libre ne l'est pas encore.
+4. **Définition de « souverain »** donnée en section 5, et niveau SecNumCloud dès le démonstrateur ou seulement à l'ouverture au public.
+5. **Qualité contre souveraineté** : si aucune brique vocale souveraine n'atteint une qualité acceptable aux tests, faut-il retarder ou déroger ?
 
 ## 10. Laissé à la réalisation
 
-Pile technique, schéma de stockage, format exact de la base de connaissances, conception des écrans, rédaction des consignes des modèles, jeu d'entretiens de test.
+Choix final de chaque brique vocale et du modèle de langage après évaluation, schéma de stockage, format exact de la base de connaissances, conception des écrans, rédaction des consignes des modèles, jeu d'entretiens de test.
