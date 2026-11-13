@@ -33,7 +33,7 @@ Un décideur (dirigeant, directeur général, directeur de fonction, entrepreneu
 | 4. Solutions | Propositions classées, expliquées à la voix et affichées. | Actions candidates, chacune reliée à un constat. |
 | 5. Affinage | Dialogue libre : écarter, préciser, repondérer. | Plan retenu. |
 | 6. Rapport | Document écrit, téléchargeable. | Rapport de mise en œuvre. |
-| 7. Suite, à sa demande | Il peut demander un accompagnement. | Demande transmise, avec son accord, à un accompagnateur. |
+| 7. Suite, à sa demande | Il peut chercher un accompagnement. | Orientation vers les annuaires publics d'accompagnateurs ; aucune transmission à un prestataire. |
 
 ### Principes de l'entretien
 
@@ -124,7 +124,7 @@ Profil de l'entreprise ; transcription ; faits (énoncé, valeur, certitude, ext
 ### Confidentialité et conformité de l'outil
 
 - Annonce claire, dès l'ouverture, que l'interlocuteur est une IA (article 50 du règlement IA, applicable depuis le 2 août 2026 **[V]**).
-- Consentement distinct pour l'enregistrement, pour la transmission à un accompagnateur et pour l'observatoire.
+- Consentement distinct pour le traitement de l'entretien et pour l'observatoire.
 - **Aucune conservation de l'audio** *(décision du porteur)* : le son est traité en flux et n'est jamais écrit sur disque ; seule la transcription est gardée. Transcription et rapport sont supprimables par le décideur.
 - **Hébergement et traitement souverains** *(décision du porteur)* : voir la pile technique ci-dessous.
 - Aucune donnée d'entretien réutilisée pour entraîner un modèle.
