@@ -70,7 +70,7 @@ Le catalogue de problèmes auditables du corpus (33 entrées, identifiants `HUM-
 
 Ces engagements conditionnent la crédibilité d'un outil gratuit financé sur fonds publics.
 
-- **Neutralité totale** *(décision du porteur)*. Le rapport se suffit à lui-même et ne recommande aucun prestataire ni éditeur nommé. L'outil ne donne à aucun accompagnateur, TCKC compris, une position privilégiée : pas de transmission automatique, pas de mise en avant. Conséquences proposées : l'orientation renvoie vers les annuaires publics existants ; la base de connaissances et les règles de diagnostic sont publiées et leurs modifications tracées ; toute future mise en relation obéit à des règles d'admission publiques, identiques pour tous.
+- **Neutralité totale** *(décision du porteur)*. Le rapport se suffit à lui-même et ne recommande aucun prestataire ni éditeur nommé. L'outil ne donne à aucun accompagnateur, TCKC compris, une position privilégiée : pas de transmission automatique, pas de mise en avant. Conséquences proposées : l'orientation renvoie vers les annuaires publics existants ; tout le code, la base de connaissances et les règles de diagnostic sont publiés sous licence libre et leurs modifications tracées ; toute future mise en relation obéit à des règles d'admission publiques, identiques pour tous.
 - **Complémentarité.** Le rapport oriente vers les dispositifs existants quand le profil y correspond (Diagnostic Data IA, catalogue de prestataires et ambassadeurs du plan Osez l'IA, France Num) au lieu de les doubler.
 - **Traçabilité.** Aucune règle, échéance, aide ou repère chiffré n'est affiché sans sa source, sa date et son niveau de confiance.
 - **Exemplarité.** L'outil est lui-même un système d'IA qui écoute des informations confidentielles. La crainte sur les données est le frein le plus spécifiquement français : hébergement, choix des modèles et transparence doivent pouvoir être montrés.
@@ -217,7 +217,7 @@ Prises le 13 novembre 2026.
 | Hébergement | Souverain ; Scaleway | Pile technique (section 5). |
 | Fournisseurs de modèles et de voix | Qualité et souveraineté ; Mistral pour le modèle de langage, Voxtral pour la voix | Souveraineté éliminatoire, qualité pour départager ; Voxtral retenu d'emblée (section 5). |
 | Conservation de l'audio | Aucune | Traitement en flux, seule la transcription est gardée (section 5). |
-| Gouvernance de la neutralité | Totale | Aucune position privilégiée, base et règles publiées (section 3). |
+| Gouvernance de la neutralité | Totale ; TCKC en dehors de l'outil ; tout le code en licence libre | Aucune position privilégiée, code, base et règles publiés (section 3). |
 | Financeur et calendrier | À déterminer | La date du démonstrateur reste ouverte. |
 
 ### Points à confirmer
@@ -225,8 +225,8 @@ Prises le 13 novembre 2026.
 Ce sont des lectures de ces décisions, pas des décisions :
 
 1. **Neutralité totale et rôle de TCKC.** *Confirmé par le porteur le 13 novembre 2026* : TCKC reste en dehors de l'outil, qui ne lui transmet aucune demande. Son accompagnement existe à côté, au même titre que celui de tout autre accompagnateur.
-2. **« Builders ».** Lus comme les indépendants et entreprises qui mettent l'IA en œuvre chez les clients. Si le terme désigne plutôt des co-développeurs de l'outil, la question d'une licence ouverte se pose.
-3. **Ouverture du code.** Publier la base de connaissances et les règles est proposé ; publier tout le code sous licence libre ne l'est pas encore.
+2. **« Builders ».** *Confirmé par le porteur le 13 novembre 2026* : ce sont les indépendants et les entreprises qui mettent l'IA en œuvre chez les clients.
+3. **Ouverture du code.** *Décidé par le porteur le 13 novembre 2026* : tout le code est publié sous licence libre, avec la base de connaissances et les règles. Restent à choisir la licence du code, celle des données de la base, et le moment où le dépôt devient public.
 4. **Définition de « souverain »** donnée en section 5, et niveau SecNumCloud dès le démonstrateur ou seulement à l'ouverture au public.
 5. **Périmètre de Voxtral** : la décision « Voxtral » tranche la question de la brique vocale. Restent à vérifier, avant de s'engager, que Voxtral couvre la transcription en flux et la synthèse en français, et où Mistral l'exécute ; à défaut, auto-hébergement des poids ouverts pour la transcription et modèle ouvert pour la synthèse.
 
