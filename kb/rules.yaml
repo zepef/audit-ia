@@ -6,6 +6,7 @@
 
 # corpus l. 54
 - id: ai-act-art-5-interdictions
+  label: "Pratiques d'IA interdites (article 5 du règlement IA)"
   statement: "Règlement IA, article 5 : les pratiques d'IA interdites sont applicables depuis le 2 février 2025."
   status: applicable
   effective_on: 2025-02-02
@@ -17,6 +18,7 @@
 
 # corpus l. 55, 257, 342
 - id: ai-act-art-4-maitrise
+  label: "Maîtrise de l'IA (article 4 du règlement IA)"
   statement: "Règlement IA, article 4 (maîtrise de l'IA) : applicable depuis le 2 février 2025. Selon la Commission, la maîtrise de l'IA « reste une obligation », sans niveau « suffisant » requis ; la preuve attendue est un registre interne des actions de formation : « Un certificat n'est pas nécessaire »."
   status: applicable
   effective_on: 2025-02-02
@@ -33,6 +35,7 @@
 
 # corpus l. 57
 - id: ai-act-art-50-transparence
+  label: "Transparence des agents conversationnels et des hypertrucages (article 50 du règlement IA)"
   statement: "Règlement IA, transparence : article 50(1) pour les agents conversationnels (chatbots) et article 50(4) pour les hypertrucages, applicables depuis le 2 août 2026."
   status: applicable
   effective_on: 2026-08-02
@@ -48,6 +51,7 @@
 
 # corpus l. 58, 237, 293
 - id: ai-act-art-50-2-marquage
+  label: "Marquage des contenus générés (article 50(2) du règlement IA)"
   statement: "Règlement IA, article 50(2) : marquage lisible par machine des contenus produits par les systèmes génératifs ; période transitoire pour les systèmes mis sur le marché avant le 2 août 2026."
   status: adopte_non_applicable
   effective_on: 2026-12-02
@@ -61,6 +65,7 @@
 
 # corpus l. 60, 81, 85
 - id: ai-act-annexe-iii
+  label: "Systèmes d'IA à haut risque de l'annexe III (règlement IA)"
   statement: "Règlement IA, systèmes à haut risque de l'annexe III (emploi, recrutement, crédit, éducation) : règlement (UE) 2026/1744 en vigueur depuis le 27 juillet 2026, application différée (au lieu du 2 août 2026)."
   status: adopte_non_applicable
   effective_on: 2027-12-02
@@ -77,6 +82,7 @@
 
 # corpus l. 61, 81
 - id: ai-act-annexe-i
+  label: "Systèmes d'IA à haut risque de l'annexe I (règlement IA)"
   statement: "Règlement IA, systèmes à haut risque de l'annexe I (produits réglementés) : règlement (UE) 2026/1744 en vigueur depuis le 27 juillet 2026, application différée."
   status: adopte_non_applicable
   effective_on: 2028-08-02
@@ -89,6 +95,7 @@
 
 # corpus l. 62
 - id: ddadue-autorites-francaises
+  label: "Autorités françaises du règlement IA (projet de loi DDADUE)"
   statement: "Autorités françaises du règlement IA : aucune autorité désignée par la loi. Projet de loi DDADUE : texte n° 63 adopté par le Sénat le 18 février 2026 et transmis à l'Assemblée le 20 février (n° 2518) ; la CNIL « se prépare à être désignée autorité de surveillance de marché »."
   status: projet
   provenance:
@@ -99,6 +106,7 @@
 
 # corpus l. 64, 95
 - id: cnil-controles-2026-recrutement
+  label: "Contrôles prioritaires de la CNIL en 2026 sur le recrutement"
   statement: "CNIL : le recrutement figure parmi les thématiques prioritaires de contrôle 2026 (annonce du 3 avril 2026), avec le répertoire électoral unique et les fédérations sportives ; cible : « prioritairement les grandes entreprises et les cabinets de recrutement », dont « les systèmes de prise de décision automatisée »."
   status: recommandation
   effective_on: 2026-04-03
@@ -112,6 +120,7 @@
 
 # corpus l. 65
 - id: facturation-electronique-reception
+  label: "Facturation électronique : réception"
   statement: "Facturation électronique : réception obligatoire pour toutes les entreprises, et émission pour les grandes entreprises et les ETI, depuis le 1er septembre 2026."
   status: applicable
   effective_on: 2026-09-01
@@ -123,6 +132,7 @@
 
 # corpus l. 66
 - id: facturation-electronique-emission-pme
+  label: "Facturation électronique : émission par les PME"
   statement: "Facturation électronique : émission obligatoire pour les PME et les micro-entreprises."
   status: adopte_non_applicable
   effective_on: 2027-09-01
@@ -134,6 +144,7 @@
 
 # corpus l. 70, 229
 - id: nis2-loi-resilience
+  label: "NIS 2 (projet de loi « Résilience »)"
   statement: "NIS 2 : projet de loi « Résilience » adopté par le Sénat le 12 mars 2025, en séance à l'Assemblée du 9 au 13 novembre 2026 ; non promulgué, obligations non opposables."
   status: projet
   provenance:
@@ -144,6 +155,7 @@
 
 # corpus l. 71
 - id: dora-registre-prestataires-tic
+  label: "DORA : registre des prestataires de services TIC"
   statement: "DORA (finance) : tout prestataire dont le service figure à l'annexe III du règlement d'exécution (UE) 2024/2956 est un prestataire de services TIC, à intégrer au registre d'information."
   status: applicable
   bounds: La FAQ lue ne mentionne ni l'IA ni les fournisseurs d'IA ; leur assimilation à des prestataires TIC est une déduction de la règle générale.
@@ -156,6 +168,7 @@
 
 # corpus l. 73
 - id: ppl-presomption-contenus-culturels
+  label: "Présomption d'utilisation des contenus culturels (proposition de loi)"
   statement: "Présomption d'utilisation des contenus culturels par les fournisseurs d'IA (nouvel article L. 331-4-1 du code de la propriété intellectuelle) : proposition de loi, texte n° 85 adopté par le Sénat le 8 avril 2026, transmis à l'Assemblée le 9 avril 2026 (n° 2634)."
   status: proposition
   applies_when: {fact: strategie.fournisseur_systeme_ia, op: eq, value: true}
@@ -167,6 +180,7 @@
 
 # corpus l. 74
 - id: cepd-lignes-directrices-rgpd-ia
+  label: "Lignes directrices sur le RGPD et le règlement IA"
   statement: "Lignes directrices CEPD/Commission sur l'articulation du RGPD et du règlement IA : annoncées, « parution […] attendue d'ici fin 2026 »."
   status: projet
   applies_when: {fact: competences.salaries_utilisent_ia, op: eq, value: true}
@@ -178,6 +192,7 @@
 
 # corpus l. 75
 - id: cepd-action-coordonnee-decision-automatisee
+  label: "Action coordonnée européenne sur la décision automatisée"
   statement: "CEPD : action coordonnée sur la décision automatisée, « notamment les systèmes de recrutement assistés par l'IA », choisie le 10 novembre 2026, lancement « au cours de l'année 2027 »."
   status: recommandation
   effective_on: 2026-11-10
@@ -190,6 +205,7 @@
 
 # corpus l. 76, 87
 - id: en-18286-presomption-art-17
+  label: "Norme harmonisée EN 18286 (management de la qualité)"
   statement: "Norme harmonisée EN 18286:2026 (système de management de la qualité) : référence publiée par la décision d'exécution (UE) 2026/2274 ; présomption de conformité limitée aux exigences de l'article 17 du règlement IA."
   status: applicable
   bounds: Présomption de conformité limitée aux exigences de l'article 17, pas une conformité générale au règlement ; annonce de la Commission du 19 octobre 2026 ; date de publication au JOUE non retrouvée sur la source citée.
@@ -202,6 +218,7 @@
 
 # corpus l. 95
 - id: rgpd-art-22-decisions-automatisees
+  label: "Décisions individuelles automatisées (article 22 du RGPD)"
   statement: "RGPD, article 22 (décisions individuelles automatisées) : le 24 août 2026, la CNIL annonce que l'autorité néerlandaise, « en coopération avec la CNIL », a infligé à Uber une amende de 824 990 000 € pour des décisions automatisées concernant les chauffeurs (« absence totale d'intervention humaine »)."
   status: jurisprudence
   bounds: Ce n'est pas une sanction de la CNIL.

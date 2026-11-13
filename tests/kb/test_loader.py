@@ -32,6 +32,8 @@ def test_require_review_fails_on_unreviewed():
         ("problem_unknown_benchmark", "problems.yaml", "HUM-S1"),
         ("bad_problem_id", "problems.yaml", "hum_s1"),
         ("verified_without_date", "rules.yaml", "regle-a"),
+        ("rule_without_label", "rules.yaml", "regle-a"),
+        ("aid_without_label", "aids.yaml", "aide-a"),
     ],
 )
 def test_incoherent_kb_names_file_and_entry(tmp_path, mutation, file, entry_id):

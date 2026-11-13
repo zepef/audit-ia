@@ -23,12 +23,12 @@ Tous les fichiers sauf `VERSION` et `neutrality.yaml` sont des listes d'entrées
 | `sources.yaml` | Sources citées | `id`, `title`, `publisher`, `url`, `published_on` (facultatif, seulement si le rapport donne le jour) |
 | `sectors.yaml` | Secteurs reconnus | `id`, `label` (libellé affiché dans le rapport) |
 | `facts.yaml` | Faits recueillis auprès du décideur | `id`, `dimension` (une des sept), `kind` (`bool`, `int`, `float`, `enum`, `text`), `choices` (pour `enum`), `prompt_hint`, `stages` (vide = tous les stades), `priority` |
-| `rules.yaml` | Règles et échéances datées | `id`, `statement`, `status` (`applicable`, `adopte_non_applicable`, `projet`, `proposition`, `recommandation`, `jurisprudence`), `effective_on`, `bounds`, `applies_when`, `provenance` |
+| `rules.yaml` | Règles et échéances datées | `id`, `label` (nom court affiché, sans nom d'éditeur), `statement`, `status` (`applicable`, `adopte_non_applicable`, `projet`, `proposition`, `recommandation`, `jurisprudence`), `effective_on`, `bounds`, `applies_when`, `provenance` |
 | `benchmarks.yaml` | Repères chiffrés | `id`, `indicator`, `value`, `headcount_min`, `headcount_max`, `sectors` (vide = tous), `scope_published` (faux si la source ne publie pas la taille des entreprises interrogées), `stages` (vide = tous les stades), `population`, `fieldwork`, `expires_on`, `provenance` |
 | `problems.yaml` | Problèmes auditables | `id` (préfixe `HUM`, `DAT`, `SI`, `GEN`, `CYB`, `COU`, `ENV` ou `FON`), `symptom`, `dimension`, `triggers`, `evidence_benchmark_ids`, `action_ids` |
 | `use_cases.yaml` | Cas d'usage | `id`, `function`, `title`, `prerequisites`, `obstacles`, `risks`, `first_step`, `applies_when`, `priority` |
 | `actions.yaml` | Actions du plan | `id`, `title`, `horizon` (`j30`, `j90`, `m12`), `effort` (`faible`, `moyen`, `fort`), `prerequisites`, `success_check` |
-| `aids.yaml` | Aides publiques | `id`, `name`, `eligibility`, `headcount_min`, `headcount_max`, `amount`, `provenance` |
+| `aids.yaml` | Aides publiques | `id`, `label` (nom court affiché), `name`, `eligibility`, `headcount_min`, `headcount_max`, `amount`, `provenance` |
 | `neutrality.yaml` | Neutralité commerciale | `forbidden_terms` : termes qui ne doivent apparaître dans aucun texte de rapport |
 
 ### Conditions

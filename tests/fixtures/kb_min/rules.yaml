@@ -1,4 +1,5 @@
 - id: regle-a
+  label: Règle A de test
   statement: Règle applicable de test.
   status: applicable
   effective_on: 2025-02-02
@@ -9,6 +10,7 @@
     confidence: V
     human_reviewed: false
 - id: regle-b
+  label: Règle B de test
   statement: Règle adoptée mais pas encore applicable.
   status: adopte_non_applicable
   effective_on: 2027-12-02

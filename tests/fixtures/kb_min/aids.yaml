@@ -1,4 +1,5 @@
 - id: aide-a
+  label: Aide A
   name: Aide de test
   eligibility: null
   headcount_min: 10

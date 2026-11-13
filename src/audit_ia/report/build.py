@@ -9,8 +9,9 @@ from typing import Literal
 
 from pydantic import BaseModel
 
-from audit_ia.audit.models import AuditState, Certainty, CompanyProfile, Dimension
+from audit_ia.audit.models import AuditState, Certainty, CompanyProfile, Dimension, Stage
 from audit_ia.diagnostic.engine import Diagnosis
+from audit_ia.kb.freshness import is_stale
 from audit_ia.kb.models import Benchmark, Confidence, Horizon, KnowledgeBase, Provenance
 
 STALE_NOTE = "À revérifier : cette information n'a pas été recontrôlée récemment."
@@ -31,6 +32,14 @@ DIMENSION_LABELS = {
     Dimension.SECURITE: "sécurité",
     Dimension.COMPETENCES: "compétences",
     Dimension.VALEUR: "valeur",
+}
+
+
+STAGE_LABELS = {
+    Stage.NON_UTILISATRICE: "non utilisatrice",
+    Stage.USAGE_INDIVIDUEL: "usage individuel",
+    Stage.USAGE_OUTILLE: "usage outillé",
+    Stage.PROCESSUS_TRANSFORME: "processus transformé",
 }
 
 
@@ -60,6 +69,8 @@ class Report(BaseModel):
     kb_version: str
     generated_on: date
     profile: CompanyProfile
+    stage_label: str
+    sector_label: str
     summary: list[ReportItem]
     by_dimension: dict[Dimension, list[ReportItem]]
     benchmarks: list[ReportItem]
@@ -215,19 +226,32 @@ def build_report(
             )
         )
 
-    # --- vérifications
+    # --- vérifications : la question, et ce qu'elle conditionne parmi les
+    # règles et les aides (nommées par leur libellé, sourcées) ; les problèmes
+    # et cas d'usage bloqués restent dans les références.
     verifications = []
     for v in diagnosis.verifications:
-        hint = (
-            kb.facts[v.fact_id].prompt_hint if v.fact_id in kb.facts else v.fact_id
-        )
+        text = kb.facts[v.fact_id].prompt_hint if v.fact_id in kb.facts else v.fact_id
         refs = [Ref(kind="fact", id=v.fact_id)]
+        labels: list[str] = []
+        v_sources: list[SourceLine] = []
         for blocked in v.blocks:
             if blocked in kb.problems:
                 refs.append(Ref(kind="problem", id=blocked))
             elif blocked in kb.use_cases:
                 refs.append(Ref(kind="use_case", id=blocked))
-        verifications.append(ReportItem(text=hint, refs=refs))
+        # règles d'abord, puis aides
+        for kind, table in (("rule", kb.rules), ("aid", kb.aids)):
+            for blocked in v.blocks:
+                if blocked not in table:
+                    continue
+                entry = table[blocked]
+                refs.append(Ref(kind=kind, id=blocked))
+                labels.append(entry.label)
+                v_sources.append(_source_line(kb, entry.provenance, is_stale(entry, today)))
+        if labels:
+            text += f" Cela conditionne : {' ; '.join(labels)}."
+        verifications.append(ReportItem(text=text, refs=refs, sources=v_sources))
 
     # --- aides
     aids = []
@@ -302,6 +326,12 @@ def build_report(
         kb_version=kb.version,
         generated_on=today,
         profile=state.profile,
+        stage_label=STAGE_LABELS[state.profile.stage],
+        sector_label=(
+            kb.sectors[state.profile.sector].label
+            if state.profile.sector in kb.sectors
+            else state.profile.sector
+        ),
         summary=summary,
         by_dimension=by_dimension,
         benchmarks=benchmarks,

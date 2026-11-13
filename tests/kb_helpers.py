@@ -70,6 +70,8 @@ MUTATIONS = {
         "benchmarks.yaml",
         lambda d: _by_id(d, "repere-construction").update(sectors=["batiment"]),
     ),
+    "rule_without_label": ("rules.yaml", lambda d: _by_id(d, "regle-a").pop("label")),
+    "aid_without_label": ("aids.yaml", lambda d: _by_id(d, "aide-a").pop("label")),
     "evidence_is_unverified": (
         "benchmarks.yaml",
         lambda d: _by_id(d, "repere-a")["provenance"].update(confidence="B"),
@@ -89,6 +91,7 @@ def mutated_copy(src: Path, tmp_path: Path, mutation: str) -> Path:
 def rule(*, verified_on: date | None = date(2026, 11, 13), **overrides) -> Rule:
     fields = dict(
         id="regle-t",
+        label="Règle de test",
         statement="Règle de test.",
         status=RuleStatus.APPLICABLE,
         effective_on=date(2025, 2, 2),

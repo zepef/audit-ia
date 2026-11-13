@@ -7,6 +7,7 @@
 
 # corpus l. 194, 202, 218
 - id: diagnostic-data-ia
+  label: "Diagnostic Data IA"
   name: Diagnostic Data IA (Bpifrance, France 2030)
   headcount_min: 10
   headcount_max: 2000
@@ -19,6 +20,7 @@
 
 # corpus l. 195, 202
 - id: accelerateurs-ia
+  label: "Accélérateurs IA"
   name: Accélérateurs IA (Bpifrance)
   headcount_min: 51
   eligibility:

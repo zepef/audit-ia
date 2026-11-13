@@ -74,3 +74,15 @@ def test_html_without_benchmark_omits_subsection():
     r = report_for(state(sector="peche"), kb=KB_SECTOR_ONLY)
     assert not r.benchmarks
     assert BENCH_TITLE not in render_html(r)
+
+
+def test_html_shows_french_labels_not_identifiers():
+    html = render_html(report_for(state(stage="usage_individuel", sector="peche")))
+    assert "stade : usage individuel" in html and "secteur pêche" in html
+    assert "usage_individuel" not in html
+
+
+def test_html_refs_are_attributes_not_text():
+    html = render_html(report_for(S_FULL))
+    assert "Réf. :" not in html
+    assert 'data-refs="problem:HUM-S1 fact:comptes_perso benchmark:repere-a"' in html

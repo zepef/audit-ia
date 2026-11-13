@@ -100,6 +100,7 @@ class FactDef(_Strict):
 
 class Rule(_Strict):
     id: str
+    label: str  # nom court affiché au lecteur (vérifications)
     statement: str
     status: RuleStatus
     effective_on: date | None = None
@@ -157,6 +158,7 @@ class Action(_Strict):
 
 class Aid(_Strict):
     id: str
+    label: str  # nom court affiché au lecteur (vérifications)
     name: str
     eligibility: Condition | None = None
     headcount_min: int | None = None

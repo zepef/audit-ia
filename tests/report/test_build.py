@@ -119,3 +119,34 @@ def test_unpublished_scope_is_stated():
 def test_benchmark_shown_with_finding_is_not_repeated():
     assert report_for(S_FULL).benchmarks == []
     assert [i.refs[0].id for i in report_for(state()).benchmarks] == ["repere-a"]
+
+
+# --- F6 : aucun identifiant technique pour le lecteur
+
+def test_profile_labels():
+    r = report_for(state(stage="usage_individuel", sector="peche"))
+    assert (r.stage_label, r.sector_label) == ("usage individuel", "pêche")
+    assert report_for(state(stage="non_utilisatrice")).stage_label == "non utilisatrice"
+
+
+def test_verification_names_rules_and_aids_it_conditions():
+    from audit_ia.kb.models import Test
+
+    rule = KB.rules["regle-a"].model_copy(update={"applies_when": Test(fact="f1", op="eq", value=True)})
+    aid = KB.aids["aide-a"].model_copy(update={"eligibility": Test(fact="f1", op="eq", value=True)})
+    kb = KB.model_copy(update={"rules": {**KB.rules, "regle-a": rule}, "aids": {"aide-a": aid}})
+    s = state()
+    r = report_for(s, kb=kb)
+    item = next(i for i in r.verifications if i.refs[0].id == "f1")
+    assert item.text == (
+        "L'entreprise a-t-elle une stratégie IA formalisée ? "
+        "Cela conditionne : Règle A de test ; Aide A."
+    )
+    assert {(x.kind, x.id) for x in item.refs} >= {("rule", "regle-a"), ("aid", "aide-a")}
+    assert item.sources and check_report(r, s, kb) == []
+
+
+def test_verification_blocking_only_problems_names_nothing():
+    item = next(i for i in report_for(state()).verifications if i.refs[0].id == "comptes_perso")
+    assert item.text == "Des comptes personnels sont-ils utilisés pour les outils d'IA ?"
+    assert ("problem", "HUM-S1") in {(x.kind, x.id) for x in item.refs}

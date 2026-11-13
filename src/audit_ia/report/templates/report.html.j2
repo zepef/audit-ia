@@ -16,7 +16,7 @@
   a { color: var(--accent); }
   ul { padding-left: 1.2rem; }
   li { margin: .5rem 0; }
-  .meta, .refs, .src { color: var(--muted); font-size: .85rem; }
+  .meta, .src { color: var(--muted); font-size: .85rem; }
   .note { background: var(--warn-bg); color: var(--warn-fg); padding: .15rem .5rem; border-radius: 4px; font-size: .9rem; display: inline-block; margin-top: .2rem; }
   .stale { font-weight: 600; color: var(--warn-fg); background: var(--warn-bg); padding: 0 .3rem; border-radius: 3px; }
   .src { display: block; }
@@ -30,17 +30,16 @@
 {% macro items(list) %}
 <ul>
 {% for item in list %}
-  <li>{{ item.text }}
+  <li{% if item.refs %} data-refs="{% for r in item.refs %}{{ r.kind }}:{{ r.id }}{% if not loop.last %} {% endif %}{% endfor %}"{% endif %}>{{ item.text }}
   {% if item.note %}<br><span class="note">{{ item.note }}</span>{% endif %}
   {% for s in item.sources %}{{ source_line(s) }}{% endfor %}
-  {% if item.refs %}<span class="refs">Réf. : {% for r in item.refs %}{{ r.kind }} {{ r.id }}{% if not loop.last %}, {% endif %}{% endfor %}</span>{% endif %}
   </li>
 {% endfor %}
 </ul>
 {% endmacro %}
 <header>
   <h1>Audit de l'intégration de l'IA</h1>
-  <p class="meta">Entreprise de {{ report.profile.headcount }} salariés, secteur {{ report.profile.sector }}, stade : {{ report.profile.stage.value }}. Répondant : {{ report.profile.respondent_role }}.</p>
+  <p class="meta">Entreprise de {{ report.profile.headcount }} salarié{{ "s" if report.profile.headcount > 1 }}, secteur {{ report.sector_label }}, stade : {{ report.stage_label }}. Répondant : {{ report.profile.respondent_role }}.</p>
 </header>
 <main>
 <section id="synthese">
