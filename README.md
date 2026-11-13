@@ -18,8 +18,9 @@ Le constat de départ, tiré du corpus : en 2026, le problème n'est plus l'acc�
 | Élément | État | Dernière mise à jour |
 |---|---|---|
 | Corpus documentaire (rapport + notes) | Rédigé ; 210 affirmations contrôlées sur sources primaires (128 confirmées, 32 corrigées, 4 infirmées, 23 non retrouvées, 23 inaccessibles) | 13/11/2026 |
-| Spécification de l'application | Version 0.3 rédigée (décisions de cadrage et pile technique intégrées), à valider (`docs/superpowers/specs/2026-11-13-audit-ia-design.md`) | 13/11/2026 |
+| Spécification de l'application | Version 0.3 validée le 13/11/2026 (`docs/superpowers/specs/2026-11-13-audit-ia-design.md`) | 13/11/2026 |
 | Modèle de données (règles datées, benchmarks, problèmes auditables) | À faire | — |
+| Plan de réalisation | Plan 1 sur 6 rédigé (socle déterministe), à relire (`docs/superpowers/plans/2026-11-13-socle-deterministe.md`) | 13/11/2026 |
 | Code | Non commencé | — |
 
 ## Contenu du dépôt
@@ -72,7 +73,8 @@ Deux conséquences pour la conception :
 - [ ] Relire le rapport et arbitrer les contradictions restées ouvertes
 - [ ] Vérifier à la main les sources restées inaccessibles (textes officiels, jurisprudence, ANSSI)
 - [x] Rédiger la spécification (version 0.1)
-- [ ] Valider la spécification
+- [x] Valider la spécification
+- [ ] Relire le plan 1 et choisir le mode de réalisation
 - [ ] Ajouter les fichiers de licence (texte officiel de l'EUPL 1.2 pour le code, Licence Ouverte 2.0 pour la base de connaissances)
 - [ ] Vérifier Voxtral (transcription en flux, synthèse en français), Mistral Large 4 et leur exécution sur Scaleway
 - [ ] Évaluer les briques vocales et le modèle de langage souverains sur un jeu d'entretiens en français
@@ -98,3 +100,4 @@ Le dépôt reste privé tant que le démonstrateur ne tourne pas.
 | 13/11/2026 | Spécification 0.1 : entretien vocal avec un décideur, bilan déterministe, rapport de mise en œuvre ; première version en démonstrateur |
 | 13/11/2026 | Spécification 0.2 : hébergement et fournisseurs souverains, aucune conservation de l'audio, neutralité totale, démonstrateur pour Bpifrance, builders et décideurs |
 | 13/11/2026 | Spécification 0.3 : Scaleway, Mistral Large 4, Voxtral ; TCKC en dehors de l'outil ; code sous EUPL 1.2, base sous Licence Ouverte 2.0 ; SecNumCloud à l'ouverture au public |
+| 13/11/2026 | Spécification validée ; plan de réalisation 1 sur 6 : socle déterministe (base de connaissances, diagnostic, rapport HTML) |
